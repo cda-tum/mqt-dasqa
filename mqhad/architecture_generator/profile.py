@@ -26,22 +26,28 @@ class Profile:
                 L.append([control_qubit, target_qubit])
         return L
 
-    def _circuit_to_adjacency_matrix(
-        self, two_qubit_map: list[list[int, int]]
+    def _get_circuit_adjacency_matrix(
+        self, num_qubits: int, two_qubit_map: list[list[int, int]]
     ) -> np.ndarray:
         """Two qubit map to adjacency matrix
 
         Returns:
             np.ndarray: adjacency matrix
         """
-        n_qubits = self.qc.num_qubits
-        adjacency_matrix = np.zeros((n_qubits, n_qubits), dtype=int)
+        adjacency_matrix = np.zeros((num_qubits, num_qubits), dtype=int)
 
         for control_qubit, target_qubit in two_qubit_map:
             adjacency_matrix[control_qubit, target_qubit] += 1
             adjacency_matrix[target_qubit, control_qubit] += 1
 
-        return adjacency_matrix
+        return adjacency_matrix.tolist()
+
+    def _get_circuit_ordered_degree(
+        self, num_qubits: int, adjacency_matrix: np.ndarray
+    ) -> list[tuple[int, int]]:
+        degree_list = list(zip(range(num_qubits), np.sum(adjacency_matrix, axis=1)))
+        ordered_degree = sorted(degree_list, key=lambda x: x[1], reverse=True)
+        return ordered_degree
 
     def _get_interaction_count(
         self, two_qubit_map: list[list[int, int]]
