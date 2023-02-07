@@ -4,8 +4,11 @@ from mqhad.architecture_generator.profile import Profile
 
 
 class TestProfile:
-    def test_get_mapping_two_qubit_gates(self):
-        profile = Profile()
+    @classmethod
+    def setup_class(cls):
+        """setup any state specific to the execution of the given class (which
+        usually contains tests).
+        """
         qr = QuantumRegister(5)
         qc = QuantumCircuit(qr)
         qc.h([0, 1, 2, 3])
@@ -18,12 +21,35 @@ class TestProfile:
         qc.cx(2, 4)
         qc.cx(3, 4)
         qc.cx(0, 4)
+        cls.qc = qc
 
-        mapping_two_qubit = profile._get_mapping_two_qubit_gates(qc)
+    @classmethod
+    def teardown_class(cls):
+        """teardown any state that was previously setup with a call to
+        setup_class.
+        """
+        pass
+
+    def test_get_profile(self):
+        profile = Profile(self.qc)
+        ordered_degree, adjacency_matrix = profile.get_profile()
+        assert ordered_degree == [(4, 5), (0, 3), (1, 2), (2, 1), (3, 1)]
+        assert adjacency_matrix == [
+            [0, 1, 0, 0, 2],
+            [1, 0, 0, 0, 1],
+            [0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 1],
+            [2, 1, 1, 1, 0],
+        ]
+
+    def test_get_mapping_two_qubit_gates(self):
+        profile = Profile(self.qc)
+
+        mapping_two_qubit = profile._get_mapping_two_qubit_gates(self.qc)
         assert mapping_two_qubit == [[0, 1], [0, 4], [1, 4], [2, 4], [3, 4], [0, 4]]
 
     def test_get_circuit_adjacency_matrix(self):
-        profile = Profile()
+        profile = Profile(self.qc)
         num_qubits = 5
         two_qubit_map = [[0, 1], [0, 4], [1, 4], [2, 4], [3, 4], [0, 4]]
         adjacency_matrix = profile._get_circuit_adjacency_matrix(
@@ -38,7 +64,7 @@ class TestProfile:
         ]
 
     def test_get_circuit_ordered_degree(self):
-        profile = Profile()
+        profile = Profile(self.qc)
         num_qubits = 5
         adjacency_matrix = [
             [0, 1, 0, 0, 2],
@@ -53,7 +79,7 @@ class TestProfile:
         assert ordered_degree == [(4, 5), (0, 3), (1, 2), (2, 1), (3, 1)]
 
     def test_get_interaction_count(self):
-        profile = Profile()
+        profile = Profile(self.qc)
         two_qubit_map = [[0, 1], [0, 4], [1, 4], [2, 4], [3, 4], [0, 4]]
         interaction_count = profile._get_interaction_count(two_qubit_map)
         assert interaction_count == OrderedDict(
@@ -61,7 +87,7 @@ class TestProfile:
         )
 
     def test_sort_interaction_dict(self):
-        profile = Profile()
+        profile = Profile(self.qc)
         L = OrderedDict(
             [((0, 1), 1), ((0, 4), 2), ((1, 4), 1), ((2, 4), 1), ((3, 4), 1)]
         )

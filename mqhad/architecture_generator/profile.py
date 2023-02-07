@@ -6,13 +6,16 @@ class Profile:
     def __init__(self, qc: QuantumCircuit):
         self.qc = qc
         self.num_qubits = qc.num_qubits
-        self.two_qubit_map = self._get_mapping_two_qubit_gates(qc)
+
+    def get_profile(self):
+        self.two_qubit_map = self._get_mapping_two_qubit_gates(self.qc)
         self.adjacency_matrix = self._get_circuit_adjacency_matrix(
             self.num_qubits, self.two_qubit_map
         )
         self.ordered_degree = self._get_circuit_ordered_degree(
             self.num_qubits, self.adjacency_matrix
         )
+        return self.ordered_degree, self.adjacency_matrix
 
     def _get_mapping_two_qubit_gates(self, qc: QuantumCircuit) -> list[list[int, int]]:
         """Traverse the circuit data, find the CX gates and store interaction count
