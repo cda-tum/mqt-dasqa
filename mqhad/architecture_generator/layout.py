@@ -2,10 +2,10 @@ class Layout:
     def __init__(
         self,
         ordered_degree: list[tuple[int, int]] = None,
-        adj_mat: list[list[int]] = None,
+        adjacency_matrix: list[list[int]] = None,
     ) -> None:
         self.ordered_degree = ordered_degree
-        self.adj_mat = adj_mat
+        self.adj_mat = adjacency_matrix
 
     def get_layout(self) -> tuple[int, int, list[list[int]]]:
         qubit_num = len(self.ordered_degree)

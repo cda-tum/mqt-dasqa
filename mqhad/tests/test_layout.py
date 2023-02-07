@@ -11,7 +11,9 @@ class TestLayout:
             [0, 0, 0, 0, 1],
             [2, 1, 1, 1, 0],
         ]
-        layout = Layout(ordered_degree, adjacency_matrix)
+        layout = Layout(
+            ordered_degree=ordered_degree, adjacency_matrix=adjacency_matrix
+        )
         dimX = 3
         dimY = 3
         qubit_grid = [[-1, 2, -1], [3, 4, 0], [-1, 1, -1]]
@@ -20,7 +22,9 @@ class TestLayout:
     def test_get_layout_with_1_qubit(self):
         ordered_degree = [(0, 1)]
         adjacency_matrix = [[0]]
-        layout = Layout(ordered_degree, adjacency_matrix)
+        layout = Layout(
+            ordered_degree=ordered_degree, adjacency_matrix=adjacency_matrix
+        )
         dimX = 1
         dimY = 1
         qubit_grid = [[0]]
@@ -52,14 +56,14 @@ class TestLayout:
         )
 
     def test_calculate_distance_to_assigned_qubit(self):
-        adj_mat = [
+        adjacency_matrix = [
             [0, 1, 0, 0, 2],
             [1, 0, 0, 0, 1],
             [0, 0, 0, 0, 1],
             [0, 0, 0, 0, 1],
             [2, 1, 1, 1, 0],
         ]
-        layout = Layout(None, adj_mat)
+        layout = Layout(ordered_degree=None, adjacency_matrix=adjacency_matrix)
         candidate_qubit = (4, 5)
         assigned_qubit = (0, 0, 1)
         location = (0, 0)
