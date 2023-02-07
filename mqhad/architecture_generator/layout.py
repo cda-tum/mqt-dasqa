@@ -1,19 +1,22 @@
 class Layout:
-    def __init__(self) -> None:
-        pass
+    def __init__(
+        self,
+        ordered_degree: list[tuple[int, int]] = None,
+        adj_mat: list[list[int]] = None,
+    ) -> None:
+        self.ordered_degree = ordered_degree
+        self.adj_mat = adj_mat
 
-    def get_layout(
-        self, ordered_degree: list[tuple[int, int]], adj_mat: list[list[int]]
-    ) -> tuple[int, int, list[list[int]]]:
-        qubit_num = len(ordered_degree)
+    def get_layout(self) -> tuple[int, int, list[list[int]]]:
+        qubit_num = len(self.ordered_degree)
 
         assigned_qubit_list = []
         candidate_location = {}
         assigned_location = {}
 
-        qubit_id = ordered_degree[0][0]
+        qubit_id = self.ordered_degree[0][0]
         assigned_qubit_list.append([qubit_id, 0, 0])
-        ordered_degree.pop(0)
+        self.ordered_degree.pop(0)
         candidate_location[(0, 1)] = 1
         candidate_location[(1, 0)] = 1
         candidate_location[(-1, 0)] = 1
@@ -23,17 +26,17 @@ class Layout:
         for _ in range(qubit_num - 1):
             candidate_qubit = (0, 0)
 
-            for qubit in ordered_degree:
+            for qubit in self.ordered_degree:
                 qubit_id = qubit[0]
                 qubit_coupling_strength = qubit[1]
                 for assigned_qubit in assigned_qubit_list:
                     assigned_qubit_id = assigned_qubit[0]
-                    if adj_mat[qubit_id][assigned_qubit_id] > 0:
+                    if self.adj_mat[qubit_id][assigned_qubit_id] > 0:
                         candidate_qubit_coupling_strength = candidate_qubit[1]
                         if qubit_coupling_strength > candidate_qubit_coupling_strength:
                             candidate_qubit = qubit
 
-            ordered_degree.remove(candidate_qubit)
+            self.ordered_degree.remove(candidate_qubit)
 
             # Manhattan distance for cost computation
             candidate_location_cost = 1000000000
@@ -42,7 +45,7 @@ class Layout:
                 cost = 0
                 for assigned_qubit in assigned_qubit_list:
                     cost += self._calculate_distance_to_assigned_qubits(
-                        adj_mat, candidate_qubit, assigned_qubit, location
+                        candidate_qubit, assigned_qubit, location
                     )
 
                 if cost < candidate_location_cost:
@@ -76,15 +79,14 @@ class Layout:
 
     def _calculate_distance_to_assigned_qubits(
         self,
-        adj_mat: list[list[int]],
         candidate_qubit: tuple[int, int],
         assigned_qubit: tuple[int, int, int],
         location: tuple[int, int],
     ) -> float:
         cost = 0
         assigned_qubit_id = assigned_qubit[0]
-        if adj_mat[candidate_qubit[0]][assigned_qubit_id] > 0:
-            cost += adj_mat[candidate_qubit[0]][assigned_qubit_id] * (
+        if self.adj_mat[candidate_qubit[0]][assigned_qubit_id] > 0:
+            cost += self.adj_mat[candidate_qubit[0]][assigned_qubit_id] * (
                 abs(location[0] - assigned_qubit[1])
                 + abs(location[1] - assigned_qubit[2])
             )
