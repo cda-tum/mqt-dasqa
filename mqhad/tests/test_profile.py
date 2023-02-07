@@ -5,6 +5,7 @@ from mqhad.architecture_generator.profile import Profile
 
 class TestProfile:
     def test_get_mapping_two_qubit_gates(self):
+        profile = Profile()
         qr = QuantumRegister(5)
         qc = QuantumCircuit(qr)
         qc.h([0, 1, 2, 3])
@@ -18,7 +19,6 @@ class TestProfile:
         qc.cx(3, 4)
         qc.cx(0, 4)
 
-        profile = Profile()
         mapping_two_qubit = profile._get_mapping_two_qubit_gates(qc)
         assert mapping_two_qubit == [[0, 1], [0, 4], [1, 4], [2, 4], [3, 4], [0, 4]]
 
