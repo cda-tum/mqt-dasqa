@@ -52,16 +52,6 @@ class ChipInfo:
     def edge_list(self, edge_list):
         self._edge_list = edge_list
 
-    def displayinfo(self):
-        print(self.qubit_num)
-        print(self.coupling_list)
-        print(self.grid_edge_list)
-        print(self.via_edge_list)
-        print(self.edge_list)
-        print(self.qubitgrid)
-        print(self.adj_mat)
-        print(self.crossbuslist)
-
     def generatefromAll2QBus(self):
         dimX = len(self.qubitgrid)
         dimY = len(self.qubitgrid[0])
