@@ -17,6 +17,8 @@ class TestYieldSimulator:
         yield_sim = YieldSimulator(
             chip, frequency_config, qubit_num, sigma, num_trials=num_trials
         )
+        yield_sim.reset_seed()
+
         collision_num, yield_rate = yield_sim.simulate()
         assert pytest.approx(collision_num, 0.1) == 2.0
         assert yield_rate == 0.0
@@ -34,6 +36,7 @@ class TestYieldSimulator:
         yield_sim = YieldSimulator(
             chip, frequency_config, qubit_num, sigma, delta, num_trials
         )
+        yield_sim.reset_seed()
 
         yield_success = 1
         frequency_list = [5.000008, 5.000012, 5.000016]
@@ -63,6 +66,7 @@ class TestYieldSimulator:
         yield_sim = YieldSimulator(
             chip, frequency_config, qubit_num, sigma, delta, num_trials
         )
+        yield_sim.reset_seed()
 
         yield_success = 1
         frequency_list = [5.000008, 5.000012, 5.000016]
@@ -92,6 +96,7 @@ class TestYieldSimulator:
         yield_sim = YieldSimulator(
             chip, frequency_config, qubit_num, sigma, delta, num_trials
         )
+        yield_sim.reset_seed()
 
         yield_success = 1
         frequency_list = np.arange(5.000008, 5.000008 + 0.000004 * qubit_num, 0.000004)
@@ -121,6 +126,7 @@ class TestYieldSimulator:
         yield_sim = YieldSimulator(
             chip, frequency_config, qubit_num, sigma, delta, num_trials
         )
+        yield_sim.reset_seed()
 
         yield_success = 1
         frequency_list = np.arange(5.000008, 5.000008 + 0.000004 * qubit_num, 0.000004)
@@ -174,6 +180,8 @@ class TestYieldSimulator:
         yield_sim = YieldSimulator(
             chip, frequency_config, qubit_num, sigma, num_trials=num_trials
         )
+        yield_sim.reset_seed()
+
         collision_num, yield_rate = yield_sim.simulate()
         assert pytest.approx(collision_num) == 12.78752
         assert yield_rate == 0.0

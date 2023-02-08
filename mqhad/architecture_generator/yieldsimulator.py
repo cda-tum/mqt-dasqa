@@ -2,6 +2,8 @@ import random
 import numpy as np
 from mqhad.architecture_generator.chip import ChipInfo
 
+random.seed(a=0, version=2)
+
 
 class YieldSimulator:
     def __init__(
@@ -19,7 +21,14 @@ class YieldSimulator:
         self.frequency_config = frequency_config
         self.delta = delta
         self.num_trials = num_trials
-        random.seed(a=0, version=2)
+
+    def reset_seed(self, seed: int = 0) -> None:
+        """Reset the seed of random number generator.
+
+        Args:
+            seed (int, optional): Seed. Defaults to 0.
+        """
+        random.seed(a=seed, version=2)
 
     def simulate(self) -> tuple[float, float]:
         collision_num_list = np.zeros(self.num_trials, dtype=int)
