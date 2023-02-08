@@ -46,7 +46,7 @@ class ChipInfo:
 
     @property
     def edge_list(self):
-        return np.array(self._edge_list)
+        return np.array(self._edge_list, dtype=object)
 
     @edge_list.setter
     def edge_list(self, edge_list):
