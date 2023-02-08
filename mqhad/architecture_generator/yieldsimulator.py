@@ -22,9 +22,9 @@ class YieldSimulator:
         random.seed(a=0, version=2)
 
     def simulate(self) -> tuple[float, float]:
-        collision_num_list = [0] * self.num_trials
-        yield_list = [0] * self.num_trials
-        collision_stat_sum = [0] * 7
+        collision_num_list = np.zeros(self.num_trials)
+        yield_list = np.zeros(self.num_trials)
+        collision_stat_sum = np.zeros(7)
 
         for trial_id in range(self.num_trials):
             (
@@ -55,7 +55,7 @@ class YieldSimulator:
 
         yield_success = 1
         collision_num = 0
-        collision_stat = [0] * 7
+        collision_stat = np.zeros(7)
 
         for edge in chip_info.coupling_list:
             qubit_j = edge[0]
