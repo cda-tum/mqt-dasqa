@@ -37,13 +37,9 @@ class YieldSimulator:
             for i in range(7):
                 collision_stat_sum[i] += collision_stat[i]
 
-        # print(collision_stat_sum)
-        # print(collision_stat)
-        # input()
         collision_num = float(sum(collision_num_list)) / float(self.num_trials)
         yield_rate = float(sum(yield_list)) / float(self.num_trials)
-        # 	print(collision_stat_sum, yield_rate)
-        # print(collision_num,'\t' ,yield_rate)
+
         return collision_num, yield_rate
 
     def _one_trial_sim(
@@ -72,21 +68,18 @@ class YieldSimulator:
                 yield_success = 0
                 collision_num += 2
                 collision_stat[0] += 1
-            # 			print('T1')
 
             # Type 2
             if abs(edge_freq_delta - (self.delta / 2)) < 0.004:
                 yield_success = 0
                 collision_num += 1
                 collision_stat[1] += 1
-            # 			print('T2')
 
             # Type 3
             if abs(edge_freq_delta - self.delta) < 0.025:
                 yield_success = 0
                 collision_num += 1
                 collision_stat[2] += 1
-        # 			print('T3')
 
         for grid_edge in chip_info.grid_edge_list:
             qubit_j = grid_edge[0]
@@ -97,7 +90,6 @@ class YieldSimulator:
                 yield_success = 0
                 collision_num += 1
                 collision_stat[3] += 1
-        # 			print('T4', frequency_list[qubit_j], frequency_list[qubit_k])
 
         for via_edge in chip_info.via_edge_list:
             qubit_i = via_edge[0]
@@ -110,14 +102,12 @@ class YieldSimulator:
                 yield_success = 0
                 collision_num += 2
                 collision_stat[4] += 1
-            # 			print('T5')
 
             # Type 6
             if abs(via_edge_feq_delta - self.delta) < 0.025:
                 yield_success = 0
                 collision_num += 1
                 collision_stat[5] += 1
-        # 			print('T6')
 
         for qubit_j in range(qubit_num):
             for qubit_i_id in range(len(chip_info.edge_list[qubit_j])):
@@ -135,14 +125,8 @@ class YieldSimulator:
                         )
                         < 0.017
                     ):
-                        # 					pass
                         yield_success = 0
                         collision_num += 1
                         collision_stat[6] += 1
-        # 					print('T7')
-        # 					print([qubit_i,qubit_j,qubit_k])
 
-        # 	print(collision_num,yield_success)
-
-        # print(frequency_list)
         return collision_num, yield_success, collision_stat
