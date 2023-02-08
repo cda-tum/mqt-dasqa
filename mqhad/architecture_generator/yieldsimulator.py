@@ -49,7 +49,7 @@ class YieldSimulator:
         sigma: float,
         frequency_config: np.ndarray,
     ) -> tuple[int, int, list[int]]:
-        frequency_list = [0] * qubit_num
+        frequency_list = np.zeros(qubit_num)
         for qubit_id in range(qubit_num):
             frequency_list[qubit_id] = random.gauss(frequency_config[qubit_id], sigma)
 
