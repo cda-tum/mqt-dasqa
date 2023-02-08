@@ -36,6 +36,7 @@ class TestChip:
                 [10, 14],
             ],
         )
+
         np.testing.assert_array_equal(
             chip.grid_edge_list,
             [
