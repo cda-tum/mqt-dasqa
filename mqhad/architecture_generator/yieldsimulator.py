@@ -67,66 +67,23 @@ class YieldSimulator:
         )
 
         yield_success, collision_num, collision_stat = self._get_type_5_6_collision(
-            chip_info, yield_success, frequency_list, collision_num, collision_stat
+            chip_info,
+            yield_success,
+            frequency_list,
+            collision_num,
+            collision_stat,
         )
 
-        for qubit_j in range(qubit_num):
-            for qubit_i_id in range(len(chip_info.edge_list[qubit_j])):
-                qubit_i = chip_info.edge_list[qubit_j][qubit_i_id]
-                for qubit_k_id in range(
-                    qubit_i_id + 1, len(chip_info.edge_list[qubit_j])
-                ):
-                    qubit_k = chip_info.edge_list[qubit_j][qubit_k_id]
-
-                    # Type 7
-                    if (
-                        abs(
-                            (2 * frequency_list[qubit_j] - self.delta)
-                            - (frequency_list[qubit_k] + frequency_list[qubit_i])
-                        )
-                        < 0.017
-                    ):
-                        yield_success = 0
-                        collision_num += 1
-                        collision_stat[6] += 1
+        yield_success, collision_num, collision_stat = self._get_type_7_collision(
+            qubit_num,
+            chip_info,
+            yield_success,
+            frequency_list,
+            collision_num,
+            collision_stat,
+        )
 
         return collision_num, yield_success, collision_stat
-
-    def _get_type_5_6_collision(
-        self, chip_info, yield_success, frequency_list, collision_num, collision_stat
-    ):
-        for via_edge in chip_info.via_edge_list:
-            qubit_i = via_edge[0]
-            qubit_k = via_edge[2]
-
-            via_edge_feq_delta = abs(frequency_list[qubit_i] - frequency_list[qubit_k])
-
-            # Type 5
-            if via_edge_feq_delta < 0.017:
-                yield_success = 0
-                collision_num += 2
-                collision_stat[4] += 1
-
-            # Type 6
-            if abs(via_edge_feq_delta - self.delta) < 0.025:
-                yield_success = 0
-                collision_num += 1
-                collision_stat[5] += 1
-        return yield_success, collision_num, collision_stat
-
-    def _get_type_4_collision(
-        self, chip_info, yield_success, frequency_list, collision_num, collision_stat
-    ):
-        for grid_edge in chip_info.grid_edge_list:
-            qubit_j = grid_edge[0]
-            qubit_k = grid_edge[1]
-
-            # Type 4
-            if abs(frequency_list[qubit_j] - frequency_list[qubit_k]) > self.delta:
-                yield_success = 0
-                collision_num += 1
-                collision_stat[3] += 1
-        return yield_success, collision_num, collision_stat
 
     def _get_type_1_2_3_collision(
         self, chip_info, yield_success, frequency_list, collision_num, collision_stat
@@ -155,4 +112,70 @@ class YieldSimulator:
                 collision_num += 1
                 collision_stat[2] += 1
 
+        return yield_success, collision_num, collision_stat
+
+    def _get_type_4_collision(
+        self, chip_info, yield_success, frequency_list, collision_num, collision_stat
+    ):
+        for grid_edge in chip_info.grid_edge_list:
+            qubit_j = grid_edge[0]
+            qubit_k = grid_edge[1]
+
+            # Type 4
+            if abs(frequency_list[qubit_j] - frequency_list[qubit_k]) > self.delta:
+                yield_success = 0
+                collision_num += 1
+                collision_stat[3] += 1
+        return yield_success, collision_num, collision_stat
+
+    def _get_type_5_6_collision(
+        self, chip_info, yield_success, frequency_list, collision_num, collision_stat
+    ):
+        for via_edge in chip_info.via_edge_list:
+            qubit_i = via_edge[0]
+            qubit_k = via_edge[2]
+
+            via_edge_feq_delta = abs(frequency_list[qubit_i] - frequency_list[qubit_k])
+
+            # Type 5
+            if via_edge_feq_delta < 0.017:
+                yield_success = 0
+                collision_num += 2
+                collision_stat[4] += 1
+
+            # Type 6
+            if abs(via_edge_feq_delta - self.delta) < 0.025:
+                yield_success = 0
+                collision_num += 1
+                collision_stat[5] += 1
+        return yield_success, collision_num, collision_stat
+
+    def _get_type_7_collision(
+        self,
+        qubit_num,
+        chip_info,
+        yield_success,
+        frequency_list,
+        collision_num,
+        collision_stat,
+    ):
+        for qubit_j in range(qubit_num):
+            for qubit_i_id in range(len(chip_info.edge_list[qubit_j])):
+                qubit_i = chip_info.edge_list[qubit_j][qubit_i_id]
+                for qubit_k_id in range(
+                    qubit_i_id + 1, len(chip_info.edge_list[qubit_j])
+                ):
+                    qubit_k = chip_info.edge_list[qubit_j][qubit_k_id]
+
+                    # Type 7
+                    if (
+                        abs(
+                            (2 * frequency_list[qubit_j] - self.delta)
+                            - (frequency_list[qubit_k] + frequency_list[qubit_i])
+                        )
+                        < 0.017
+                    ):
+                        yield_success = 0
+                        collision_num += 1
+                        collision_stat[6] += 1
         return yield_success, collision_num, collision_stat
