@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Bus:
     def __init__(self, dimX, dimY, qubit_grid, adj_mat, num_4Q_bus):
         self.dimX = dimX
@@ -6,20 +9,12 @@ class Bus:
         self.adj_mat = adj_mat
         self.num_4Q_bus = num_4Q_bus
 
-    def bus_select(self):
+    def bus_select(self) -> tuple[np.ndarray, np.ndarray]:
         bus_locations_4Q = []
 
-        bus_grid = [0] * (self.dimX - 1)
-        for x in range(self.dimX - 1):
-            bus_grid[x] = [0] * (self.dimY - 1)
-
-        bus_weight = [0] * (self.dimX - 1)
-        for x in range(self.dimX - 1):
-            bus_weight[x] = [0] * (self.dimY - 1)
-
-        filtered_weight = [0] * (self.dimX - 1)
-        for x in range(self.dimX - 1):
-            filtered_weight[x] = [0] * (self.dimY - 1)
+        bus_grid = np.zeros((self.dimX - 1, self.dimY - 1), dtype=int)
+        bus_weight = np.zeros((self.dimX - 1, self.dimY - 1), dtype=int)
+        filtered_weight = np.zeros((self.dimX - 1, self.dimY - 1), dtype=int)
 
         # Sum of weights across diagonals of qubits
         # For the example in Figure 7 (c), the cross-coupling weight of the green square is the
@@ -40,7 +35,6 @@ class Bus:
                         self.qubit_grid[x + 1][y]
                     ]
                 bus_weight[x][y] = weight
-        # 	print(bus_weight)
 
         while self.num_4Q_bus > 0:
             # However, the cross-coupling weight is not accurate enough
@@ -76,7 +70,7 @@ class Bus:
             if select_X == -1:
                 break
 
-            bus_locations_4Q.append((select_X + 1, select_Y + 1))
+            bus_locations_4Q.append([select_X + 1, select_Y + 1])
             bus_grid[select_X][select_Y] = 1
 
             # We also change their weights to zero because they should not affect the 4-qubit selection among the remaining squares.
@@ -89,8 +83,7 @@ class Bus:
                 bus_weight[select_X][select_Y - 1] = 0
             if select_Y != (self.dimY - 2):
                 bus_weight[select_X][select_Y + 1] = 0
-            # print(filtered_weight)
 
             self.num_4Q_bus -= 1
-
+        bus_locations_4Q = np.array(bus_locations_4Q)
         return bus_grid, bus_locations_4Q
