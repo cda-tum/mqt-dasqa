@@ -331,7 +331,7 @@ class TestChip:
     def test_patch4qbus(self):
         chip = ChipInfo()
         chip.load_from_file("mqhad/tests/test_chip/17q_bus4.chip")
-        chip.Patch4QBus()
+        chip.patch4QBus()
         np.testing.assert_array_equal(
             chip.adjacency_matrix,
             [
