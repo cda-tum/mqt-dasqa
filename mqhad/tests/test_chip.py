@@ -107,7 +107,7 @@ class TestChip:
             ],
         )
         np.testing.assert_array_equal(
-            chip.qubitgrid,
+            chip.qubit_grid,
             [
                 [-1, 2, 6, -1, -1],
                 [-1, 3, 7, 11, 15],
@@ -138,7 +138,7 @@ class TestChip:
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0],
             ],
         )
-        assert chip.crossbuslist == []
+        assert chip.cross_bus_list == []
 
     def test_generatefromAll2QBus(self):
         chip = ChipInfo()
