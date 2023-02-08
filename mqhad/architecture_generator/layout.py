@@ -1,13 +1,16 @@
+import numpy as np
+
+
 class Layout:
     def __init__(
         self,
         ordered_degree: list[tuple[int, int]] = None,
-        adjacency_matrix: list[list[int]] = None,
+        adjacency_matrix: np.ndarray = None,
     ) -> None:
         self.ordered_degree = ordered_degree
         self.adj_mat = adjacency_matrix
 
-    def get_layout(self) -> tuple[int, int, list[list[int]]]:
+    def get_layout(self) -> tuple[int, int, np.ndarray]:
         qubit_num = len(self.ordered_degree)
 
         assigned_qubit_list = []
@@ -16,7 +19,7 @@ class Layout:
 
         qubit_id = self.ordered_degree[0][0]
         assigned_qubit_list.append([qubit_id, 0, 0])
-        self.ordered_degree.pop(0)
+        self.ordered_degree = np.delete(self.ordered_degree, 0, axis=0)
         candidate_location[(0, 1)] = 1
         candidate_location[(1, 0)] = 1
         candidate_location[(-1, 0)] = 1
@@ -36,7 +39,8 @@ class Layout:
                         if qubit_coupling_strength > candidate_qubit_coupling_strength:
                             candidate_qubit = qubit
 
-            self.ordered_degree.remove(candidate_qubit)
+            mask = np.where((self.ordered_degree == candidate_qubit).all(axis=1))
+            self.ordered_degree = np.delete(self.ordered_degree, mask, axis=0)
 
             # Manhattan distance for cost computation
             candidate_location_cost = 1000000000
@@ -53,7 +57,6 @@ class Layout:
                     selected_location = location
 
             location = selected_location
-            # 		print(location)
 
             candidate_location.pop(location)
             assigned_qubit_list.append([candidate_qubit[0], location[0], location[1]])
@@ -79,9 +82,9 @@ class Layout:
 
     def _calculate_distance_to_assigned_qubits(
         self,
-        candidate_qubit: tuple[int, int],
-        assigned_qubit: tuple[int, int, int],
-        location: tuple[int, int],
+        candidate_qubit: np.array,
+        assigned_qubit: np.array,
+        location: np.array,
     ) -> float:
         cost = 0
         assigned_qubit_id = assigned_qubit[0]
@@ -97,20 +100,18 @@ class Layout:
 
     def _center_layout(
         self,
-        assigned_qubit_list: list[list[int]],
+        assigned_qubit_list: np.ndarray[int],
         minX: int,
         minY: int,
         maxX: int,
         maxY: int,
-    ) -> tuple[int, int, list[list[int]]]:
+    ) -> tuple[int, int, np.ndarray[int]]:
         offsetX = -minX
         offsetY = -minY
 
         dimX = maxX - minX + 1
         dimY = maxY - minY + 1
-        qubitgrid = [0] * dimX
-        for x in range(dimX):
-            qubitgrid[x] = [-1] * dimY
+        qubitgrid = np.full((dimX, dimY), -1)
 
         for qubit_info in assigned_qubit_list:
             qubit_info[1] += offsetX
@@ -119,7 +120,7 @@ class Layout:
         return dimX, dimY, qubitgrid
 
     def _extract_min_max_XY(
-        self, assigned_qubit_list: list[list[int]]
+        self, assigned_qubit_list: np.ndarray
     ) -> tuple[int, int, int, int]:
         minX = 0
         minY = 0
