@@ -23,7 +23,9 @@ class Bus:
         while self.num_4Q_bus > 0:
             # However, the cross-coupling weight is not accurate enough
             # to evaluate the benefit of 4-qubit for a square because the prohibited condition is not yet considered.
-            filtered_weights = self._calculate_filtered_weights(bus_weights)
+            filtered_weights = self._calculate_filtered_weights(
+                self.dimX, self.dimY, bus_weights
+            )
 
             # After applying the filter, we will select one square with the highest filtered weight.
             select_X = -1
