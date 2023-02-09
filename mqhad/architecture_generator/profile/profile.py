@@ -1,14 +1,15 @@
 from collections import OrderedDict
 from qiskit import QuantumCircuit
 import numpy as np
+from .profile_base import ProfileBase
 
 
-class Profile:
+class Profile(ProfileBase):
     def __init__(self, qc: QuantumCircuit):
         self.qc = qc
         self.num_qubits = qc.num_qubits
 
-    def get_profile(self):
+    def get_profile(self) -> tuple[np.ndarray, np.ndarray]:
         self.two_qubit_map = self._get_mapping_two_qubit_gates(self.qc)
         self.adjacency_matrix = self._get_circuit_adjacency_matrix(
             self.num_qubits, self.two_qubit_map
