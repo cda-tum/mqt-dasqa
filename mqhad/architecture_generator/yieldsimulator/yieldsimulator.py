@@ -67,7 +67,6 @@ class YieldSimulator(YieldSimulatorBase):
         collision_num = 0
         collision_stat = np.zeros(7)
 
-        # Vectorize this for loop using numpy
         yield_success, collision_num, collision_stat = self._get_type_1_2_3_collision(
             chip_info, yield_success, frequency_list, collision_num, collision_stat
         )
