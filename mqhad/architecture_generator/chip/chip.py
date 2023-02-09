@@ -1,7 +1,8 @@
 import numpy as np
+from .chip_base import ChipBase
 
 
-class ChipInfo:
+class ChipInfo(ChipBase):
     def __init__(
         self,
         qubit_num: int = 0,
@@ -17,23 +18,23 @@ class ChipInfo:
         self._edge_list = []
 
     @property
-    def adjacency_matrix(self):
+    def adjacency_matrix(self) -> np.ndarray:
         return self._adj_mat
 
     @property
-    def coupling_list(self):
+    def coupling_list(self) -> np.ndarray:
         return np.array(self._coupling_list)
 
     @coupling_list.setter
-    def coupling_list(self, coupling_list):
+    def coupling_list(self, coupling_list: list[list[int]]):
         self._coupling_list = coupling_list
 
     @property
-    def grid_edge_list(self):
+    def grid_edge_list(self) -> np.ndarray:
         return np.array(self._grid_edge_list)
 
     @grid_edge_list.setter
-    def grid_edge_list(self, grid_edge_list):
+    def grid_edge_list(self, grid_edge_list: list[list[int]]):
         self._grid_edge_list = grid_edge_list
 
     @property
@@ -41,7 +42,7 @@ class ChipInfo:
         return np.array(self._via_edge_list)
 
     @via_edge_list.setter
-    def via_edge_list(self, via_edge_list):
+    def via_edge_list(self, via_edge_list: list[list[int]]):
         self._via_edge_list = via_edge_list
 
     @property
@@ -49,7 +50,7 @@ class ChipInfo:
         return np.array(self._edge_list, dtype=object)
 
     @edge_list.setter
-    def edge_list(self, edge_list):
+    def edge_list(self, edge_list: list[list[int]]):
         self._edge_list = edge_list
 
     def generate_buses(self):
