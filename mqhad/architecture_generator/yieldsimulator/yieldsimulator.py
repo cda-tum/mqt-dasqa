@@ -96,8 +96,13 @@ class YieldSimulator(YieldSimulatorBase):
         return collision_num, yield_success, collision_stat
 
     def _get_type_1_2_3_collision(
-        self, chip_info, yield_success, frequency_list, collision_num, collision_stat
-    ):
+        self,
+        chip_info: ChipInfo,
+        yield_success: int,
+        frequency_list: list[float],
+        collision_num: int,
+        collision_stat: np.ndarray,
+    ) -> tuple[int, int, np.ndarray]:
         for edge in chip_info.coupling_list:
             qubit_j = edge[0]
             qubit_k = edge[1]
@@ -125,8 +130,13 @@ class YieldSimulator(YieldSimulatorBase):
         return yield_success, collision_num, collision_stat
 
     def _get_type_4_collision(
-        self, chip_info, yield_success, frequency_list, collision_num, collision_stat
-    ):
+        self,
+        chip_info: ChipInfo,
+        yield_success: int,
+        frequency_list: list[float],
+        collision_num: int,
+        collision_stat: np.ndarray,
+    ) -> tuple[int, int, np.ndarray]:
         for grid_edge in chip_info.grid_edge_list:
             qubit_j = grid_edge[0]
             qubit_k = grid_edge[1]
@@ -139,8 +149,13 @@ class YieldSimulator(YieldSimulatorBase):
         return yield_success, collision_num, collision_stat
 
     def _get_type_5_6_collision(
-        self, chip_info, yield_success, frequency_list, collision_num, collision_stat
-    ):
+        self,
+        chip_info: ChipInfo,
+        yield_success: int,
+        frequency_list: list[float],
+        collision_num: int,
+        collision_stat: np.ndarray,
+    ) -> tuple[int, int, np.ndarray]:
         for via_edge in chip_info.via_edge_list:
             qubit_i = via_edge[0]
             qubit_k = via_edge[2]
@@ -162,13 +177,13 @@ class YieldSimulator(YieldSimulatorBase):
 
     def _get_type_7_collision(
         self,
-        qubit_num,
-        chip_info,
-        yield_success,
-        frequency_list,
-        collision_num,
-        collision_stat,
-    ):
+        qubit_num: int,
+        chip_info: ChipInfo,
+        yield_success: int,
+        frequency_list: list[float],
+        collision_num: int,
+        collision_stat: np.ndarray,
+    ) -> tuple[int, int, np.ndarray]:
         for qubit_j in range(qubit_num):
             for qubit_i_id in range(len(chip_info.edge_list[qubit_j])):
                 qubit_i = chip_info.edge_list[qubit_j][qubit_i_id]
