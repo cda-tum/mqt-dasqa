@@ -54,10 +54,10 @@ class ChipInfo(ChipBase):
         self._edge_list = edge_list
 
     def generate_buses(self):
-        self.generate_from_all_2q_bus()
-        self.patch_4q_bus()
+        self._generate_from_all_2q_bus()
+        self._patch_4q_bus()
 
-    def generate_from_all_2q_bus(self):
+    def _generate_from_all_2q_bus(self):
         dimX = len(self.qubit_grid)
         dimY = len(self.qubit_grid[0])
 
@@ -129,7 +129,7 @@ class ChipInfo(ChipBase):
             self._edge_list[qubit_i].append(qubit_j)
             self._edge_list[qubit_j].append(qubit_i)
 
-    def patch_4q_bus(self):
+    def _patch_4q_bus(self):
         for bus in self.cross_bus_list:
             x = bus[0]
             y = bus[1]
@@ -186,13 +186,13 @@ class ChipInfo(ChipBase):
             if line[0] == "bustype":
                 bustype = int(line[1])
                 if bustype == 2:
-                    self.generate_from_all_2q_bus()
+                    self._generate_from_all_2q_bus()
                 if bustype == 4:
-                    self.generate_from_all_2q_bus()
+                    self._generate_from_all_2q_bus()
 
             if line[0] == "b":
                 x = int(line[1])
                 y = int(line[2])
                 self.cross_bus_list.append([x, y])
-        self.patch_4q_bus()
+        self._patch_4q_bus()
         return
