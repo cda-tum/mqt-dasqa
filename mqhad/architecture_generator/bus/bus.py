@@ -1,7 +1,8 @@
 import numpy as np
+from .bus_base import BusBase
 
 
-class Bus:
+class Bus(BusBase):
     def __init__(self, dimX, dimY, qubit_grid, adj_mat, num_4Q_bus):
         self.dimX = dimX
         self.dimY = dimY
