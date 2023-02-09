@@ -184,12 +184,11 @@ class YieldSimulator(YieldSimulatorBase):
         collision_stat: np.ndarray,
     ) -> tuple[int, int, np.ndarray]:
         for qubit_j in range(qubit_num):
-            for qubit_i_id in range(len(chip_info.edge_list[qubit_j])):
-                qubit_i = chip_info.edge_list[qubit_j][qubit_i_id]
-                for qubit_k_id in range(
-                    qubit_i_id + 1, len(chip_info.edge_list[qubit_j])
-                ):
-                    qubit_k = chip_info.edge_list[qubit_j][qubit_k_id]
+            edge_list = chip_info.edge_list
+            for qubit_i_id in range(len(edge_list[qubit_j])):
+                qubit_i = edge_list[qubit_j][qubit_i_id]
+                for qubit_k_id in range(qubit_i_id + 1, len(edge_list[qubit_j])):
+                    qubit_k = edge_list[qubit_j][qubit_k_id]
 
                     # Type 7
                     if (
