@@ -136,12 +136,12 @@ class YieldSimulator2(YieldSimulatorBase):
         collision_stat: np.ndarray,
     ) -> tuple[int, int, np.ndarray]:
         grid_edge = chip_info.grid_edge_list
-        grid_edge_delta = np.abs(
+        grid_freq_edge_delta = np.abs(
             frequency_list[grid_edge[:, 0]] - frequency_list[grid_edge[:, 1]]
         )
 
         # Type 4
-        mask = grid_edge_delta > self.delta
+        mask = grid_freq_edge_delta > self.delta
         collision_num += np.sum(mask)
         collision_stat[3] += np.sum(mask)
         yield_success = 0 if np.any(mask) else yield_success
@@ -152,27 +152,27 @@ class YieldSimulator2(YieldSimulatorBase):
         self,
         chip_info: ChipInfo,
         yield_success: int,
-        frequency_list: list[float],
+        frequency_list: np.ndarray,
         collision_num: int,
         collision_stat: np.ndarray,
     ) -> tuple[int, int, np.ndarray]:
-        for via_edge in chip_info.via_edge_list:
-            qubit_i = via_edge[0]
-            qubit_k = via_edge[2]
+        via_edge = chip_info.via_edge_list
+        via_edge_freq_delta = np.abs(
+            frequency_list[via_edge[:, 0]] - frequency_list[via_edge[:, 2]]
+        )
 
-            via_edge_feq_delta = abs(frequency_list[qubit_i] - frequency_list[qubit_k])
+        # Type 5
+        mask = via_edge_freq_delta < 0.017
+        collision_num += np.sum(2 * mask)
+        collision_stat[4] += np.sum(mask)
+        yield_success = 0 if np.any(mask) else yield_success
 
-            # Type 5
-            if via_edge_feq_delta < 0.017:
-                yield_success = 0
-                collision_num += 2
-                collision_stat[4] += 1
+        # Type 6
+        mask = np.abs(via_edge_freq_delta - self.delta) < 0.025
+        collision_num += np.sum(mask)
+        collision_stat[5] += np.sum(mask)
+        yield_success = 0 if np.any(mask) else yield_success
 
-            # Type 6
-            if abs(via_edge_feq_delta - self.delta) < 0.025:
-                yield_success = 0
-                collision_num += 1
-                collision_stat[5] += 1
         return yield_success, collision_num, collision_stat
 
     def _get_type_7_collision(
