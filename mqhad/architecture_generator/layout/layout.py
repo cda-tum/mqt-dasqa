@@ -1,7 +1,8 @@
 import numpy as np
+from .layout_base import LayoutBase
 
 
-class Layout:
+class Layout(LayoutBase):
     def __init__(
         self,
         ordered_degree: list[tuple[int, int]] = None,
