@@ -203,7 +203,7 @@ class TestYieldSimulator2:
         assert yield_success == 1
         np.testing.assert_array_equal(collision_stat, [0, 0, 0, 0, 0, 0, 0])
 
-    def test_get_type_7_collision(self):
+    def test_get_type_7_collision_failure(self):
         qubit_num = 9
         qubit_grid = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         cross_list_bus = []

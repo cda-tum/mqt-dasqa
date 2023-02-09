@@ -103,6 +103,10 @@ class YieldSimulator2(YieldSimulatorBase):
         collision_stat: np.ndarray,
     ) -> tuple[int, int, np.ndarray]:
         coupling = chip_info.coupling_list
+
+        if len(coupling) == 0:
+            return yield_success, collision_num, collision_stat
+
         coupling_freq_delta = np.abs(
             frequency_list[coupling[:, 0]] - frequency_list[coupling[:, 1]]
         )
@@ -136,6 +140,10 @@ class YieldSimulator2(YieldSimulatorBase):
         collision_stat: np.ndarray,
     ) -> tuple[int, int, np.ndarray]:
         grid_edge = chip_info.grid_edge_list
+
+        if len(grid_edge) == 0:
+            return yield_success, collision_num, collision_stat
+
         grid_freq_edge_delta = np.abs(
             frequency_list[grid_edge[:, 0]] - frequency_list[grid_edge[:, 1]]
         )
@@ -157,6 +165,10 @@ class YieldSimulator2(YieldSimulatorBase):
         collision_stat: np.ndarray,
     ) -> tuple[int, int, np.ndarray]:
         via_edge = chip_info.via_edge_list
+
+        if len(via_edge) == 0:
+            return yield_success, collision_num, collision_stat
+
         via_edge_freq_delta = np.abs(
             frequency_list[via_edge[:, 0]] - frequency_list[via_edge[:, 2]]
         )
@@ -180,27 +192,32 @@ class YieldSimulator2(YieldSimulatorBase):
         qubit_num: int,
         chip_info: ChipInfo,
         yield_success: int,
-        frequency_list: list[float],
+        frequency_list: np.ndarray,
         collision_num: int,
         collision_stat: np.ndarray,
     ) -> tuple[int, int, np.ndarray]:
         for qubit_j in range(qubit_num):
-            for qubit_i_id in range(len(chip_info.edge_list[qubit_j])):
-                qubit_i = chip_info.edge_list[qubit_j][qubit_i_id]
-                for qubit_k_id in range(
-                    qubit_i_id + 1, len(chip_info.edge_list[qubit_j])
-                ):
-                    qubit_k = chip_info.edge_list[qubit_j][qubit_k_id]
+            qubit_j_delta = 2 * frequency_list[qubit_j] - self.delta
+            edges = np.array(chip_info.edge_list[qubit_j])
+            edges_frequency = frequency_list[edges]
+            edges_frequency_square_matrix = np.tile(
+                edges_frequency, (len(edges_frequency), 1)
+            )
+            il1 = np.tril_indices(len(edges))
+            edges_frequency_square_matrix[il1] = -1
+            edges_frequency_square_matrix_computed = np.where(
+                edges_frequency_square_matrix != -1,
+                np.abs(
+                    qubit_j_delta - (edges_frequency + edges_frequency_square_matrix)
+                ),
+                edges_frequency_square_matrix,
+            )
+            mask = np.logical_and(
+                edges_frequency_square_matrix_computed != -1,
+                edges_frequency_square_matrix_computed < 0.017,
+            )
 
-                    # Type 7
-                    if (
-                        abs(
-                            (2 * frequency_list[qubit_j] - self.delta)
-                            - (frequency_list[qubit_k] + frequency_list[qubit_i])
-                        )
-                        < 0.017
-                    ):
-                        yield_success = 0
-                        collision_num += 1
-                        collision_stat[6] += 1
+            collision_num += np.sum(mask)
+            collision_stat[6] += np.sum(mask)
+            yield_success = 0 if np.any(mask) else yield_success
         return yield_success, collision_num, collision_stat
