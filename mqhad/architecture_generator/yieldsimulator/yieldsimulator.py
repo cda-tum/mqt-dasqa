@@ -1,11 +1,12 @@
 import random
 import numpy as np
+from .yieldsimulator_base import YieldSimulatorBase
 from mqhad.architecture_generator.chip import ChipInfo
 
 random.seed(a=0, version=2)
 
 
-class YieldSimulator:
+class YieldSimulator(YieldSimulatorBase):
     def __init__(
         self,
         chip_info: ChipInfo,
