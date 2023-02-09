@@ -77,4 +77,4 @@ class TestBus:
 
         bus_weights = np.array([[0, 0], [0, 1]])
         filtered_weights = bus._calculate_filtered_weights(dimX, dimY, bus_weights)
-        np.testing.assert_array_equal(filtered_weights, [[ 0, -1],[-1,  1]])
+        np.testing.assert_array_equal(filtered_weights, [[0, -1], [-1, 1]])
