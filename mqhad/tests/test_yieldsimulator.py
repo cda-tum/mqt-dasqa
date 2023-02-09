@@ -83,7 +83,7 @@ class TestYieldSimulator:
         assert yield_success == 1
         np.testing.assert_array_equal(collision_stat, [0, 0, 0, 0, 0, 0, 0])
 
-    def test_get_type_4_collision(self):
+    def test_get_type_4_collision_failure(self):
         qubit_num = 3
         qubit_grid = [[0, 1], [-1, 2]]
         cross_list_bus = []
@@ -112,6 +112,36 @@ class TestYieldSimulator:
         assert collision_num == 2
         assert yield_success == 0
         np.testing.assert_array_equal(collision_stat, [0, 0, 0, 2, 0, 0, 0])
+
+    def test_get_type_4_collision_success(self):
+        qubit_num = 3
+        qubit_grid = [[0, 1], [-1, 2]]
+        cross_list_bus = []
+        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip.generate_buses()
+        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        sigma = 0.03
+        delta = 1e-1
+        num_trials = 5
+        yield_sim = YieldSimulator(
+            chip, frequency_config, qubit_num, sigma, delta, num_trials
+        )
+        yield_sim.reset_seed()
+
+        yield_success = 1
+        frequency_list = [5.000008, 5.000012, 5.000016]
+        collision_num = 0
+        collision_stat = np.zeros(7, dtype=int)
+        (
+            yield_success,
+            collision_num,
+            collision_stat,
+        ) = yield_sim._get_type_4_collision(
+            chip, yield_success, frequency_list, collision_num, collision_stat
+        )
+        assert collision_num == 0
+        assert yield_success == 1
+        np.testing.assert_array_equal(collision_stat, [0, 0, 0, 0, 0, 0, 0])
 
     def test_get_type_5_6_collision(self):
         qubit_num = 9
