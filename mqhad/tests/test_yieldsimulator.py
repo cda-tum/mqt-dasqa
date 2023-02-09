@@ -13,7 +13,7 @@ class TestYieldSimulator:
         chip.generate_buses()
         frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
         sigma = 0.03
-        num_trials = 5
+        num_trials = 100000
         yield_sim = YieldSimulator(
             chip, frequency_config, qubit_num, sigma, num_trials=num_trials
         )
