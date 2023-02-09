@@ -132,7 +132,7 @@ class YieldSimulator(YieldSimulatorBase):
         self,
         chip_info: ChipInfo,
         yield_success: int,
-        frequency_list: list[float],
+        frequency_list: np.ndarray,
         collision_num: int,
         collision_stat: np.ndarray,
     ) -> tuple[int, int, np.ndarray]:

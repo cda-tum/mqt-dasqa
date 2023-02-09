@@ -39,7 +39,7 @@ class TestYieldSimulator:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = [5.000008, 5.000012, 5.000016]
+        frequency_list = np.array([5.000008, 5.000012, 5.000016])
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -69,7 +69,7 @@ class TestYieldSimulator:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = [5.0, 5.7, 5.14]
+        frequency_list = np.array([5.0, 5.7, 5.14])
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -99,7 +99,7 @@ class TestYieldSimulator:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = [5.000008, 5.000012, 5.000016]
+        frequency_list = np.array([5.000008, 5.000012, 5.000016])
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -129,7 +129,7 @@ class TestYieldSimulator:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = [5.000008, 5.000012, 5.000016]
+        frequency_list = np.array([5.000008, 5.000012, 5.000016])
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
