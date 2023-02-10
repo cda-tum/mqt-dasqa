@@ -375,6 +375,7 @@ class TestYieldSimulator2:
 
         mask = yield_sim._get_summation_mask(qubit_num, edge_list)
         assert yield_sim._generate_combinations.call_count == 1
+        assert yield_sim._summation_mask is not None
         np.testing.assert_array_equal(
             mask,
             [

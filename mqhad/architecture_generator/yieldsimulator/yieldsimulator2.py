@@ -239,9 +239,9 @@ class YieldSimulator2(YieldSimulatorBase):
             )
             mask[mask_index[:, 0], mask_index[:, 1], mask_index[:, 2]] = 1
 
-        summation_mask = np.transpose(mask, axes=(0, 2, 1))
+        self._summation_mask = np.transpose(mask, axes=(0, 2, 1))
 
-        return summation_mask
+        return self._summation_mask
 
     def _generate_combinations(
         self,
