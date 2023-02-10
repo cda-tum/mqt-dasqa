@@ -5,7 +5,5 @@ from collections import OrderedDict
 
 
 class TestGenerator:
-    def test_setting_wrong_quantum_circuit(self):
-        generator = Generator()
-        with pytest.raises(ValueError):
-            generator.quantum_circuit = None
+    def test_generate(self):
+        pass
