@@ -8,4 +8,5 @@ class TestUtils:
             Utils.check_type("1", int)
 
     def test_check_type_success(self):
-        Utils.check_type(1, int)
+        result = Utils.check_type(1, int)
+        assert result == True
