@@ -9,7 +9,7 @@ class Bus(BusBase):
         dimY: int = 0,
         qubit_grid: np.ndarray = np.array([]),
         adjacency_matrix: np.ndarray = np.array([]),
-        num_4Q_bus: int = 0,
+        num_4Q_bus: int = 10,
     ):
         self.dimX = dimX
         self.dimY = dimY
