@@ -196,28 +196,72 @@ class YieldSimulator2(YieldSimulatorBase):
         collision_num: int,
         collision_stat: np.ndarray,
     ) -> tuple[int, int, np.ndarray]:
-        for qubit_j in range(qubit_num):
-            qubit_j_delta = 2 * frequency_list[qubit_j] - self.delta
-            edges = np.array(chip_info.edge_list[qubit_j])
-            edges_frequency = frequency_list[edges]
-            edges_frequency_square_matrix = np.tile(
-                edges_frequency, (len(edges_frequency), 1)
-            )
-            il1 = np.tril_indices(len(edges))
-            edges_frequency_square_matrix[il1] = -1
-            edges_frequency_square_matrix_computed = np.where(
-                edges_frequency_square_matrix != -1,
-                np.abs(
-                    qubit_j_delta - (edges_frequency + edges_frequency_square_matrix)
-                ),
-                edges_frequency_square_matrix,
-            )
-            mask = np.logical_and(
-                edges_frequency_square_matrix_computed != -1,
-                edges_frequency_square_matrix_computed < 0.017,
-            )
+        edge_list = chip_info.edge_list
+        import numpy as np
+        from itertools import combinations
+        from collections import OrderedDict
 
-            collision_num += np.sum(mask)
-            collision_stat[6] += np.sum(mask)
-            yield_success = 0 if np.any(mask) else yield_success
+        # Generate combinations for each list in edge_list and store in a dictionary with keys
+        # keys are the qubit index and values are the combinations
+        def generate_combinations(
+            edge_list,
+        ) -> tuple[OrderedDict[int, list[tuple[int, int]]], int]:
+            """Generate combinations for each list in edge_list and store in a dictionary with keys
+
+            Args:
+                edge_list (np.array): list of lists of qubit neighbors
+            Returns:
+                dict: keys are the qubit index and values are the combinations
+            """
+            combinations_dict = OrderedDict()
+            max_len = 0
+            for i in range(len(edge_list)):
+                combinations_dict[i] = list(combinations(edge_list[i], 2))
+                if len(combinations_dict[i]) > max_len:
+                    max_len = len(combinations_dict[i])
+            return combinations_dict, max_len
+
+        def generate_mask(
+            qubit_num: int,
+            edges_combinations: OrderedDict[int, list[tuple[int, int]]],
+            max_len: int,
+        ):
+            """Generate mask for qubit frequency
+
+            Returns:
+                np.array: mask for qubit frequency
+            """
+            mask = np.zeros((max_len, qubit_num, qubit_num))
+
+            for qubit, edges in edges_combinations.items():
+                edges_len = len(edges)
+                depth_indexes = (
+                    np.arange(0, 0 + 1 * edges_len, step=1, dtype=int)
+                    .repeat(2)
+                    .reshape(edges_len * 2, 1)
+                )
+                row_indexes = np.array([qubit] * (len(edges) * 2)).reshape(
+                    edges_len * 2, 1
+                )
+                edge_indexes = np.reshape(edges, (edges_len * 2, 1))
+                mask_index = np.concatenate(
+                    (depth_indexes, row_indexes, edge_indexes), axis=1
+                )
+                mask[mask_index[:, 0], mask_index[:, 1], mask_index[:, 2]] = 1
+
+            summation_mask = np.transpose(mask, axes=(0, 2, 1))
+
+            return summation_mask
+
+        comb_dict, max_len = generate_combinations(edge_list)
+        summation_mask = generate_mask(qubit_num, comb_dict, max_len)
+
+        frequency_list_delta = 2 * frequency_list - self.delta
+
+        edges_sum = frequency_list @ summation_mask
+        mask = np.abs(frequency_list_delta - edges_sum) < 0.017
+
+        collision_num += np.sum(mask)
+        collision_stat[6] += np.sum(mask)
+        yield_success = 0 if np.any(mask) else yield_success
         return yield_success, collision_num, collision_stat
