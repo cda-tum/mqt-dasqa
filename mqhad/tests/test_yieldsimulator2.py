@@ -1,3 +1,4 @@
+import time
 from collections import OrderedDict
 from unittest.mock import MagicMock
 from mqhad.architecture_generator.yieldsimulator import YieldSimulator2
@@ -16,12 +17,16 @@ class TestYieldSimulator2:
         frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
         num_trials = 100000
+
         yield_sim = YieldSimulator2(
             chip, frequency_config, qubit_num, sigma, num_trials=num_trials
         )
         yield_sim.reset_seed()
 
+        st = time.time()
         collision_num, yield_rate = yield_sim.simulate()
+        et = time.time()
+        print("time: ", (et - st) * 1000)
         assert pytest.approx(collision_num, 0.1) == 2.0
         assert yield_rate == 0.0
 
@@ -259,7 +264,6 @@ class TestYieldSimulator2:
         frequency_list = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
-        import time
 
         st = time.time()
         (

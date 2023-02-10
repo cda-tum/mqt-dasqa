@@ -1,3 +1,4 @@
+import time
 from mqhad.architecture_generator.yieldsimulator import YieldSimulator
 from mqhad.architecture_generator.chip import ChipInfo
 import numpy as np
@@ -19,7 +20,11 @@ class TestYieldSimulator:
         )
         yield_sim.reset_seed()
 
+        st = time.time()
         collision_num, yield_rate = yield_sim.simulate()
+        et = time.time()
+        print("Execution time: ", (et - st) * 1000)
+
         assert pytest.approx(collision_num, 0.1) == 2.0
         assert yield_rate == 0.0
 
@@ -257,7 +262,6 @@ class TestYieldSimulator:
         frequency_list = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
-        import time
 
         st = time.time()
         (
