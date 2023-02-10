@@ -3,6 +3,7 @@ from qiskit import QuantumRegister, QuantumCircuit
 from mqhad.architecture_generator.generator import Generator
 from mqhad.architecture_generator.profile import Profile
 from mqhad.architecture_generator.layout import Layout
+from mqhad.architecture_generator.bus import Bus
 
 
 class TestGenerator:
@@ -34,6 +35,9 @@ class TestGenerator:
         with pytest.raises(TypeError):
             Generator(layout=1)
         Generator(layout=Layout())
+        with pytest.raises(TypeError):
+            Generator(bus=1)
+        Generator(bus=Bus())
 
     def test_generate(self):
         generator = Generator(qc=self.qc)
