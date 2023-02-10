@@ -200,6 +200,9 @@ class YieldSimulator2(YieldSimulatorBase):
     ) -> tuple[int, int, np.ndarray]:
         edge_list = chip_info.edge_list
 
+        if len(edge_list) == 0:
+            return yield_success, collision_num, collision_stat
+
         summation_mask = self._get_summation_mask(qubit_num, edge_list)
 
         frequency_list_delta = 2 * frequency_list - self.delta
@@ -222,6 +225,10 @@ class YieldSimulator2(YieldSimulatorBase):
         Returns:
             np.array: mask for qubit frequency
         """
+        self._summation_mask = getattr(self, "_summation_mask", None)
+        if self._summation_mask is not None:
+            return self._summation_mask
+
         edges_combinations, max_len = self._generate_combinations(edge_list)
         mask = np.zeros((max_len, qubit_num, qubit_num))
 

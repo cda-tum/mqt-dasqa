@@ -448,6 +448,53 @@ class TestYieldSimulator2:
             ],
         )
 
+    def test_get_summation_mask_assigned(self):
+        qubit_num = 9
+        qubit_grid = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+        cross_list_bus = []
+        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip.generate_buses()
+        frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
+        sigma = 0.03
+        delta = 1.0
+        num_trials = 5
+        yield_sim = YieldSimulator2(
+            chip, frequency_config, qubit_num, sigma, delta, num_trials
+        )
+        yield_sim.reset_seed()
+
+        edge_list = np.array(
+            [
+                [1, 3],
+                [0, 2, 4],
+                [1, 5],
+                [0, 4, 6],
+                [1, 3, 5, 7],
+                [2, 4, 8],
+                [3, 7],
+                [4, 6, 8],
+                [5, 7],
+            ],
+            dtype=object,
+        )
+
+        yield_sim._summation_mask = np.array(
+            [
+                [
+                    [0, 1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 0, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 0, 1, 1, 1, 1, 1, 1],
+                ],
+                [
+                    [1, 1, 1, 0, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 0, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 0, 1, 1, 1],
+                ],
+            ]
+        )
+        mask = yield_sim._get_summation_mask(qubit_num, edge_list)
+        np.testing.assert_array_equal(mask, yield_sim._summation_mask)
+
     @pytest.mark.slow
     def test_simulate_slow(self):
         chip = ChipInfo()
