@@ -3,7 +3,14 @@ from .bus_base import BusBase
 
 
 class Bus(BusBase):
-    def __init__(self, dimX, dimY, qubit_grid, adj_mat, num_4Q_bus):
+    def __init__(
+        self,
+        dimX: int = 0,
+        dimY: int = 0,
+        qubit_grid: np.ndarray = np.array([]),
+        adj_mat: np.ndarray = np.array([]),
+        num_4Q_bus: int = 0,
+    ):
         self.dimX = dimX
         self.dimY = dimY
         self.qubit_grid = qubit_grid
