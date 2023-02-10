@@ -203,7 +203,7 @@ class YieldSimulator2(YieldSimulatorBase):
         if len(edge_list) == 0:
             return yield_success, collision_num, collision_stat
 
-        summation_mask = self._get_summation_mask(qubit_num, edge_list)
+        summation_mask = self._get_summation_mask2(qubit_num, edge_list)
 
         frequency_list_delta = 2 * frequency_list - self.delta
 
@@ -214,6 +214,44 @@ class YieldSimulator2(YieldSimulatorBase):
         collision_stat[6] += np.sum(mask)
         yield_success = 0 if np.any(mask) else yield_success
         return yield_success, collision_num, collision_stat
+
+    def _get_summation_mask2(
+        self, qubit_num: int, edge_list: list[list[tuple[int, int]]]
+    ) -> np.ndarray:
+        """Generate mask for qubit frequency
+
+        Returns:
+            np.array: mask for qubit frequency
+        """
+        self._summation_mask = getattr(self, "_summation_mask", None)
+        if self._summation_mask is not None:
+            return self._summation_mask
+
+        arr = []
+        max_len = 0
+        for qubit, edges in enumerate(edge_list):
+            if len(edges) == 1:
+                continue
+
+            comb = list(combinations(edges, 2))
+            len_comb = len(comb)
+            if len_comb > max_len:
+                max_len = len_comb
+            mask_index_per_qubit = np.column_stack(
+                [np.arange(len_comb), qubit * np.ones(len_comb, dtype=int), comb]
+            )
+            arr.append(mask_index_per_qubit)
+
+        mask_index = np.vstack(arr)
+        mask = np.zeros((max_len, qubit_num, qubit_num))
+        mask[
+            mask_index[:, 0, np.newaxis],
+            mask_index[:, 1, np.newaxis],
+            mask_index[:, 2:4],
+        ] = 1
+        self._summation_mask = np.transpose(mask, axes=(0, 2, 1))
+
+        return self._summation_mask
 
     def _get_summation_mask(
         self,
@@ -232,22 +270,44 @@ class YieldSimulator2(YieldSimulatorBase):
         edges_combinations, max_len = self._generate_combinations(edge_list)
         mask = np.zeros((max_len, qubit_num, qubit_num))
 
+        arr = []
         for qubit, edges in edges_combinations.items():
             if len(edges) == 0:
                 continue
-            edges_len = len(edges)
-            depth_indexes = (
-                np.arange(0, 0 + 1 * edges_len, step=1, dtype=int)
-                .repeat(2)
-                .reshape(edges_len * 2, 1)
-            )
-            row_indexes = np.array([qubit] * (len(edges) * 2)).reshape(edges_len * 2, 1)
-            edge_indexes = np.reshape(edges, (edges_len * 2, 1))
-            mask_index = np.concatenate(
-                (depth_indexes, row_indexes, edge_indexes), axis=1
-            )
-            mask[mask_index[:, 0], mask_index[:, 1], mask_index[:, 2]] = 1
 
+            # edges_len = len(edges)
+            # depth_indexes = (
+            #     np.arange(0, 0 + 1 * edges_len, step=1, dtype=int)
+            #     .repeat(2)
+            #     .reshape(edges_len * 2, 1)
+            # )
+            # row_indexes = np.array([qubit] * (len(edges) * 2)).reshape(edges_len * 2, 1)
+            # edge_indexes = np.reshape(edges, (edges_len * 2, 1))
+            # mask_index = np.concatenate(
+            #     (depth_indexes, row_indexes, edge_indexes), axis=1
+            # )
+            # mask[mask_index[:, 0], mask_index[:, 1], mask_index[:, 2]] = 1
+
+            # edges_len = len(edges)
+            # depth_indexes = np.repeat(np.arange(edges_len), 2)
+            # row_indexes = np.tile(qubit, edges_len * 2)
+            # edge_indexes = np.array(edges).flatten()
+            # mask_index = np.stack((depth_indexes, row_indexes, edge_indexes), axis=1)
+            # mask[tuple(mask_index.T)] = 1
+            # mask[mask_index[:, 0], mask_index[:, 1], mask_index[:, 2]] = 1
+
+            edges_len = len(edges)
+            mask_index_per_qubit = np.column_stack(
+                [np.arange(edges_len), qubit * np.ones(edges_len, dtype=int), edges]
+            )
+            arr.append(mask_index_per_qubit)
+
+        mask_index = np.vstack(arr)
+        mask[
+            mask_index[:, 0, np.newaxis],
+            mask_index[:, 1, np.newaxis],
+            mask_index[:, 2:4],
+        ] = 1
         self._summation_mask = np.transpose(mask, axes=(0, 2, 1))
 
         return self._summation_mask
