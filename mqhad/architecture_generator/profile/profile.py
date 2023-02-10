@@ -2,12 +2,13 @@ from collections import OrderedDict
 from qiskit import QuantumCircuit
 import numpy as np
 from .profile_base import ProfileBase
+from mqhad.utils import Utils
 
 
 class Profile(ProfileBase):
     def __init__(self, qc: QuantumCircuit):
         self.qc = qc
-        self.num_qubits = qc.num_qubits
+        self.num_qubits = qc.num_qubits if Utils.check_type(qc, QuantumCircuit) else 0
 
     def get_profile(self) -> tuple[np.ndarray, np.ndarray]:
         self.two_qubit_map = self._get_mapping_two_qubit_gates(self.qc)
