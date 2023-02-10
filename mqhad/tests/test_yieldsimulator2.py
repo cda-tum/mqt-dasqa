@@ -11,7 +11,7 @@ class TestYieldSimulator2:
         cross_list_bus = []
         chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
-        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
         num_trials = 100000
         yield_sim = YieldSimulator2(
@@ -29,7 +29,7 @@ class TestYieldSimulator2:
         cross_list_bus = []
         chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
-        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
         delta = 1e-6
         num_trials = 5
@@ -39,7 +39,7 @@ class TestYieldSimulator2:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = np.array([5.000008, 5.000012, 5.000016])
+        frequency_list = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -59,7 +59,7 @@ class TestYieldSimulator2:
         cross_list_bus = []
         chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
-        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
         delta = 1e-6
         num_trials = 5
@@ -69,7 +69,7 @@ class TestYieldSimulator2:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = np.array([5.0, 5.7, 5.14])
+        frequency_list = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -89,7 +89,7 @@ class TestYieldSimulator2:
         cross_list_bus = []
         chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
-        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
         delta = 1e-6
         num_trials = 5
@@ -99,7 +99,7 @@ class TestYieldSimulator2:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = np.array([5.000008, 5.000012, 5.000016])
+        frequency_list = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -119,7 +119,7 @@ class TestYieldSimulator2:
         cross_list_bus = []
         chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
-        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
         delta = 1e-1
         num_trials = 5
@@ -129,7 +129,7 @@ class TestYieldSimulator2:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = np.array([5.000008, 5.000012, 5.000016])
+        frequency_list = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -149,7 +149,7 @@ class TestYieldSimulator2:
         cross_list_bus = []
         chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
-        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
         delta = 1e-6
         num_trials = 5
@@ -159,7 +159,7 @@ class TestYieldSimulator2:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = np.arange(5.000008, 5.000008 + 0.000004 * qubit_num, 0.000004)
+        frequency_list = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -179,7 +179,7 @@ class TestYieldSimulator2:
         cross_list_bus = []
         chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
-        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
         delta = 1e-6
         num_trials = 5
@@ -189,7 +189,7 @@ class TestYieldSimulator2:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_list = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -209,7 +209,7 @@ class TestYieldSimulator2:
         cross_list_bus = []
         chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
-        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
         delta = 1e-6
         num_trials = 5
@@ -219,7 +219,7 @@ class TestYieldSimulator2:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = np.arange(5.000008, 5.000008 + 0.000004 * qubit_num, 0.000004)
+        frequency_list = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
         (
@@ -244,7 +244,7 @@ class TestYieldSimulator2:
         cross_list_bus = []
         chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
-        frequency_config = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
         delta = 1.0
         num_trials = 5
@@ -254,9 +254,12 @@ class TestYieldSimulator2:
         yield_sim.reset_seed()
 
         yield_success = 1
-        frequency_list = np.arange(5.0, 5.0 + 0.7 * qubit_num, 0.7)
+        frequency_list = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
+        import time
+
+        st = time.time()
         (
             yield_success,
             collision_num,
@@ -269,6 +272,8 @@ class TestYieldSimulator2:
             collision_num,
             collision_stat,
         )
+        et = time.time()
+        print("Execution time: ", (et - st) * 1000)
         assert collision_num == 0
         assert yield_success == 1
         np.testing.assert_array_equal(collision_stat, [0, 0, 0, 0, 0, 0, 0])
@@ -302,7 +307,7 @@ class TestYieldSimulator2:
             5.0,
         ]
         num_trials = 100000
-        yield_sim = YieldSimulator(
+        yield_sim = YieldSimulator2(
             chip, frequency_config, qubit_num, sigma, num_trials=num_trials
         )
         yield_sim.reset_seed()
