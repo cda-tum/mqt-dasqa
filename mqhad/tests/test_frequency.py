@@ -1,8 +1,10 @@
 import numpy as np
+import pytest
 from mqhad.architecture_generator.frequency import Frequency
 
 
 class TestFrequency:
+    @pytest.mark.slow
     def test_freq_allocation(self):
         qubit_num = 5
         dimX = 3
