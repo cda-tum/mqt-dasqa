@@ -1,6 +1,6 @@
 from collections import deque
 import numpy as np
-from mqhad.architecture_generator.chip import ChipInfo
+from mqhad.architecture_generator.chip import Chip
 from mqhad.architecture_generator.yieldsimulator import YieldSimulator
 
 
@@ -120,7 +120,7 @@ class Frequency:
         return freq_qubit_list
 
     def _create_temp_chip(self, qubit_num, qubit_grid, bus_location):
-        chip = ChipInfo(qubit_num, qubit_grid, bus_location)
+        chip = Chip(qubit_num, qubit_grid, bus_location)
         chip.generate_buses()
         return chip
 

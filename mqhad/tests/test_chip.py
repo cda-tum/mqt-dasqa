@@ -1,10 +1,10 @@
 import numpy as np
-from mqhad.architecture_generator.chip import ChipInfo
+from mqhad.architecture_generator.chip import Chip
 
 
 class TestChip:
     def test_load_from_file(self):
-        chip = ChipInfo()
+        chip = Chip()
         chip.load_from_file("mqhad/tests/test_chip/17q_bus2.chip")
         assert chip.qubit_num == 17
         np.testing.assert_array_equal(
@@ -145,7 +145,7 @@ class TestChip:
         assert chip.cross_bus_list == []
 
     def test_generatefromAll2QBus(self):
-        chip = ChipInfo()
+        chip = Chip()
         chip.load_from_file("mqhad/tests/test_chip/17q_bus2.chip")
         chip._generate_from_all_2q_bus()
         np.testing.assert_array_equal(
@@ -336,7 +336,7 @@ class TestChip:
         )
 
     def test_patch4qbus(self):
-        chip = ChipInfo()
+        chip = Chip()
         chip.load_from_file("mqhad/tests/test_chip/17q_bus4.chip")
         chip._patch_4q_bus()
         np.testing.assert_array_equal(

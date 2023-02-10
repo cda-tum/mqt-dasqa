@@ -1,6 +1,6 @@
 import time
 from mqhad.architecture_generator.yieldsimulator import YieldSimulator2
-from mqhad.architecture_generator.chip import ChipInfo
+from mqhad.architecture_generator.chip import Chip
 import numpy as np
 import pytest
 
@@ -10,7 +10,7 @@ class TestYieldSimulator2:
         qubit_num = 3
         qubit_grid = [[0, 1], [-1, 2]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
@@ -32,7 +32,7 @@ class TestYieldSimulator2:
         qubit_num = 3
         qubit_grid = [[0, 1], [-1, 2]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
@@ -62,7 +62,7 @@ class TestYieldSimulator2:
         qubit_num = 3
         qubit_grid = [[0, 1], [-1, 2]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
@@ -92,7 +92,7 @@ class TestYieldSimulator2:
         qubit_num = 3
         qubit_grid = [[0, 1], [-1, 2]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
@@ -122,7 +122,7 @@ class TestYieldSimulator2:
         qubit_num = 3
         qubit_grid = [[0, 1], [-1, 2]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
@@ -152,7 +152,7 @@ class TestYieldSimulator2:
         qubit_num = 9
         qubit_grid = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
@@ -182,7 +182,7 @@ class TestYieldSimulator2:
         qubit_num = 9
         qubit_grid = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
@@ -212,7 +212,7 @@ class TestYieldSimulator2:
         qubit_num = 9
         qubit_grid = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.000004 * qubit_num, 0.000004)
         sigma = 0.03
@@ -247,7 +247,7 @@ class TestYieldSimulator2:
         qubit_num = 9
         qubit_grid = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
@@ -287,7 +287,7 @@ class TestYieldSimulator2:
         qubit_num = 9
         qubit_grid = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
@@ -388,7 +388,7 @@ class TestYieldSimulator2:
         qubit_num = 9
         qubit_grid = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         cross_list_bus = []
-        chip = ChipInfo(qubit_num, qubit_grid, cross_list_bus)
+        chip = Chip(qubit_num, qubit_grid, cross_list_bus)
         chip.generate_buses()
         frequency_config = 5.0 + np.arange(0.0, 0.7 * qubit_num, 0.7)
         sigma = 0.03
@@ -433,7 +433,7 @@ class TestYieldSimulator2:
 
     @pytest.mark.slow
     def test_simulate_slow(self):
-        chip = ChipInfo()
+        chip = Chip()
         chip.load_from_file("mqhad/tests/test_chip/20q_bus4.chip")
         qubit_num = 20
         sigma = 0.03

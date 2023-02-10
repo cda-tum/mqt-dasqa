@@ -1,7 +1,7 @@
 import random
 import numpy as np
 from .yieldsimulator_base import YieldSimulatorBase
-from mqhad.architecture_generator.chip import ChipInfo
+from mqhad.architecture_generator.chip import Chip
 
 random.seed(a=0, version=2)
 
@@ -9,7 +9,7 @@ random.seed(a=0, version=2)
 class YieldSimulator(YieldSimulatorBase):
     def __init__(
         self,
-        chip_info: ChipInfo,
+        chip_info: Chip,
         frequency_config: np.ndarray,
         qubit_num: int,
         sigma: float = 0.00,
@@ -55,7 +55,7 @@ class YieldSimulator(YieldSimulatorBase):
     def _one_trial_sim(
         self,
         qubit_num: int,
-        chip_info: ChipInfo,
+        chip_info: Chip,
         sigma: float,
         frequency_config: np.ndarray,
     ) -> tuple[int, int, list[int]]:
@@ -96,7 +96,7 @@ class YieldSimulator(YieldSimulatorBase):
 
     def _get_type_1_2_3_collision(
         self,
-        chip_info: ChipInfo,
+        chip_info: Chip,
         yield_success: int,
         frequency_list: list[float],
         collision_num: int,
@@ -130,7 +130,7 @@ class YieldSimulator(YieldSimulatorBase):
 
     def _get_type_4_collision(
         self,
-        chip_info: ChipInfo,
+        chip_info: Chip,
         yield_success: int,
         frequency_list: np.ndarray,
         collision_num: int,
@@ -149,7 +149,7 @@ class YieldSimulator(YieldSimulatorBase):
 
     def _get_type_5_6_collision(
         self,
-        chip_info: ChipInfo,
+        chip_info: Chip,
         yield_success: int,
         frequency_list: list[float],
         collision_num: int,
@@ -177,7 +177,7 @@ class YieldSimulator(YieldSimulatorBase):
     def _get_type_7_collision(
         self,
         qubit_num: int,
-        chip_info: ChipInfo,
+        chip_info: Chip,
         yield_success: int,
         frequency_list: list[float],
         collision_num: int,

@@ -1,2 +1,2 @@
 from .chip_base import ChipBase
-from .chip import ChipInfo
+from .chip import Chip

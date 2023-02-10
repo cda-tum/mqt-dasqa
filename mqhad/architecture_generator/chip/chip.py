@@ -2,7 +2,7 @@ import numpy as np
 from .chip_base import ChipBase
 
 
-class ChipInfo(ChipBase):
+class Chip(ChipBase):
     def __init__(
         self,
         qubit_num: int = 0,
