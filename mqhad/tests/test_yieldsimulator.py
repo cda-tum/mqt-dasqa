@@ -263,21 +263,22 @@ class TestYieldSimulator:
         collision_num = 0
         collision_stat = np.zeros(7, dtype=int)
 
-        st = time.time()
-        (
-            yield_success,
-            collision_num,
-            collision_stat,
-        ) = yield_sim._get_type_7_collision(
-            qubit_num,
-            chip,
-            yield_success,
-            frequency_list,
-            collision_num,
-            collision_stat,
-        )
-        et = time.time()
-        print("Execution time: ", (et - st) * 1000)
+        for _ in range(10):
+            st = time.time()
+            (
+                yield_success,
+                collision_num,
+                collision_stat,
+            ) = yield_sim._get_type_7_collision(
+                qubit_num,
+                chip,
+                yield_success,
+                frequency_list,
+                collision_num,
+                collision_stat,
+            )
+            et = time.time()
+            print("Execution time: ", (et - st) * 1000)
         assert collision_num == 0
         assert yield_success == 1
         np.testing.assert_array_equal(collision_stat, [0, 0, 0, 0, 0, 0, 0])
