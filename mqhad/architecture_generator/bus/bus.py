@@ -8,13 +8,13 @@ class Bus(BusBase):
         dimX: int = 0,
         dimY: int = 0,
         qubit_grid: np.ndarray = np.array([]),
-        adj_mat: np.ndarray = np.array([]),
+        adjacency_matrix: np.ndarray = np.array([]),
         num_4Q_bus: int = 0,
     ):
         self.dimX = dimX
         self.dimY = dimY
         self.qubit_grid = qubit_grid
-        self.adj_mat = adj_mat
+        self.adjacency_matrix = adjacency_matrix
         self.num_4Q_bus = num_4Q_bus
 
     def bus_select(self) -> tuple[np.ndarray, np.ndarray]:
@@ -25,7 +25,7 @@ class Bus(BusBase):
         # For the example in Figure 7 (c), the cross-coupling weight of the green square is the
         # coupling strength of q0,q3 plus that of q1,q2.
         bus_weights = self._calculate_cross_coupling_weights(
-            self.dimX, self.dimY, self.qubit_grid, self.adj_mat
+            self.dimX, self.dimY, self.qubit_grid, self.adjacency_matrix
         )
 
         while self.num_4Q_bus > 0:
@@ -100,7 +100,7 @@ class Bus(BusBase):
         return filtered_weights
 
     def _calculate_cross_coupling_weights(
-        self, dimX: int, dimY: int, qubit_grid: np.ndarray, adj_mat: np.ndarray
+        self, dimX: int, dimY: int, qubit_grid: np.ndarray, adjacency_matrix: np.ndarray
     ) -> np.ndarray:
         """Calculate cross coupling weight.
 
@@ -108,7 +108,7 @@ class Bus(BusBase):
             dimX (int): dimension X
             dimY (int): dimension Y
             qubit_grid (np.ndarray): qubit grid
-            adj_mat (np.ndarray): adjacency matrix
+            adjacency_matrix (np.ndarray): adjacency matrix
 
         Returns:
             np.ndarray: bus weights
@@ -118,8 +118,12 @@ class Bus(BusBase):
             for y in range(dimY - 1):
                 weight = 0
                 if (qubit_grid[x][y] != -1) and (qubit_grid[x + 1][y + 1] != -1):
-                    weight += adj_mat[qubit_grid[x][y]][qubit_grid[x + 1][y + 1]]
+                    weight += adjacency_matrix[qubit_grid[x][y]][
+                        qubit_grid[x + 1][y + 1]
+                    ]
                 if (qubit_grid[x][y + 1] != -1) and (qubit_grid[x + 1][y] != -1):
-                    weight += adj_mat[qubit_grid[x][y + 1]][qubit_grid[x + 1][y]]
+                    weight += adjacency_matrix[qubit_grid[x][y + 1]][
+                        qubit_grid[x + 1][y]
+                    ]
                 bus_weights[x][y] = weight
         return bus_weights

@@ -20,7 +20,7 @@ class TestBus:
             dimX=dimX,
             dimY=dimY,
             qubit_grid=qubit_grid,
-            adj_mat=adjacency_matrix,
+            adjacency_matrix=adjacency_matrix,
             num_4Q_bus=10,
         )
         bus_grid = [[0, 0], [0, 1]]
@@ -46,7 +46,7 @@ class TestBus:
             dimX=dimX,
             dimY=dimY,
             qubit_grid=qubit_grid,
-            adj_mat=adjacency_matrix,
+            adjacency_matrix=adjacency_matrix,
             num_4Q_bus=10,
         )
         bus_weights = bus._calculate_cross_coupling_weights(
@@ -71,7 +71,7 @@ class TestBus:
             dimX=dimX,
             dimY=dimY,
             qubit_grid=qubit_grid,
-            adj_mat=adjacency_matrix,
+            adjacency_matrix=adjacency_matrix,
             num_4Q_bus=10,
         )
 
