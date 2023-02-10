@@ -67,8 +67,6 @@ class Frequency:
             self.qubit_num, self.dimX, self.dimY, self.qubit_grid
         )
 
-        # 	print(qubit_id, freq_qubit_list[qubit_id])
-
         while allocated_qubit_num < self.qubit_num:
             allocate_qubit_id = bfs_queue.popleft()
             allocated_qubit_num += 1
@@ -86,40 +84,30 @@ class Frequency:
                 self.qubit_grid,
                 self.bus_location,
             )
-            # 		print(sub_grid, sub_bus)
-            # 	temp_chip = create_temp_chip(qubit_num, sub_grid, sub_bus)
+
             temp_chip = self._create_temp_chip(allocated_qubit_num, sub_grid, sub_bus)
             optimal_freq = self.frequency_lowerbound
             test_freq = self.frequency_lowerbound
             optimal_yield_rate = 0.0
-            # 		print(sub_grid, sub_bus)
-            # 		temp_chip.displayinfo()
 
             while test_freq < self.frequency_upperbound:
-                # freq_qubit_list[allocate_qubit_id] = test_freq
                 temp_freq_config = [0] * allocated_qubit_num
                 for idx in range(allocated_qubit_num):
                     temp_freq_config[idx] = freq_qubit_list[
                         allocated_qubit_list[idx][0]
                     ]
                 temp_freq_config[-1] = test_freq
-                # 			print(temp_freq_config)
 
                 yieldsim = YieldSimulator(
                     temp_chip, temp_freq_config, allocated_qubit_num, self.sigma
                 )
                 collision_num, yield_rate = yieldsim.simulate()
-                # 			print(test_freq, yield_rate)
                 if yield_rate > optimal_yield_rate:
                     optimal_yield_rate = yield_rate
                     optimal_freq = test_freq
                 test_freq += self.frequency_step
 
             freq_qubit_list[allocate_qubit_id] = optimal_freq
-
-            # print(allocate_qubit_id, optimal_freq)
-            # 		print(optimal_yield_rate)
-            # 		aaaaa=input('next')
 
             for next_qubit_id in range(self.qubit_num):
                 if (
