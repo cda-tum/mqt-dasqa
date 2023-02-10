@@ -4,6 +4,7 @@ from mqhad.architecture_generator.generator import Generator
 from mqhad.architecture_generator.profile import Profile
 from mqhad.architecture_generator.layout import Layout
 from mqhad.architecture_generator.bus import Bus
+from mqhad.architecture_generator.chip import Chip
 
 
 class TestGenerator:
@@ -38,6 +39,9 @@ class TestGenerator:
         with pytest.raises(TypeError):
             Generator(bus=1)
         Generator(bus=Bus())
+        with pytest.raises(TypeError):
+            Generator(chip=1)
+        Generator(chip=Chip())
 
     def test_generate(self):
         generator = Generator(qc=self.qc)
