@@ -233,6 +233,8 @@ class YieldSimulator2(YieldSimulatorBase):
         mask = np.zeros((max_len, qubit_num, qubit_num))
 
         for qubit, edges in edges_combinations.items():
+            if len(edges) == 0:
+                continue
             edges_len = len(edges)
             depth_indexes = (
                 np.arange(0, 0 + 1 * edges_len, step=1, dtype=int)
