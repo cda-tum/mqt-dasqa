@@ -9,7 +9,7 @@ class Layout(LayoutBase):
         adjacency_matrix: np.ndarray = None,
     ) -> None:
         self.ordered_degree = ordered_degree
-        self.adj_mat = adjacency_matrix
+        self.adjacency_mat = adjacency_matrix
 
     def get_layout(self) -> tuple[int, int, np.ndarray]:
         qubit_num = len(self.ordered_degree)
@@ -35,7 +35,7 @@ class Layout(LayoutBase):
                 qubit_coupling_strength = qubit[1]
                 for assigned_qubit in assigned_qubit_list:
                     assigned_qubit_id = assigned_qubit[0]
-                    if self.adj_mat[qubit_id][assigned_qubit_id] > 0:
+                    if self.adjacency_mat[qubit_id][assigned_qubit_id] > 0:
                         candidate_qubit_coupling_strength = candidate_qubit[1]
                         if qubit_coupling_strength > candidate_qubit_coupling_strength:
                             candidate_qubit = qubit
@@ -89,8 +89,8 @@ class Layout(LayoutBase):
     ) -> float:
         cost = 0
         assigned_qubit_id = assigned_qubit[0]
-        if self.adj_mat[candidate_qubit[0]][assigned_qubit_id] > 0:
-            cost += self.adj_mat[candidate_qubit[0]][assigned_qubit_id] * (
+        if self.adjacency_mat[candidate_qubit[0]][assigned_qubit_id] > 0:
+            cost += self.adjacency_mat[candidate_qubit[0]][assigned_qubit_id] * (
                 abs(location[0] - assigned_qubit[1])
                 + abs(location[1] - assigned_qubit[2])
             )
