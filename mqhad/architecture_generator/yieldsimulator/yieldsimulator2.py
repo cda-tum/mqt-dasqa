@@ -8,6 +8,7 @@ from mqhad.architecture_generator.chip import ChipInfo
 random.seed(a=0, version=2)
 
 
+# TODO: Could use JAX instead of numpy?
 class YieldSimulator2(YieldSimulatorBase):
     def __init__(
         self,
@@ -61,6 +62,7 @@ class YieldSimulator2(YieldSimulatorBase):
         sigma: float,
         frequency_config: np.ndarray,
     ) -> tuple[int, int, list[int]]:
+        # TODO: Could potentially use numpy.random.Generator.normal?
         frequency_list = np.zeros(qubit_num)
         for qubit_id in range(qubit_num):
             frequency_list[qubit_id] = random.gauss(frequency_config[qubit_id], sigma)
@@ -229,6 +231,7 @@ class YieldSimulator2(YieldSimulatorBase):
 
         arr = []
         max_len = 0
+        # TODO: Could parallelize this using jit()?
         for qubit, edges in enumerate(edge_list):
             if len(edges) == 1:
                 continue
