@@ -45,6 +45,7 @@ class TransmonPocket6Qubit(QubitBase):
                 )
 
                 if pins_to_remove is not None:
+                    # TODO: Creating a dictionary seems unnecessary
                     exclude_pin_dict = {pin: dict() for pin in pins_to_remove[current_qubit]["remove"]}
                     connection_pins = set(connection_pads) - set(exclude_pin_dict.keys())
                     connection_pads_intersected = {key: connection_pads[key] for key in connection_pins}
