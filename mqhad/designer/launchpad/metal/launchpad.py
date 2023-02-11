@@ -24,32 +24,7 @@ class Launchpad(LaunchpadBase):
                 if current_qubit == -1:
                     continue
 
-                x_loc = 3500
-                y_loc = 3000
-                # Bottom row
-                if y == 0:
-                    offset_x = 150
-                    offset_y = 500
-                    if x % 2 == 0:
-                        pos_x = str(x * x_loc + offset_x) + "um"
-                    else:
-                        pos_x = str(x * x_loc - offset_x) + "um"
-                    pos_y = str(-y_loc / 2 - offset_y) + "um"
-                    orientation = "90"
-                # Top row
-                elif y == (N_y - 1):
-                    offset_x = 150
-                    offset_y = 500
-                    if x % 2 == 0:
-                        pos_x = str(x * x_loc - offset_x) + "um"
-                    else:
-                        pos_x = str(x * x_loc + offset_x) + "um"
-                    pos_y = str(y * y_loc + y_loc / 2 + offset_y) + "um"
-                    orientation = "-90"
-                else:
-                    pos_x = str(x * x_loc - x_loc / 2) + "um"
-                    pos_y = str(y * y_loc) + "um"
-                    orientation = "0"
+                pos_x, pos_y, orientation = self._get_configuration(N_y, x, y)
 
                 launchpad_name = f"Launch_Readout_{current_qubit}"
 
@@ -61,3 +36,32 @@ class Launchpad(LaunchpadBase):
                 launchpads[launchpad_name] = launchpad
 
         return launchpads
+
+    def _get_configuration(self, N_y, x, y):
+        x_loc = 3500
+        y_loc = 3000
+        # Bottom row
+        if y == 0:
+            offset_x = 150
+            offset_y = 500
+            if x % 2 == 0:
+                pos_x = str(x * x_loc + offset_x) + "um"
+            else:
+                pos_x = str(x * x_loc - offset_x) + "um"
+            pos_y = str(-y_loc / 2 - offset_y) + "um"
+            orientation = "90"
+            # Top row
+        elif y == (N_y - 1):
+            offset_x = 150
+            offset_y = 500
+            if x % 2 == 0:
+                pos_x = str(x * x_loc - offset_x) + "um"
+            else:
+                pos_x = str(x * x_loc + offset_x) + "um"
+            pos_y = str(y * y_loc + y_loc / 2 + offset_y) + "um"
+            orientation = "-90"
+        else:
+            pos_x = str(x * x_loc - x_loc / 2) + "um"
+            pos_y = str(y * y_loc) + "um"
+            orientation = "0"
+        return pos_x, pos_y, orientation
