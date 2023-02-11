@@ -11,8 +11,8 @@ class RouteMeanderConnector(QubitConnectionBase):
     def __init__(
         self,
         design: DesignPlanar = None,
-        qubit_frequencies: np.ndarray = np.array([]),
         qubit_grid: np.ndarray = np.array([]),
+        qubit_frequencies: np.ndarray = np.array([]),
     ):
         self._design = design
         self.qubit_frequencies = qubit_frequencies
