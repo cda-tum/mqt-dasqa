@@ -9,6 +9,8 @@ Munich Quantum HArdware Designer
 
 3. Install - `python -m pip install -e .`
 
+4. Install Qiskit Metal following installation instructions at [Qiskit Metal](https://qiskit.org/documentation/metal/installation.html)
+
 ## Usage
 
 1. For CLI - `mqhad --file-path {PATH_TO_QASM_2.0_FILE}`
