@@ -13,10 +13,10 @@ class Frequency(FrequencyBase):
         dimY: int = 0,
         qubit_grid: np.ndarray = np.array([]),
         bus_location: np.ndarray = np.array([]),
-        frequency_lowerbound: float = 0.0,
-        frequency_upperbound: float = 0.0,
-        frequency_step: int = 0,
-        sigma: float = 0.0,
+        frequency_lowerbound: float = 5.0,
+        frequency_upperbound: float = 5.34,
+        frequency_step: int = 0.01,
+        sigma: float = 0.03,
     ):
         self.qubit_num = qubit_num
         self.dimX = dimX
