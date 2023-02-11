@@ -39,6 +39,6 @@ Explanation on YieldSimulator2 - Vectorized - Faster in large circuit - need tes
 
 6. Add examples on how to use the package
 
-7. Increase test coverage
+7. Increase test coverage, notably on edge cases. For instance, the designer module has a considerable amount of if-else statement which would be good to be tested.
 
 8. Refactor Frequency class. Frequency class can be refactored to make the functions leaner and more testable.
