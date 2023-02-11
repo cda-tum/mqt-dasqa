@@ -1,4 +1,4 @@
-from .design_base import DesignBase
+from ..design_base import DesignBase
 from qiskit_metal import designs
 
 
