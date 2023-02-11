@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class DesignBase(ABC):
+class CanvasBase(ABC):
     @abstractmethod
-    def get_design(self):
+    def get_canvas(self):
         pass
