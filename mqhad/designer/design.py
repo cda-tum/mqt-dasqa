@@ -2,6 +2,7 @@ import sys
 from mqhad.designer.design_base import DesignBase
 from mqhad.designer.canvas.metal import CanvasMetal
 from mqhad.designer.qubit.metal import TransmonPocket6Qubit
+from mqhad.designer.qubit_connection.metal import RouteMeanderConnector
 from qiskit_metal import MetalGUI
 import numpy as np
 
@@ -24,6 +25,9 @@ class Design(DesignBase):
     def _design_metal(self):
         design = CanvasMetal().get_canvas()
         qubit = TransmonPocket6Qubit(design, self._qubit_grid).generate_qubit_layout()
+        qubit_connection = RouteMeanderConnector(
+            design, self._qubit_grid, self._qubit_frequencies
+        ).generate_qubit_connection()
         gui = MetalGUI(design)
         q_app = gui.qApp
         gui.rebuild()
