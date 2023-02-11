@@ -1,10 +1,11 @@
 import argparse
 import os
+import sys
 from mqhad.architecture_generator.generator import Generator
 from qiskit import QuantumCircuit
 
 
-def main(args):
+def flow(args):
     print("#### Start generating architecture ###")
     absolute_path = os.path.abspath(args.file_path)
     qc = QuantumCircuit.from_qasm_file(absolute_path)
@@ -16,7 +17,7 @@ def main(args):
     print("#### Generation ended ###")
 
 
-if __name__ == "__main__":
+def main(args=None):
     parser = argparse.ArgumentParser(description="mqhad cli")
     parser.add_argument(
         "--file-path",
@@ -25,4 +26,8 @@ if __name__ == "__main__":
         required=True,
     )
     args = parser.parse_args()
-    main(args)
+    flow(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main() or 0)

@@ -2,13 +2,13 @@ from unittest import mock
 import argparse
 
 
-class TestCli:
+class TestMain:
     # Check for no exceptions
     def test_main(self):
         with mock.patch(
             "mqhad.architecture_generator.generator.Generator"
         ) as mock_class:
-            from mqhad.cli import main
+            from mqhad.__main__ import flow
 
             instance = mock_class.return_value
             qubit_grid = [[-1, 2, -1], [3, 4, 0], [-1, 1, -1]]
@@ -25,4 +25,4 @@ class TestCli:
             args = argparse.Namespace(
                 file_path="./mqhad/tests/test_circuit/circuit1.qasm"
             )
-            main(args)
+            flow(args)
