@@ -1,21 +1,22 @@
 from collections import deque
 import numpy as np
+from .frequency_base import FrequencyBase
 from mqhad.architecture_generator.chip import Chip
 from mqhad.architecture_generator.yieldsimulator import YieldSimulator
 
 
-class Frequency:
+class Frequency(FrequencyBase):
     def __init__(
         self,
-        qubit_num: int,
-        dimX: int,
-        dimY: int,
-        qubit_grid: np.ndarray,
-        bus_location: np.ndarray,
-        frequency_lowerbound: float,
-        frequency_upperbound: float,
-        frequency_step: int,
-        sigma: float,
+        qubit_num: int = 0,
+        dimX: int = 0,
+        dimY: int = 0,
+        qubit_grid: np.ndarray = np.array([]),
+        bus_location: np.ndarray = np.array([]),
+        frequency_lowerbound: float = 0.0,
+        frequency_upperbound: float = 0.0,
+        frequency_step: int = 0,
+        sigma: float = 0.0,
     ):
         self.qubit_num = qubit_num
         self.dimX = dimX

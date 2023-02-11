@@ -1,1 +1,1 @@
-from .frequency import Frequency
+from .frequency import FrequencyBase, Frequency
