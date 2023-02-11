@@ -1,4 +1,4 @@
-from mqhad.designer.design import DesignMetal
+from mqhad.designer.design.metal import DesignMetal
 from qiskit_metal.designs import DesignPlanar
 
 
