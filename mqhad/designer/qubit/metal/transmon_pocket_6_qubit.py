@@ -1,11 +1,11 @@
 from collections import OrderedDict
-from .qubit_base import QubitBase
+from ..qubit_base import QubitBase
 from qiskit_metal.designs import DesignPlanar
 from qiskit_metal.qlibrary.qubits.transmon_pocket_6 import TransmonPocket6
 import numpy as np
 
 
-class QubitMetal(QubitBase):
+class TransmonPocket6Qubit(QubitBase):
     def __init__(
         self, design: DesignPlanar = None, qubit_grid: np.ndarray = np.array([])
     ):

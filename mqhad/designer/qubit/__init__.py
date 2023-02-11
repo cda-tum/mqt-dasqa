@@ -1,2 +1,2 @@
 from .qubit_base import QubitBase
-from .qubit_metal import QubitMetal
+from .metal.transmon_pocket_6_qubit import TransmonPocket6Qubit
