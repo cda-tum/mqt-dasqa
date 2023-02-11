@@ -3,6 +3,7 @@ from mqhad.architecture_generator.profile import ProfileBase, Profile
 from mqhad.architecture_generator.layout import LayoutBase, Layout
 from mqhad.architecture_generator.bus import BusBase, Bus
 from mqhad.architecture_generator.chip import ChipBase, Chip
+from mqhad.architecture_generator.frequency import FrequencyBase, Frequency
 from mqhad.utils import Utils
 from qiskit.circuit import QuantumCircuit
 
@@ -15,6 +16,7 @@ class Generator(GeneratorBase):
         layout: LayoutBase = None,
         bus: BusBase = None,
         chip: ChipBase = None,
+        frequency: FrequencyBase = None,
     ) -> None:
         if qc is not None:
             Utils.check_type(qc, QuantumCircuit)
@@ -35,6 +37,10 @@ class Generator(GeneratorBase):
         if chip is not None:
             Utils.check_type(chip, ChipBase)
         self.chip = chip
+
+        if frequency is not None:
+            Utils.check_type(frequency, FrequencyBase)
+        self.frequency = frequency
 
     def generate(self):
         if self.profile is None:
@@ -60,3 +66,14 @@ class Generator(GeneratorBase):
                 self.qc.num_qubits, self._qubit_grid, self._bus_locations_4Q
             )
         self.chip.generate_buses()
+
+        if self.frequency is None:
+            self.frequency = Frequency(
+                self.qc.num_qubits,
+                self._dimX,
+                self._dimY,
+                self._qubit_grid,
+                self._bus_locations_4Q,
+            )
+        self._qubit_frequencies = self.frequency.get_frequency_allocation()
+        return self._qubit_grid, self._qubit_frequencies

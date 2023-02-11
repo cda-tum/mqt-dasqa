@@ -1,6 +1,8 @@
+import itertools
+from unittest import mock
 import pytest
+import numpy as np
 from qiskit import QuantumRegister, QuantumCircuit
-from mqhad.architecture_generator.generator import Generator
 from mqhad.architecture_generator.profile import Profile
 from mqhad.architecture_generator.layout import Layout
 from mqhad.architecture_generator.bus import Bus
@@ -27,7 +29,41 @@ class TestGenerator:
         qc.cx(0, 4)
         cls.qc = qc
 
+    def test_generate(self):
+        with mock.patch(
+            "mqhad.architecture_generator.yieldsimulator.YieldSimulator"
+        ) as mock_class:
+            from mqhad.architecture_generator.generator import Generator
+
+            def infinite_generator():
+                for i in itertools.count():
+                    yield (i, 1.0 + 0.1 * i)
+
+            instance = mock_class.return_value
+            instance.simulate = mock.MagicMock(side_effect=infinite_generator())
+            generator = Generator(qc=self.qc)
+            qubit_grid, qubit_frequencies = generator.generate()
+            np.testing.assert_equal(qubit_grid, [[-1, 2, -1], [3, 4, 0], [-1, 1, -1]])
+            np.testing.assert_allclose(
+                qubit_frequencies,
+                [
+                    5.339999999999993,
+                    5.339999999999993,
+                    5.339999999999993,
+                    5.339999999999993,
+                    5.17,
+                ],
+                rtol=1e-2,
+            )
+
+    # This test need to below tests that is mocking the YieldSimulator
+    # so that the mocked YieldSimulator in previous tests is mocked properly.
+    # Once the Frequency class is imported in this method, it is added to the namespace
+    # and the mocked YieldSimulator is not mocked anymore.
     def test_init(self):
+        from mqhad.architecture_generator.frequency import Frequency
+        from mqhad.architecture_generator.generator import Generator
+
         with pytest.raises(TypeError):
             Generator(qc=1)
         with pytest.raises(TypeError):
@@ -42,7 +78,6 @@ class TestGenerator:
         with pytest.raises(TypeError):
             Generator(chip=1)
         Generator(chip=Chip())
-
-    def test_generate(self):
-        generator = Generator(qc=self.qc)
-        generator.generate()
+        with pytest.raises(TypeError):
+            Generator(frequency=1)
+        Generator(frequency=Frequency())
