@@ -27,8 +27,6 @@ Explanation on YieldSimulator2 - Vectorized - Faster in large circuit - need tes
 
 ## Future Improvements
 
-### Architecture Generator
-
 1. Make random seed in YieldSimulator and YieldSimulator2 configurable for the user
 
 2. Make it easy for user to configure which yield simulator they want to use
@@ -42,3 +40,5 @@ Explanation on YieldSimulator2 - Vectorized - Faster in large circuit - need tes
 7. Increase test coverage, notably on edge cases. For instance, the designer module has a considerable amount of if-else statement which would be good to be tested.
 
 8. Refactor Frequency class. Frequency class can be refactored to make the functions leaner and more testable.
+
+9. Save output of Metal design as Python script using (DesignPlanar.to_python_script)[https://qiskit.org/documentation/metal/stubs/qiskit_metal.designs.DesignPlanar.to_python_script.html#qiskit_metal.designs.DesignPlanar.to_python_script]. Potentially, we don't need a GUI opened. If this is possible, then we can give an option to the user, to either open the GUI and/or generate a Python script containing their design.
