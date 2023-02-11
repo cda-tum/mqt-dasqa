@@ -43,14 +43,17 @@ class Generator(GeneratorBase):
         self.frequency = frequency
 
     def generate(self):
+        print("Generating profile...")
         if self.profile is None:
             self.profile = Profile(self.qc)
         self._ordered_degree, self._adjacency_matrix = self.profile.get_profile()
 
+        print("Generating layout...")
         if self.layout is None:
             self.layout = Layout(self._ordered_degree, self._adjacency_matrix)
         self._dimX, self._dimY, self._qubit_grid = self.layout.get_layout()
 
+        print("Generating buses...")
         if self.bus is None:
             self.bus = Bus(
                 self._dimX,
@@ -61,12 +64,14 @@ class Generator(GeneratorBase):
             )
         self._bus_grid, self._bus_locations_4Q = self.bus.bus_select()
 
+        print("Generating chip...")
         if self.chip is None:
             self.chip = Chip(
                 self.qc.num_qubits, self._qubit_grid, self._bus_locations_4Q
             )
         self.chip.generate_buses()
 
+        print("Generating frequencies...")
         if self.frequency is None:
             self.frequency = Frequency(
                 self.qc.num_qubits,
@@ -76,4 +81,7 @@ class Generator(GeneratorBase):
                 self._bus_locations_4Q,
             )
         self._qubit_frequencies = self.frequency.get_frequency_allocation()
+
+        print("Completed architecture generation.")
+
         return self._qubit_grid, self._qubit_frequencies
