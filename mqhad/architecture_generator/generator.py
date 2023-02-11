@@ -11,15 +11,14 @@ from qiskit.circuit import QuantumCircuit
 class Generator(GeneratorBase):
     def __init__(
         self,
-        qc: QuantumCircuit = None,
+        qc: QuantumCircuit,
         profile: ProfileBase = None,
         layout: LayoutBase = None,
         bus: BusBase = None,
         chip: ChipBase = None,
         frequency: FrequencyBase = None,
     ) -> None:
-        if qc is not None:
-            Utils.check_type(qc, QuantumCircuit)
+        Utils.check_type(qc, QuantumCircuit)
         self.qc = qc
 
         if profile is not None:

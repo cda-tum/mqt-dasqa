@@ -65,19 +65,22 @@ class TestGenerator:
         from mqhad.architecture_generator.generator import Generator
 
         with pytest.raises(TypeError):
+            Generator()
+        with pytest.raises(TypeError):
             Generator(qc=1)
+        Generator(qc=self.qc)
         with pytest.raises(TypeError):
-            Generator(profile=1)
-        Generator(profile=Profile())
+            Generator(qc=self.qc, profile=1)
+        Generator(qc=self.qc, profile=Profile())
         with pytest.raises(TypeError):
-            Generator(layout=1)
-        Generator(layout=Layout())
+            Generator(qc=self.qc, layout=1)
+        Generator(qc=self.qc, layout=Layout())
         with pytest.raises(TypeError):
-            Generator(bus=1)
-        Generator(bus=Bus())
+            Generator(qc=self.qc, bus=1)
+        Generator(qc=self.qc, bus=Bus())
         with pytest.raises(TypeError):
-            Generator(chip=1)
-        Generator(chip=Chip())
+            Generator(qc=self.qc, chip=1)
+        Generator(qc=self.qc, chip=Chip())
         with pytest.raises(TypeError):
-            Generator(frequency=1)
-        Generator(frequency=Frequency())
+            Generator(qc=self.qc, frequency=1)
+        Generator(qc=self.qc, frequency=Frequency())
