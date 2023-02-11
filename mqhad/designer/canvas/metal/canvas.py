@@ -2,7 +2,7 @@ from ..canvas_base import CanvasBase
 from qiskit_metal import designs
 
 
-class CanvasMetal(CanvasBase):
+class Canvas(CanvasBase):
     def __init__(self):
         pass
 

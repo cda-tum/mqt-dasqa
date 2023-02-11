@@ -1,1 +1,1 @@
-from .canvas_metal import CanvasMetal
+from .canvas import Canvas
