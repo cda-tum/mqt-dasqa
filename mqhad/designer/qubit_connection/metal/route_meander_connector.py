@@ -45,24 +45,11 @@ class RouteMeanderConnector(QubitConnectionBase):
                     top_qubit = self._qubit_grid[y + 1][x]
 
                     if top_qubit != -1:
-                        if x % 2 == 0:
-                            if y % 2 == 0:
-                                vertical_start_pin_ref = "B0"
-                                vertical_end_pin_ref = "B2"
-                                meander_asymmetry = "700um"
-                            else:
-                                vertical_start_pin_ref = "B1"
-                                vertical_end_pin_ref = "B3"
-                                meander_asymmetry = "-700um"
-                        else:
-                            if y % 2 == 0:
-                                vertical_start_pin_ref = "B1"
-                                vertical_end_pin_ref = "B3"
-                                meander_asymmetry = "-700um"
-                            else:
-                                vertical_start_pin_ref = "B0"
-                                vertical_end_pin_ref = "B2"
-                                meander_asymmetry = "700um"
+                        (
+                            vertical_start_pin_ref,
+                            vertical_end_pin_ref,
+                            meander_asymmetry,
+                        ) = self._get_upward_connection_parameters(x, y)
 
                         connectorAD = RouteMeander(
                             self._design,
@@ -97,35 +84,11 @@ class RouteMeanderConnector(QubitConnectionBase):
                     right_qubit = self._qubit_grid[y][x + 1]
 
                     if right_qubit != -1:
-                        if y % 2 == 0:
-                            # even lines, [0,2,...]
-                            if x % 2 == 0:
-                                # up side-ways
-                                horizontal_start_pin_ref = "B1"
-                                horizontal_end_pin_ref = "B0"
-                                jogs_start = OrderedDict()
-                                jogs_start[0] = ["R", "150um"]
-
-                            else:
-                                # botton side-ways
-                                horizontal_start_pin_ref = "B3"
-                                horizontal_end_pin_ref = "B2"
-                                jogs_start = OrderedDict()
-                                # jogs_start[0] = ["L", '200um']
-                        else:
-                            # odd lines, [1,3,...]
-                            if x % 2 == 0:
-                                # bottom side-ways
-                                horizontal_start_pin_ref = "B3"
-                                horizontal_end_pin_ref = "B2"
-                                jogs_start = OrderedDict()
-                                # jogs_start[0] = ["L", '200um']
-                            else:
-                                # up side-ways
-                                horizontal_start_pin_ref = "B1"
-                                horizontal_end_pin_ref = "B0"
-                                jogs_start = OrderedDict()
-                                jogs_start[0] = ["R", "150um"]
+                        (
+                            horizontal_start_pin_ref,
+                            horizontal_end_pin_ref,
+                            jogs_start,
+                        ) = self._get_sideway_connection_parameters(x, y)
 
                         connectorBC = RouteMeander(
                             self._design,
@@ -156,6 +119,59 @@ class RouteMeanderConnector(QubitConnectionBase):
                         )
 
         return resonators
+
+    def _get_upward_connection_parameters(self, x, y):
+        if x % 2 == 0:
+            if y % 2 == 0:
+                vertical_start_pin_ref = "B0"
+                vertical_end_pin_ref = "B2"
+                meander_asymmetry = "700um"
+            else:
+                vertical_start_pin_ref = "B1"
+                vertical_end_pin_ref = "B3"
+                meander_asymmetry = "-700um"
+        else:
+            if y % 2 == 0:
+                vertical_start_pin_ref = "B1"
+                vertical_end_pin_ref = "B3"
+                meander_asymmetry = "-700um"
+            else:
+                vertical_start_pin_ref = "B0"
+                vertical_end_pin_ref = "B2"
+                meander_asymmetry = "700um"
+        return vertical_start_pin_ref, vertical_end_pin_ref, meander_asymmetry
+
+    def _get_sideway_connection_parameters(self, x, y):
+        if y % 2 == 0:
+            # even lines, [0,2,...]
+            if x % 2 == 0:
+                # up side-ways
+                horizontal_start_pin_ref = "B1"
+                horizontal_end_pin_ref = "B0"
+                jogs_start = OrderedDict()
+                jogs_start[0] = ["R", "150um"]
+
+            else:
+                # botton side-ways
+                horizontal_start_pin_ref = "B3"
+                horizontal_end_pin_ref = "B2"
+                jogs_start = OrderedDict()
+                # jogs_start[0] = ["L", '200um']
+        else:
+            # odd lines, [1,3,...]
+            if x % 2 == 0:
+                # bottom side-ways
+                horizontal_start_pin_ref = "B3"
+                horizontal_end_pin_ref = "B2"
+                jogs_start = OrderedDict()
+                # jogs_start[0] = ["L", '200um']
+            else:
+                # up side-ways
+                horizontal_start_pin_ref = "B1"
+                horizontal_end_pin_ref = "B0"
+                jogs_start = OrderedDict()
+                jogs_start[0] = ["R", "150um"]
+        return horizontal_start_pin_ref, horizontal_end_pin_ref, jogs_start
 
     def _find_resonator_length(self, frequency, line_width, line_gap, N):
         # frequency in GHz
