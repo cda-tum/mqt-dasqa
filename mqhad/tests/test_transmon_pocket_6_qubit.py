@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from unittest.mock import MagicMock
 import numpy as np
-from mqhad.designer.qubit import TransmonPocket6Qubit
+from mqhad.designer.qubit.metal import TransmonPocket6Qubit
 from qiskit_metal.designs import DesignPlanar
 from qiskit_metal.qlibrary.qubits.transmon_pocket_6 import TransmonPocket6
 
