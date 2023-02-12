@@ -39,8 +39,6 @@ class RouteMeanderConnector(QubitConnectionBase):
                     frequency=current_qubit_frequency, line_width=10, line_gap=6, N=2
                 )
 
-                print(f"Resonator length={resonator_length} for qubit={current_qubit}")
-
                 if y < (N_y - 1):
                     top_qubit = self._qubit_grid[y + 1][x]
 
