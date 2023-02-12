@@ -59,7 +59,7 @@ class TransmonPocket6Qubit(QubitBase):
                 if y != 0 and y != (N_y-1):
                     options["connection_pads"]["B4"] = dict(loc_W=0, loc_H=-1, pad_width='90um')
                 
-                obj=TransmonPocket6(design,qubit_name,options) #TransmonPocket(design,f'Q_{current_qubit}',options)
+                obj=TransmonPocket6(design,qubit_name,options)
                 qubits[qubit_name] = obj
         return qubits
 
