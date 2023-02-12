@@ -35,10 +35,12 @@ Explanation on YieldSimulator2 - Vectorized - Faster in large circuit - need tes
 
 4. Currently Generator is expecting a Qiskit QuantumCircuit. This dependency can be removed to be more generic. Possibly, suppoting other libraries' circuits, i.e: Cirq, Q#, etc.
 
-6. Add examples on how to use the package
+6. Add examples on how to use the package in another program
 
 7. Increase test coverage, notably on edge cases. For instance, the designer module has a considerable amount of if-else statement which would be good to be tested.
 
 8. Refactor Frequency class. Frequency class can be refactored to make the functions leaner and more testable.
 
 9. Save output of Metal design as Python script using (DesignPlanar.to_python_script)[https://qiskit.org/documentation/metal/stubs/qiskit_metal.designs.DesignPlanar.to_python_script.html#qiskit_metal.designs.DesignPlanar.to_python_script]. Potentially, we don't need a GUI opened. If this is possible, then we can give an option to the user, to either open the GUI and/or generate a Python script containing their design.
+
+10. The Design class is can be refactored to follow a creational pattern, i.e: Factory, AbstractFactory, Builder etc. The steps to construct a layout can be harmonized into a series of steps defined in an interface that can be implemented by different concrete implementation classes. The idea is to support various Metal designs and possibly other hardware designer backend seamlessly in the future.
