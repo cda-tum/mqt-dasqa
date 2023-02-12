@@ -27,3 +27,12 @@ class TestMain:
         instance2.design = mock.MagicMock()
         args = argparse.Namespace(file_path="./mqhad/tests/test_circuit/circuit1.qasm")
         flow(args)
+
+    def test_main_invalid_file_path(self, capfd):
+        from mqhad.__main__ import flow
+
+        args = argparse.Namespace(file_path="./invalid_file.qasm")
+        flow(args)
+        # Capture the stdout and stderr output
+        out, err = capfd.readouterr()
+        assert out == "File does not exist. Exiting...\n"
