@@ -4,19 +4,20 @@ Munich Quantum HArdware Designer (MQHAD) is an early-stage toolkit that is envis
 
 - [MQHAD](#mqhad)
   - [Installation](#installation)
-    - [Installing package](#installing-package)
+    - [Installing Package](#installing-package)
     - [Installing Qiskit Metal](#installing-qiskit-metal)
   - [Usage](#usage)
     - [Command-line interface (CLI)](#command-line-interface-cli)
-    - [Testing package](#testing-package)
+    - [Testing the Package](#testing-the-package)
   - [Development](#development)
-  - [Experimental Feature](#experimental-feature)
+  - [Experimental Features](#experimental-features)
+    - [Vectorized Yield Simulator](#vectorized-yield-simulator)
   - [FAQs](#faqs)
   - [Future Improvements](#future-improvements)
 
 ## Installation
 
-### Installing package
+### Installing Package
 
 1. Clone the repository - `git clone {URL}`
 
@@ -47,7 +48,7 @@ The CLI will generate the high-level architecture of the placement of qubits in 
 
 ![4_qubit_2D_square_lattice](docs/images/4_qubit_2D_square_lattice.png)
 
-### Testing package
+### Testing the Package
 
 1. There is a test circuit that could be used to test the package. Navigate to `mqhad` directory and execute `mqhad --file-path ./mqhad/tests/test_circuit/circuit1.qasm`
 
@@ -57,13 +58,17 @@ The CLI will generate the high-level architecture of the placement of qubits in 
 
 2. Install development dependencies - `pip install -r requirements-dev.txt`
 
-## Experimental Feature
+## Experimental Features
+
+### Vectorized Yield Simulator
 
 Yield simulation is used in frequency allocation to detect common collisions in frequency allocation. The image below from ([G. Li, Y. Ding and Y. Xie](https://arxiv.org/abs/1911.12879)) lists the conditions and their thresholds.
 
 ![frequency collision conditions](docs/images/frequency_collision_conditions.png)
 
-In this toolkit, a new vectorized yield simulator called [YieldSimulator2](mqhad/architecture_generator/yieldsimulator/yieldsimulator2.py) is implemented. It is still experimental as the performance for the yield simulator needs to be benchmarked. It's hypothesized that the new yield simulator can handle large quantum hardware layout given it's vectorized nature. For furthe information, see [Future Improvements](#future-improvements) section.
+Injecting random noise from a Gaussian distribution into pre-fabrication qubit frequencies enables a yield simulator to accurately model post-fabrication frequencies. The Monte Carlo simulations allow the successful fabrications of a quantum processor design to be accurately modeled, and the resulting yield rate to be estimated. Through repeated runs of the simulation process, the successful simulations are calculated in relation to all simulations, thereby providing an accurate estimate of the overall yield rate. Furthermore, the use of this simulation process enables a more precise analysis of the effects of the random noise on the pre-fabrication qubit frequencies, allowing for more precise estimates of the yield rate.
+
+In this toolkit, a new vectorized yield simulator called [YieldSimulator2](mqhad/architecture_generator/yieldsimulator/yieldsimulator2.py) is implemented. It is still experimental as the performance for the yield simulator needs to be benchmarked. It's hypothesized that the new yield simulator can handle large quantum hardware layout given it's vectorized nature. For further information, see [Future Improvements](#future-improvements) section. Currently, the unvectorized yield simulator [YieldSimulator](mqhad/architecture_generator/yieldsimulator/yieldsimulator.py) is used as the default yield simulator.
 
 ## FAQs
 
