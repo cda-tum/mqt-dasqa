@@ -29,14 +29,23 @@ class Design(DesignBase):
             self._design_metal(display_gui=self._display_gui)
 
     def _design_metal(self, display_gui: bool = False):
+        print("Initializing Metal Canvas...")
         design = MetalCanvas().get_canvas()
+
+        print("Generating qubits...")
         qubits = MetalTransmonPocket6Qubit(
             design, self._qubit_grid
         ).generate_qubit_layout()
+
+        print("Generating qubit connections...")
         qubit_connections = MetalRouteMeanderConnector(
             design, self._qubit_grid, self._qubit_frequencies
         ).generate_qubit_connection()
+
+        print("Generating launchpads...")
         launchpads = MetalLaunchpad(design, self._qubit_grid).generate_launchpad()
+
+        print("Generating capacitors...")
         capacitors = MetalCapacitor(design, self._qubit_grid).generate_capacitor()
 
         if display_gui == True:
