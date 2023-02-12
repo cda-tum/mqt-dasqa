@@ -1,10 +1,14 @@
-# mqhad
+# MQHAD
 
 Munich Quantum HArdware Designer (MQHAD) is an early-stage toolkit that is envisioned to automatically generate quantum chip design from a quantum circuit. This work adapts and integrates the work of [G. Li, Y. Ding and Y. Xie](https://arxiv.org/abs/1911.12879) and [Qiskit Metal](https://qiskit.org/documentation/metal/) into a seamless workflow for quantum chip design while improving the code resilience through test suites and performance improvements.
 
-- [mqhad](#mqhad)
+- [MQHAD](#mqhad)
   - [Installation](#installation)
+    - [Installing package](#installing-package)
+    - [Installing Qiskit Metal](#installing-qiskit-metal)
   - [Usage](#usage)
+    - [Command-line interface (CLI)](#command-line-interface-cli)
+    - [Testing package](#testing-package)
   - [Development](#development)
   - [Experimental Feature](#experimental-feature)
   - [FAQs](#faqs)
@@ -12,29 +16,46 @@ Munich Quantum HArdware Designer (MQHAD) is an early-stage toolkit that is envis
 
 ## Installation
 
-MQHAD is tested on Python 3.10.
+### Installing package
 
 1. Clone the repository - `git clone {URL}`
 
-2. Change directory - `cd mqhad`
+2. Change to cloned directory - `cd mqhad`
 
-3. Install - `python -m pip install -e .`
+3. The easiest way to install the toolkit without affecting other packages is to create a virtual environment, i.e: using conda, as following. Else, you can just run `python -m pip install -e .`. Do note that MQHAD is tested on Python 3.10.
 
-4. Install Qiskit Metal following installation instructions at [Qiskit Metal](https://qiskit.org/documentation/metal/installation.html)
+```text
+conda env create -n <env_name> environment.yml
+conda activate <env_name>
+python -m pip install --no-deps -e .
+```
+
+### Installing Qiskit Metal
+
+1. Install Qiskit Metal following installation instructions at [Qiskit Metal](https://qiskit.org/documentation/metal/installation.html). Refer to the [Pre-existing environment](https://qiskit.org/documentation/metal/installation.html#option-2-a-pre-existing-environment) section.
 
 ## Usage
 
-1. For CLI - `mqhad --file-path {PATH_TO_QASM_2.0_FILE}`
+### Command-line interface (CLI)
+
+```text
+Usage:
+    mqhad --file-path [PATH_TO_QASM_2.0_FILE]
+```
 
 The CLI will generate the high-level architecture of the placement of qubits in a 2D square-lattice and the corresponding qubit frequencies. The Metal GUI is invoked at the end as following where there is an option to save the design as a Python script.
 
 ![4_qubit_2D_square_lattice](docs/images/4_qubit_2D_square_lattice.png)
 
+### Testing package
+
+1. There is a test circuit that could be used to test the package. Navigate to `mqhad` directory and execute `mqhad --file-path ./mqhad/tests/test_circuit/circuit1.qasm`
+
 ## Development
 
 1. Install required dependencies - `pip install -r requirements.txt`
 
-2. Install dev dependencies - `pip install -r requirements-dev.txt`
+2. Install development dependencies - `pip install -r requirements-dev.txt`
 
 ## Experimental Feature
 
@@ -42,7 +63,7 @@ Yield simulation is used in frequency allocation to detect common collisions in 
 
 ![frequency collision conditions](docs/images/frequency_collision_conditions.png)
 
-In this toolkit, a new vectorized yield simulator called [YieldSimulator2](mqhad/architecture_generator/yieldsimulator/yieldsimulator2.py) is implemented. It is still experimental as the performance for the yield simulator needs to be benchmarked. It's hypothesized that the new yield simulator can handle large quantum hardware layout given it's vectorized nature. See [Future Improvements](#future-improvements) section.
+In this toolkit, a new vectorized yield simulator called [YieldSimulator2](mqhad/architecture_generator/yieldsimulator/yieldsimulator2.py) is implemented. It is still experimental as the performance for the yield simulator needs to be benchmarked. It's hypothesized that the new yield simulator can handle large quantum hardware layout given it's vectorized nature. For furthe information, see [Future Improvements](#future-improvements) section.
 
 ## FAQs
 
@@ -75,3 +96,5 @@ In this toolkit, a new vectorized yield simulator called [YieldSimulator2](mqhad
 - [ ] The Design class can be refactored to follow a creational pattern, i.e: Factory, AbstractFactory, Builder etc. to make it more extensible and modular. Refer [here](https://refactoring.guru/design-patterns/creational-patterns). The steps to construct a layout can be harmonized into a series of steps defined in an interface that can be implemented by different concrete implementation classes. The idea is to support various Metal designs and possibly other hardware designer backend seamlessly in the future.
 
 - [ ] Add better progress indicator for the steps using progress indicators, i.e: [tqdm](https://github.com/tqdm/tqdm). Currently, some steps such as generating qubit frequencies takes time and there is no granular indicator on the progress other than a simple text message.
+
+- [ ] After tool execution in MacOS Ventura 13.0, there is a segmentation fault message `zsh: segmentation fault  mqhad --file-path ./mqhad/tests/test_circuit/circuit1.qasm`. Investigate why this issue is happening.
