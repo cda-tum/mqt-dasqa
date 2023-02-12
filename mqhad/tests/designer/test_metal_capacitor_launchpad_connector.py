@@ -30,4 +30,20 @@ class TestCapacitorLaunchpadConnector:
             assert len(capacitor_launchpad_connections) == 27
 
     def test_get_configuration(self):
-        pass
+        from mqhad.designer.capacitor_launchpad_connector.metal import (
+            CapacitorLaunchpadConnector,
+        )
+
+        capacitor_launchpad_connector = CapacitorLaunchpadConnector()
+        assert capacitor_launchpad_connector.get_configuration(2, 0) == (
+            "south_end",
+            "tie",
+        )
+        assert capacitor_launchpad_connector.get_configuration(2, 1) == (
+            "north_end",
+            "tie",
+        )
+        assert capacitor_launchpad_connector.get_configuration(2, 2) == (
+            "south_end",
+            "tie",
+        )

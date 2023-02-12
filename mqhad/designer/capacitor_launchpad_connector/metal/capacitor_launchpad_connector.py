@@ -6,7 +6,9 @@ import numpy as np
 
 
 class CapacitorLaunchpadConnector(CapacitorLaunchpadConnectorBase):
-    def __init__(self, design: DesignPlanar = None, qubit_grid: np.ndarray = np.array([])):
+    def __init__(
+        self, design: DesignPlanar = None, qubit_grid: np.ndarray = np.array([])
+    ):
         self._design = design
         self._qubit_grid = qubit_grid
 
@@ -25,16 +27,7 @@ class CapacitorLaunchpadConnector(CapacitorLaunchpadConnectorBase):
                 if current_qubit == -1:
                     continue
 
-                # Bottom row
-                if y == 0:
-                    start_pin_ = "south_end"
-                # Top row
-                elif y == (N_y - 1):
-                    start_pin_ = "north_end"
-                # Middle row
-                else:
-                    start_pin_ = "south_end"
-                end_pin_ = "tie"
+                start_pin_, end_pin_ = self.get_configuration(N_y, y)
 
                 tl_readout = RoutePathfinder(
                     self._design,
@@ -64,3 +57,16 @@ class CapacitorLaunchpadConnector(CapacitorLaunchpadConnectorBase):
                 )
 
         return tl_readouts
+
+    def get_configuration(self, N_y, y):
+        # Bottom row
+        if y == 0:
+            start_pin_ = "south_end"
+        # Top row
+        elif y == (N_y - 1):
+            start_pin_ = "north_end"
+        # Middle row
+        else:
+            start_pin_ = "south_end"
+        end_pin_ = "tie"
+        return start_pin_, end_pin_
