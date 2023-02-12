@@ -12,6 +12,8 @@ Munich Quantum HArdware Designer (MQHAD) is a toolkit that is envisioned to auto
 
 ## Installation
 
+MQHAD is tested on Python 3.10.
+
 1. Clone the repository - `git clone {URL}`
 
 2. Change directory - `cd mqhad`
@@ -38,6 +40,8 @@ The CLI will generate the high-level architecture of the placement of qubits in 
 
 Explanation on YieldSimulator2 - Vectorized - Faster in large circuit - need tests to prove
 
+Yield simulation that is used in frequency allocation to detect common collisions in frequency allocation.
+
 ## FAQs
 
 - QT Warnings
@@ -50,22 +54,22 @@ Explanation on YieldSimulator2 - Vectorized - Faster in large circuit - need tes
 
 ## Future Improvements
 
-1. Make random seed in YieldSimulator and YieldSimulator2 configurable for the user
+- [ ] Make random seed in YieldSimulator and YieldSimulator2 configurable for the user
 
-2. Make it easy for user to configure which yield simulator they want to use
+- [ ] Make it easy for user to configure which yield simulator they want to use
 
-3. Experiment further speed up in YieldSimulator2. For instance, using JAX, jit, etc. The initial mask creation takes a bit time. Maybe the itertools.combinations can be improved; <https://stackoverflow.com/a/16008578/1893470>.
+- [ ] Experiment further speed up in YieldSimulator2. For instance, using JAX, jit, etc. The initial mask creation takes a bit time. Maybe the itertools.combinations can be improved; <https://stackoverflow.com/a/16008578/1893470>.
 
-4. Currently Generator is expecting a Qiskit QuantumCircuit. This dependency can be removed to be more generic. Possibly, suppoting other libraries' circuits, i.e: Cirq, Q#, etc.
+- [ ] Currently Generator is expecting a Qiskit QuantumCircuit. This dependency can be removed to be more generic. Possibly, suppoting other libraries' circuits, i.e: Cirq, Q#, etc.
 
-5. Add examples on how to use the package in another program
+- [ ] Add examples on how to use the package in another program as an alternative to using the toolkit as in CLI mode.
 
-6. Increase test coverage, notably on edge cases. For instance, the designer module has a considerable amount of if-else statement which would be good to be tested. Probably, an AI unit test case generator or analyzers, i.e: [Pynguin—PYthoN General UnIt test geNerator](https://pynguin.readthedocs.io/en/latest/) could be used to generate test cases.
+- [ ] Increase test coverage, notably on edge cases. For instance, the designer module has a considerable amount of if-else statement which would be good to be tested. Probably, an AI unit test case generator or analyzers, i.e: [Pynguin—PYthoN General UnIt test geNerator](https://pynguin.readthedocs.io/en/latest/) could be used to generate test cases.
 
-7. Refactor Frequency class. Frequency class can be refactored to make the functions leaner and more testable.
+- [ ] Refactor Frequency class. Frequency class can be refactored to make the functions leaner and more testable.
 
-8. Save output of Metal design as Python script using [DesignPlanar.to_python_script](https://qiskit.org/documentation/metal/stubs/qiskit_metal.designs.DesignPlanar.to_python_script.html#qiskit_metal.designs.DesignPlanar.to_python_script). Potentially, we don't need a GUI opened. If this is possible, then we can give an option to the user, to either open the GUI and/or generate a Python script containing their design.
+- [ ] Save output of Metal design as Python script using [DesignPlanar.to_python_script](https://qiskit.org/documentation/metal/stubs/qiskit_metal.designs.DesignPlanar.to_python_script.html#qiskit_metal.designs.DesignPlanar.to_python_script). Potentially, we don't need a GUI opened. If this is possible, then we can give an option to the user, to either open the GUI and/or generate a Python script containing their design.
 
-9. The Design class can be refactored to follow a creational pattern, i.e: Factory, AbstractFactory, Builder etc. Refer [here](https://refactoring.guru/design-patterns/creational-patterns). The steps to construct a layout can be harmonized into a series of steps defined in an interface that can be implemented by different concrete implementation classes. The idea is to support various Metal designs and possibly other hardware designer backend seamlessly in the future.
+- [ ] The Design class can be refactored to follow a creational pattern, i.e: Factory, AbstractFactory, Builder etc. Refer [here](https://refactoring.guru/design-patterns/creational-patterns). The steps to construct a layout can be harmonized into a series of steps defined in an interface that can be implemented by different concrete implementation classes. The idea is to support various Metal designs and possibly other hardware designer backend seamlessly in the future.
 
-10. Add better progress indicator for the steps using progress indicators, i.e: [tqdm](https://github.com/tqdm/tqdm). Currently, some steps such as generating qubit frequencies takes time and there is no indicator on the progress.
+- [ ] Add better progress indicator for the steps using progress indicators, i.e: [tqdm](https://github.com/tqdm/tqdm). Currently, some steps such as generating qubit frequencies takes time and there is no indicator on the progress.
