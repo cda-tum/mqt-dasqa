@@ -1,2 +1,2 @@
-numpy
-qiskit
+numpy>=1.23.5
+qiskit==0.41.0
