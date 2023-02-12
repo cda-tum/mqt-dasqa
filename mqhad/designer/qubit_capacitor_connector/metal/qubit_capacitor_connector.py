@@ -25,46 +25,7 @@ class QubitCapacitorConnector(QubitCapacitorConnectorBase):
                 if current_qubit == -1:
                     continue
 
-                x_loc = 3500
-                y_loc = 3000
-                # Bottom row
-                if y == 0:
-                    offset_readout_capacitor = 100
-                    offset_anchor = 100
-                    if x % 2 == 0:
-                        start_pin_ = "B3"
-                        pos_x = (x * x_loc + x_loc / 2 - offset_anchor) / 1000
-                    else:
-                        start_pin_ = "B2"
-                        pos_x = (x * x_loc - x_loc / 2 + offset_anchor) / 1000
-                    pos_y = ((-y_loc / 2 - offset_readout_capacitor) / 2) / 1000
-                    pin_loc = "north_end"
-                # Top row
-                elif y == (N_y - 1):
-                    offset_readout_capacitor = 100
-                    offset_anchor = 100
-                    if x % 2 == 0:
-                        start_pin_ = "B0"
-                        pos_x = (x * x_loc - x_loc / 2 + offset_anchor) / 1000
-                    else:
-                        start_pin_ = "B1"
-                        pos_x = (x * x_loc + x_loc / 2 - offset_anchor) / 1000
-                    pos_y = (
-                        y * y_loc + (y_loc / 2 + offset_readout_capacitor) / 2
-                    ) / 1000
-                    pin_loc = "south_end"
-                # Middle row
-                else:
-                    start_pin_ = "B4"
-                    pin_loc = "north_end"
-                    offset_readout_capacitor = 300
-                    pos_x = (
-                        x * x_loc - ((x_loc / 2 - offset_readout_capacitor) / 2)
-                    ) / 1000
-                    if x % 2 == 0:
-                        pos_y = (y * y_loc - y_loc / 2 + y_loc / 4) / 1000
-                    else:
-                        pos_y = (y * y_loc + y_loc / 2 - y_loc / 4) / 1000
+                start_pin_, pos_x, pos_y, pin_loc = self.get_configuration(N_y, x, y)
 
                 anchors = OrderedDict()
                 anchors[0] = np.array([pos_x, pos_y])
@@ -101,3 +62,46 @@ class QubitCapacitorConnector(QubitCapacitorConnectorBase):
                     ([f"Q_{current_qubit}", f"Cap_Readout_{current_qubit}"], meander)
                 )
         return meanders
+
+    def get_configuration(self, N_y, x, y):
+        x_loc = 3500
+        y_loc = 3000
+                # Bottom row
+        if y == 0:
+            offset_readout_capacitor = 100
+            offset_anchor = 100
+            if x % 2 == 0:
+                start_pin_ = "B3"
+                pos_x = (x * x_loc + x_loc / 2 - offset_anchor) / 1000
+            else:
+                start_pin_ = "B2"
+                pos_x = (x * x_loc - x_loc / 2 + offset_anchor) / 1000
+            pos_y = ((-y_loc / 2 - offset_readout_capacitor) / 2) / 1000
+            pin_loc = "north_end"
+                # Top row
+        elif y == (N_y - 1):
+            offset_readout_capacitor = 100
+            offset_anchor = 100
+            if x % 2 == 0:
+                start_pin_ = "B0"
+                pos_x = (x * x_loc - x_loc / 2 + offset_anchor) / 1000
+            else:
+                start_pin_ = "B1"
+                pos_x = (x * x_loc + x_loc / 2 - offset_anchor) / 1000
+            pos_y = (
+                        y * y_loc + (y_loc / 2 + offset_readout_capacitor) / 2
+                    ) / 1000
+            pin_loc = "south_end"
+                # Middle row
+        else:
+            start_pin_ = "B4"
+            pin_loc = "north_end"
+            offset_readout_capacitor = 300
+            pos_x = (
+                        x * x_loc - ((x_loc / 2 - offset_readout_capacitor) / 2)
+                    ) / 1000
+            if x % 2 == 0:
+                pos_y = (y * y_loc - y_loc / 2 + y_loc / 4) / 1000
+            else:
+                pos_y = (y * y_loc + y_loc / 2 - y_loc / 4) / 1000
+        return start_pin_,pos_x,pos_y,pin_loc

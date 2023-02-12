@@ -26,3 +26,6 @@ class TestQubitCapacitorConnector:
                 qubit_capacitor_connector.generate_qubit_capacitor_connection()
             )
             assert len(qubit_capacitor_connections) == 27
+
+    def test_get_configuration(self):
+        pass
