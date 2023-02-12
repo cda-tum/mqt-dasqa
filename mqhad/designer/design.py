@@ -2,7 +2,7 @@ import sys
 from mqhad.designer.design_base import DesignBase
 from mqhad.designer.canvas.metal import Canvas as MetalCanvas
 from mqhad.designer.qubit.metal import TransmonPocket6Qubit as MetalTransmonPocket6Qubit
-from mqhad.designer.qubit_connection.metal import (
+from mqhad.designer.qubit_connector.metal import (
     RouteMeanderConnector as MetalRouteMeanderConnector,
 )
 from mqhad.designer.launchpad.metal import Launchpad as MetalLaunchpad

@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from ..qubit_connection_base import QubitConnectionBase
+from ..qubit_connector_base import QubitConnectorBase
 from qiskit_metal import Dict
 from qiskit_metal.designs import DesignPlanar
 from qiskit_metal.qlibrary.tlines.meandered import RouteMeander
@@ -7,7 +7,7 @@ from qiskit_metal.analyses.em.cpw_calculations import guided_wavelength
 import numpy as np
 
 
-class RouteMeanderConnector(QubitConnectionBase):
+class RouteMeanderConnector(QubitConnectorBase):
     def __init__(
         self,
         design: DesignPlanar = None,

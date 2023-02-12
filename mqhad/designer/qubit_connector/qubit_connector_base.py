@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class QubitConnectionBase(ABC):
+class QubitConnectorBase(ABC):
     @abstractmethod
     def generate_qubit_connection(self):
         pass
