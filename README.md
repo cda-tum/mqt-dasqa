@@ -37,7 +37,7 @@ Explanation on YieldSimulator2 - Vectorized - Faster in large circuit - need tes
 
 6. Add examples on how to use the package in another program
 
-7. Increase test coverage, notably on edge cases. For instance, the designer module has a considerable amount of if-else statement which would be good to be tested.
+7. Increase test coverage, notably on edge cases. For instance, the designer module has a considerable amount of if-else statement which would be good to be tested. Probably, an AI unit test case generator or analyzers, i.e: [Pynguin—PYthoN General UnIt test geNerator](https://pynguin.readthedocs.io/en/latest/) could be used to generate test cases.
 
 8. Refactor Frequency class. Frequency class can be refactored to make the functions leaner and more testable.
 
