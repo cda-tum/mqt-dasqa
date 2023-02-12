@@ -7,7 +7,12 @@ from mqhad.designer.qubit_connector.metal import (
 )
 from mqhad.designer.launchpad.metal import Launchpad as MetalLaunchpad
 from mqhad.designer.capacitor.metal import Capacitor as MetalCapacitor
-from mqhad.designer.qubit_capacitor_connector.metal import QubitCapacitorConnector
+from mqhad.designer.qubit_capacitor_connector.metal import (
+    QubitCapacitorConnector as MetalQubitCapacitorConnector,
+)
+from mqhad.designer.capacitor_launchpad_connector.metal import (
+    CapacitorLaunchpadConnector as MetalCapacitorLaunchpadConnector,
+)
 from qiskit_metal import MetalGUI
 import numpy as np
 
@@ -50,9 +55,14 @@ class Design(DesignBase):
         capacitors = MetalCapacitor(design, self._qubit_grid).generate_capacitor()
 
         print("Generating qubit-capacitor connections...")
-        qubit_capacitor_connections = QubitCapacitorConnector(
+        qubit_capacitor_connections = MetalQubitCapacitorConnector(
             design, self._qubit_grid
         ).generate_qubit_capacitor_connection()
+
+        print("Generating capacitor-launchpad connections...")
+        capacitor_launchpad_connections = MetalCapacitorLaunchpadConnector(
+            design, self._qubit_grid
+        ).generate_capacitor_launchpad_connection()
 
         if display_gui == True:
             # We define a exit_no_operation() function that simply does nothing, and then use
