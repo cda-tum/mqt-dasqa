@@ -11,7 +11,7 @@ class Launchpad(LaunchpadBase):
         self._design = design
         self._qubit_grid = qubit_grid
 
-    def generate_launchpad(self) -> list[list[LaunchpadWirebond]]:
+    def generate_launchpad(self) -> dict[str, LaunchpadWirebond]:
         N_x = len(self._qubit_grid[0])
         N_y = len(self._qubit_grid)
         launchpads = {}
