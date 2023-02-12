@@ -12,18 +12,7 @@ class TestDesign:
         design._design_metal.assert_called_once()
 
     # Test for no exception
-    def test_design_metal(self, monkeypatch):
-        # In this example, we define a exit_noop() function
-        # that simply does nothing, and then use the monkeypatch.setattr()
-        # method to replace the sys.exit() function with exit_noop() during the test.
-        # This way, if the program calls sys.exit(), it will be replaced with the
-        # no-op function and the test will continue to run instead of exiting.
-        def exit_noop(status):
-            pass
-
-        # replace sys.exit with exit_noop
-        monkeypatch.setattr(sys, "exit", exit_noop)
-
+    def test_design_metal(self):
         qubit_grid = np.array(
             [
                 [-1, -1, -1, 0, -1, -1, -1, 1, -1, -1, -1],
@@ -38,5 +27,6 @@ class TestDesign:
             design_backend="metal",
             qubit_grid=qubit_grid,
             qubit_frequencies=qubit_frequencies,
+            display_gui=True,
         )
-        design._design_metal()
+        design._design_metal(display_gui=True)

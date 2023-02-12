@@ -6,6 +6,7 @@ from mqhad.designer.qubit_connection.metal import (
     RouteMeanderConnector as MetalRouteMeanderConnector,
 )
 from mqhad.designer.launchpad.metal import Launchpad as MetalLaunchpad
+from mqhad.designer.capacitor.metal import Capacitor as MetalCapacitor
 from qiskit_metal import MetalGUI
 import numpy as np
 
@@ -16,16 +17,18 @@ class Design(DesignBase):
         design_backend: str = "metal",
         qubit_grid: np.ndarray = np.array([]),
         qubit_frequencies: np.ndarray = np.array([]),
+        display_gui: bool = False,
     ):
         self._design_backend = design_backend
         self._qubit_grid = qubit_grid
         self._qubit_frequencies = qubit_frequencies
+        self._display_gui = display_gui
 
     def design(self):
         if self._design_backend == "metal":
-            self._design_metal()
+            self._design_metal(display_gui=self._display_gui)
 
-    def _design_metal(self):
+    def _design_metal(self, display_gui: bool = False):
         design = MetalCanvas().get_canvas()
         qubits = MetalTransmonPocket6Qubit(
             design, self._qubit_grid
@@ -34,8 +37,19 @@ class Design(DesignBase):
             design, self._qubit_grid, self._qubit_frequencies
         ).generate_qubit_connection()
         launchpads = MetalLaunchpad(design, self._qubit_grid).generate_launchpad()
-        gui = MetalGUI(design)
-        q_app = gui.qApp
-        gui.rebuild()
-        gui.autoscale()
-        sys.exit(q_app.exec_())
+        capacitors = MetalCapacitor(design, self._qubit_grid).generate_capacitor()
+
+        if display_gui == True:
+            # We define a exit_no_operation() function that simply does nothing, and then use
+            # the monkeypatch.setattr() method to replace the sys.exit() function with exit_noop() during the test.
+            # This way, if the program calls sys.exit(), it will be replaced with the
+            # no-op function and the test will continue to run instead of exiting.
+            def exit_no_operation(status):
+                pass
+
+            gui = MetalGUI(design)
+            q_app = gui.qApp
+            gui.rebuild()
+            gui.autoscale()
+            sys.exit = exit_no_operation
+            sys.exit(q_app.exec_())
