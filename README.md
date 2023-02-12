@@ -38,9 +38,11 @@ The CLI will generate the high-level architecture of the placement of qubits in 
 
 ## Experimental Feature
 
-Explanation on YieldSimulator2 - Vectorized - Faster in large circuit - need tests to prove
+Yield simulation that is used in frequency allocation to detect common collisions in frequency allocation. The image below from ([G. Li, Y. Ding and Y. Xie](https://arxiv.org/abs/1911.12879)) lists the conditions and their thresholds.
 
-Yield simulation that is used in frequency allocation to detect common collisions in frequency allocation.
+![frequency collision conditions](docs/images/frequency_collision_conditions.png)
+
+In this toolkit, a new vectorized yield simulator called YieldSimulator2 is implemented. It is still experimental as the performance for the yield simulator needs to be benchmarked. It's hypothesized that the new yield simulator can handle large quantum hardware layout given it's vectorized nature. See [Future Improvements](#future-improvements).
 
 ## FAQs
 
