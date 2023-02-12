@@ -49,7 +49,7 @@ class RouteMeanderConnector(QubitConnectionBase):
                             vertical_start_pin_ref,
                             vertical_end_pin_ref,
                             meander_asymmetry,
-                        ) = self._get_upward_connection_parameters(x, y)
+                        ) = self._get_upward_connection_configuration(x, y)
 
                         connectorAD = RouteMeander(
                             self._design,
@@ -88,7 +88,7 @@ class RouteMeanderConnector(QubitConnectionBase):
                             horizontal_start_pin_ref,
                             horizontal_end_pin_ref,
                             jogs_start,
-                        ) = self._get_sideway_connection_parameters(x, y)
+                        ) = self._get_sideway_connection_configuration(x, y)
 
                         connectorBC = RouteMeander(
                             self._design,
@@ -120,7 +120,7 @@ class RouteMeanderConnector(QubitConnectionBase):
 
         return resonators
 
-    def _get_upward_connection_parameters(self, x, y):
+    def _get_upward_connection_configuration(self, x, y):
         if x % 2 == 0:
             if y % 2 == 0:
                 vertical_start_pin_ref = "B0"
@@ -141,7 +141,7 @@ class RouteMeanderConnector(QubitConnectionBase):
                 meander_asymmetry = "700um"
         return vertical_start_pin_ref, vertical_end_pin_ref, meander_asymmetry
 
-    def _get_sideway_connection_parameters(self, x, y):
+    def _get_sideway_connection_configuration(self, x, y):
         if y % 2 == 0:
             # even lines, [0,2,...]
             if x % 2 == 0:
