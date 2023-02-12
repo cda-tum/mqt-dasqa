@@ -1,4 +1,5 @@
 import sys
+from typing import Any
 from mqhad.designer.design_base import DesignBase
 from mqhad.designer.canvas.metal import Canvas as MetalCanvas
 from mqhad.designer.qubit.metal import TransmonPocket6Qubit as MetalTransmonPocket6Qubit
@@ -32,35 +33,41 @@ class Design(DesignBase):
 
     def design(self):
         if self._design_backend == "metal":
-            self._design_metal(display_gui=self._display_gui)
+            return self._design_metal(display_gui=self._display_gui)
 
-    def _design_metal(self, display_gui: bool = False):
+    def _design_metal(self, display_gui: bool = False) -> Any:
         print("Initializing Metal Canvas...")
         design = MetalCanvas().get_canvas()
 
+        result = {}
+
         print("Generating qubits...")
-        qubits = MetalTransmonPocket6Qubit(
+        result["qubits"] = MetalTransmonPocket6Qubit(
             design, self._qubit_grid
         ).generate_qubit_layout()
 
         print("Generating qubit connections...")
-        qubit_connections = MetalRouteMeanderConnector(
+        result["qubit_connections"] = MetalRouteMeanderConnector(
             design, self._qubit_grid, self._qubit_frequencies
         ).generate_qubit_connection()
 
         print("Generating launchpads...")
-        launchpads = MetalLaunchpad(design, self._qubit_grid).generate_launchpad()
+        result["launchpads"] = MetalLaunchpad(
+            design, self._qubit_grid
+        ).generate_launchpad()
 
         print("Generating capacitors...")
-        capacitors = MetalCapacitor(design, self._qubit_grid).generate_capacitor()
+        result["capacitors"] = MetalCapacitor(
+            design, self._qubit_grid
+        ).generate_capacitor()
 
         print("Generating qubit-capacitor connections...")
-        qubit_capacitor_connections = MetalQubitCapacitorConnector(
+        result["qubit_capacitor_connections"] = MetalQubitCapacitorConnector(
             design, self._qubit_grid
         ).generate_qubit_capacitor_connection()
 
         print("Generating capacitor-launchpad connections...")
-        capacitor_launchpad_connections = MetalCapacitorLaunchpadConnector(
+        result["capacitor_launchpad_connections"] = MetalCapacitorLaunchpadConnector(
             design, self._qubit_grid
         ).generate_capacitor_launchpad_connection()
 
@@ -74,7 +81,11 @@ class Design(DesignBase):
 
             gui = MetalGUI(design)
             q_app = gui.qApp
+            print("Building GUI...")
             gui.rebuild()
             gui.autoscale()
+            print("GUI built.")
             sys.exit = exit_no_operation
             sys.exit(q_app.exec_())
+
+        return result
