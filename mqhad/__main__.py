@@ -2,6 +2,7 @@ import argparse
 import os
 import sys
 from mqhad.architecture_generator.generator import Generator
+from mqhad.designer.design import Design
 from qiskit import QuantumCircuit
 
 
@@ -14,7 +15,15 @@ def flow(args):
     print("#### Architecture generated ####")
     print("Qubit grid:", qubit_grid)
     print("Qubit frequencies:", qubit_frequencies)
-    print("#### Generation ended ####")
+    print("#### Start generating physical design ####")
+    design = Design(
+        design_backend="metal",
+        qubit_grid=qubit_grid,
+        qubit_frequencies=qubit_frequencies,
+        display_gui=True,
+    )
+    design.design()
+    print("#### Physical design generated ####")
 
 
 def main(args=None):
