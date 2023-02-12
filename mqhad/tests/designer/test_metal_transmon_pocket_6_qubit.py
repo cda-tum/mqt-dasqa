@@ -1,9 +1,7 @@
 from collections import OrderedDict
-from unittest.mock import MagicMock
+from unittest.mock import patch, MagicMock
 import numpy as np
-from mqhad.designer.qubit.metal import TransmonPocket6Qubit
 from qiskit_metal.designs import DesignPlanar
-from qiskit_metal.qlibrary.qubits.transmon_pocket_6 import TransmonPocket6
 
 
 class TestTransmonPocket6Qubit:
@@ -350,31 +348,37 @@ class TestTransmonPocket6Qubit:
             ]
         )
 
+    def test_generate_qubits(self):
+        with patch(
+            "qiskit_metal.qlibrary.qubits.transmon_pocket_6.TransmonPocket6"
+        ) as mock_class:
+            from mqhad.designer.qubit.metal import TransmonPocket6Qubit
+
+            mock_class.return_value = object
+            qubit = TransmonPocket6Qubit()
+            qubits = qubit._generate_qubits(None, self.qubit_grid, self.pins_to_remove)
+            assert len(qubits) == 27
+
     def test_generate_qubit_layout(self):
+        from mqhad.designer.qubit.metal import TransmonPocket6Qubit
+
         design = DesignPlanar()
         qubit = TransmonPocket6Qubit()
         qubit._get_open_qubit_pins = MagicMock(return_value=self.pins_to_remove)
-        qubit._generate_qubits = MagicMock(
-            return_value=[
-                TransmonPocket6(design),
-                TransmonPocket6(design),
-            ]
-        )
+        qubit._generate_qubits = MagicMock(return_value=[object] * 2)
         qubits = qubit.generate_qubit_layout()
         assert len(qubits) == 2
 
-    def test_generate_qubits(self):
-        design = DesignPlanar()
-        qubit = TransmonPocket6Qubit()
-        qubits = qubit._generate_qubits(design, self.qubit_grid, self.pins_to_remove)
-        assert len(qubits) == np.sum(self.qubit_grid != -1)
-
     def test_get_open_qubit_pins(self):
+        from mqhad.designer.qubit.metal import TransmonPocket6Qubit
+
         qubit = TransmonPocket6Qubit()
         open_qubit_pins = qubit._get_open_qubit_pins(self.qubit_grid)
         assert open_qubit_pins == self.pins_to_remove
 
     def test_get_qubit(self):
+        from mqhad.designer.qubit.metal import TransmonPocket6Qubit
+
         qubit = TransmonPocket6Qubit()
         assert 0 == qubit._get_qubit(self.qubit_grid, 0, 3)
         assert -1 == qubit._get_qubit(self.qubit_grid, 0, 0)
