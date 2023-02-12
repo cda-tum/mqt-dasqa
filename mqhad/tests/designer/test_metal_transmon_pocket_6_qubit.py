@@ -348,6 +348,7 @@ class TestTransmonPocket6Qubit:
             ]
         )
 
+    # Patching test case needs to come first to ensure the patch is done correctly
     def test_generate_qubits(self):
         with patch(
             "qiskit_metal.qlibrary.qubits.transmon_pocket_6.TransmonPocket6"
