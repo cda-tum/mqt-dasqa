@@ -84,7 +84,7 @@ In this toolkit, a new vectorized yield simulator called [YieldSimulator2](mqhad
 
 - [ ] Make it easy for user to configure which yield simulator they want to use
 
-- [ ] Experiment further speed up in YieldSimulator2. For instance, using JAX, jit, etc. The initial mask creation takes a bit time. Maybe the itertools.combinations can be improved; <https://stackoverflow.com/a/16008578/1893470>.
+- [ ] Experiment further speed up in YieldSimulator2. For instance, using JAX, jit, etc. The initial mask creation takes a bit of time. Maybe the `itertools.combinations` can be improved, taking inspiration from <https://stackoverflow.com/a/16008578/1893470>.
 
 - [ ] Currently Generator is expecting a Qiskit QuantumCircuit. This dependency can be removed to be more generic. Possibly, supporting other libraries' circuits, i.e: Cirq, Q#, etc.
 
