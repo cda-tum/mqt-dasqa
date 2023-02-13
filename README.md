@@ -54,9 +54,7 @@ The CLI will generate the high-level architecture of the placement of qubits in 
 
 ## Development
 
-1. Install required dependencies - `pip install -r requirements.txt`
-
-2. Install development dependencies - `pip install -r requirements-dev.txt`
+1. On top of normal installation, install development dependencies using `pip install -r requirements-dev.txt`
 
 ## Experimental Features
 
