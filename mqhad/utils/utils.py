@@ -27,3 +27,7 @@ class Utils:
     def load_yaml(path: str) -> dict:
         with open(path, "r") as f:
             return yaml.safe_load(f)
+
+    @staticmethod
+    def process_yaml(config: dict) -> dict:
+        pass
