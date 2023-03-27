@@ -1,4 +1,5 @@
 from typing import Any, Union
+import yaml
 
 
 class Utils:
@@ -21,3 +22,8 @@ class Utils:
                 return False
         else:
             return True
+
+    @staticmethod
+    def load_yaml(path: str) -> dict:
+        with open(path, "r") as f:
+            return yaml.safe_load(f)
