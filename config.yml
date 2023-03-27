@@ -1,0 +1,14 @@
+model:
+  qubit:
+    fQ:
+      pad_gap: models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl
+  resonator:
+
+target:
+  qubit:
+    specific:
+      Q_0:
+        fQ:
+    general:
+      EC/EQ: 50
+  
