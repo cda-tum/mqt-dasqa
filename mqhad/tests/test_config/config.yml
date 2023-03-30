@@ -9,7 +9,7 @@ target:
   qubit:
     specific:
       Q_0:
-        fQ:
+        fQ: 5.3
     general:
       EC/EQ: 50
   

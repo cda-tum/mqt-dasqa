@@ -29,5 +29,10 @@ class Utils:
             return yaml.safe_load(f)
 
     @staticmethod
-    def process_yaml(config: dict) -> dict:
-        pass
+    def process_config_dict(config: dict) -> dict:
+        tmp = config.copy()
+        qubit_specific = config["target"]["qubit"]["specific"]
+        qubit_general = config["target"]["qubit"]["general"]
+        for qubit, _ in qubit_specific.items():
+            qubit_specific[qubit].update(qubit_general)
+        return tmp

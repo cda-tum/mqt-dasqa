@@ -25,3 +25,26 @@ class TestUtils:
     def test_load_yaml(self):
         CONFIG_FILE_PATH = os.getcwd() + "/mqhad/tests/test_config/config.yml"
         Utils.load_yaml(CONFIG_FILE_PATH)
+
+    def test_process_config_dict(self):
+        CONFIG_FILE_PATH = os.getcwd() + "/mqhad/tests/test_config/config.yml"
+        config = Utils.load_yaml(CONFIG_FILE_PATH)
+        output = Utils.process_config_dict(config)
+        result = {
+            "model": {
+                "qubit": {
+                    "fQ": {
+                        "pad_gap": "models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                        "pad_height": "models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl",
+                    }
+                },
+                "resonator": None,
+            },
+            "target": {
+                "qubit": {
+                    "specific": {"Q_0": {"fQ": 5.3, "EC/EQ": 50}},
+                    "general": {"EC/EQ": 50},
+                }
+            },
+        }
+        assert output == result
