@@ -52,6 +52,10 @@ class Optimizer(OptimizerBase):
         tmp = config.copy()
         qubit_specific = config["target"]["qubit"]["specific"]
         qubit_general = config["target"]["qubit"]["general"]
+
+        if qubit_general == None:
+            return tmp
+
         for qubit, _ in qubit_specific.items():
             qubit_specific[qubit].update(qubit_general)
         return tmp

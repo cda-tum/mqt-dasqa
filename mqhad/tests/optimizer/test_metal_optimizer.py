@@ -9,6 +9,21 @@ class TestOptimizer:
 
         CONFIG_FILE_PATH = os.getcwd() + "/mqhad/tests/test_config/config.yml"
         optimizer = Optimizer()
+        config = {
+            "model": {
+                "qubit": {
+                    "fQ": {
+                        "pad_gap": "models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                        "pad_height": "models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl",
+                    }
+                },
+                "resonator": None,
+            },
+            "target": {
+                "qubit": {"specific": {"Q_0": {"fQ": 5.3}}, "general": {"EC/EQ": 50}},
+                "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
+            },
+        }
         result = {
             "model": {
                 "qubit": {
@@ -30,8 +45,51 @@ class TestOptimizer:
                 },
             },
         }
-        dict_ = Utils.load_yaml(CONFIG_FILE_PATH)
-        output = optimizer._process_config_dict(dict_)
+        output = optimizer._process_config_dict(config)
+        assert output == result
+
+    def test_process_config_dict2(self):
+        # Test NoneType for config["target"]["qubit"]["general"]
+        from mqhad.designer.optimizer.metal import Optimizer
+
+        optimizer = Optimizer()
+        config = {
+            "model": {
+                "qubit": {
+                    "fQ": {
+                        "pad_gap": "models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                        "pad_height": "models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl",
+                    }
+                },
+                "resonator": None,
+            },
+            "target": {
+                "qubit": {"specific": {"Q_0": {"fQ": 5.3}}, "general": None},
+                "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
+            },
+        }
+        result = {
+            "model": {
+                "qubit": {
+                    "fQ": {
+                        "pad_gap": "models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                        "pad_height": "models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl",
+                    }
+                },
+                "resonator": None,
+            },
+            "target": {
+                "qubit": {
+                    "specific": {"Q_0": {"fQ": 5.3}},
+                    "general": None,
+                },
+                "resonator": {
+                    "specific": {"CU_0": {"fQ": 5.3}},
+                    "general": None,
+                },
+            },
+        }
+        output = optimizer._process_config_dict(config)
         assert output == result
 
     def test_unpack_models(self):
