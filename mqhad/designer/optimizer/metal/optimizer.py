@@ -6,12 +6,7 @@ from qiskit_metal.designs import DesignPlanar
 
 
 class Optimizer(OptimizerBase):
-    def __init__(
-        self,
-        design=None,  #: DesignPlanar = None,
-        targets: dict = {},
-        models: dict = {},
-    ):
+    def __init__(self, design=None, config: dict = {}):  #: DesignPlanar = None,
         """Optimizer class for metal designs
 
         Args:
@@ -43,13 +38,23 @@ class Optimizer(OptimizerBase):
             }
         """
         self._design = design
-        self._models = models
-        self._targets = targets
+        self._config = config
 
     def optimize(self):
+        processed_config = self._process_config_dict(self._config)
+        self._targets = processed_config["target"]
+        self._models = processed_config["model"]
         self._models = self._unpack_models()
         self._optimize_qubits()
         self._optimize_resonators()
+
+    def _process_config_dict(self, config: dict) -> tuple[dict, dict]:
+        tmp = config.copy()
+        qubit_specific = config["target"]["qubit"]["specific"]
+        qubit_general = config["target"]["qubit"]["general"]
+        for qubit, _ in qubit_specific.items():
+            qubit_specific[qubit].update(qubit_general)
+        return tmp
 
     def _unpack_models(self):
         models = copy.deepcopy(self._models)

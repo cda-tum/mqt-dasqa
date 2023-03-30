@@ -1,7 +1,39 @@
 from unittest.mock import patch, MagicMock
+import os
+from mqhad.utils import Utils
 
 
 class TestOptimizer:
+    def test_process_config_dict(self):
+        from mqhad.designer.optimizer.metal import Optimizer
+
+        CONFIG_FILE_PATH = os.getcwd() + "/mqhad/tests/test_config/config.yml"
+        optimizer = Optimizer()
+        result = {
+            "model": {
+                "qubit": {
+                    "fQ": {
+                        "pad_gap": "models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                        "pad_height": "models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl",
+                    }
+                },
+                "resonator": None,
+            },
+            "target": {
+                "qubit": {
+                    "specific": {"Q_0": {"fQ": 5.3, "EC/EQ": 50}},
+                    "general": {"EC/EQ": 50},
+                },
+                "resonator": {
+                    "specific": {"CU_0": {"fQ": 5.3}},
+                    "general": None,
+                },
+            },
+        }
+        dict_ = Utils.load_yaml(CONFIG_FILE_PATH)
+        output = optimizer._process_config_dict(dict_)
+        assert output == result
+
     def test_unpack_models(self):
         # DesignPlanar needs to be patched first as builtins.open messes up
         # Matplotlib which is supposedly used by DesignPlanar
@@ -21,7 +53,8 @@ class TestOptimizer:
                 "resonator": None,
             }
 
-            optimizer = Optimizer(models=models)
+            optimizer = Optimizer()
+            optimizer._models = models
             unpacked_models = optimizer._unpack_models()
             assert unpacked_models == {
                 "qubit": {
