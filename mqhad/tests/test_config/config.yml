@@ -12,4 +12,9 @@ target:
         fQ: 5.3
     general:
       EC/EQ: 50
+  resonator:
+    specific:
+      CU_0:
+        fQ: 5.3
+    general:
   

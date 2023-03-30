@@ -44,7 +44,11 @@ class TestUtils:
                 "qubit": {
                     "specific": {"Q_0": {"fQ": 5.3, "EC/EQ": 50}},
                     "general": {"EC/EQ": 50},
-                }
+                },
+                "resonator": {
+                    "specific": {"CU_0": {"fQ": 5.3}},
+                    "general": None,
+                },
             },
         }
         assert output == result
