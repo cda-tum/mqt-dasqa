@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 
 class TestOptimizer:
@@ -32,3 +32,38 @@ class TestOptimizer:
                 },
                 "resonator": None,
             }
+
+    def test_optimize_qubits(self):
+        from mqhad.designer.optimizer.metal import Optimizer
+
+        optimizer = Optimizer()
+
+        optimizer._targets = {
+            "qubit": {
+                "specific": {"Q_0": {"fQ": 5.3}},
+                "general": None,
+            },
+            "resonator": {
+                "specific": None,
+                "general": None,
+            },
+        }
+        mock_model = MagicMock()
+        mock_model.predict.return_value = 10.0
+
+        optimizer._models = {
+            "qubit": {
+                "fQ": {
+                    "pad_gap": mock_model,
+                    "pad_height": mock_model,
+                }
+            },
+            "resonator": None,
+        }
+
+        mock_design = MagicMock(name="mock_design")
+        optimizer._design = mock_design
+
+        optimizer._optimize_qubits()
+
+        assert mock_design.components.__getitem__().options.__setitem__.call_count == 2

@@ -60,11 +60,13 @@ class Optimizer(OptimizerBase):
         return models
 
     def _optimize_qubits(self):
-        for qubit, parameters in self._targets["qubit"].items():
+        for qubit, parameters in self._targets["qubit"]["specific"].items():
             for parameter, target_value in parameters.items():
                 for _, model in self._models["qubit"][parameter].items():
                     geometry_value = model.predict(target_value)
-                    self._design.components[qubit].options[parameter] = geometry_value
+                    self._design.components[qubit].options[
+                        parameter
+                    ] = f"{geometry_value}um"
 
     def _optimize_resonators(self):
         pass
