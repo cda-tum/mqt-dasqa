@@ -65,14 +65,15 @@ class Optimizer(OptimizerBase):
         qubit_models = models["qubit"]
         for parameter, geometries in qubit_models.items():
             for geometry, model_path in geometries.items():
-                qubit_models[parameter][geometry] = pickle.load(model_path)
+                with open(model_path, "rb") as file:
+                    qubit_models[parameter][geometry] = pickle.load(file)
         return models
 
     def _optimize_qubits(self):
         for qubit, parameters in self._targets["qubit"]["specific"].items():
             for parameter, target_value in parameters.items():
                 for _, model in self._models["qubit"][parameter].items():
-                    geometry_value = model.predict(target_value)
+                    geometry_value = model.predict([[target_value]])[0]
                     self._design.components[qubit].options[
                         parameter
                     ] = f"{geometry_value}um"

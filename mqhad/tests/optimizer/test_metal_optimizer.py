@@ -1,6 +1,7 @@
 from unittest.mock import patch, MagicMock
 import os
 from mqhad.utils import Utils
+from sklearn.pipeline import Pipeline
 
 
 class TestOptimizer:
@@ -123,6 +124,25 @@ class TestOptimizer:
                 },
                 "resonator": None,
             }
+
+    def test_unpack_models2(self):
+        # Real model file is used
+        from mqhad.designer.optimizer.metal import Optimizer
+
+        models = {
+            "qubit": {
+                "fQ": {
+                    "pad_gap": os.getcwd()
+                    + "/mqhad/tests/test_model/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                }
+            },
+            "resonator": None,
+        }
+
+        optimizer = Optimizer()
+        optimizer._models = models
+        unpacked_models = optimizer._unpack_models()
+        assert type(unpacked_models["qubit"]["fQ"]["pad_gap"]) == Pipeline
 
     def test_optimize_qubits(self):
         from mqhad.designer.optimizer.metal import Optimizer

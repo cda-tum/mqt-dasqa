@@ -1,8 +1,8 @@
 model:
   qubit:
     fQ:
-      pad_gap: models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl
-      pad_height: models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl
+      pad_gap: /Users/jagan/Codes/mqhad/models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl
+      pad_height: /Users/jagan/Codes/mqhad/models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl
   resonator:
 
 target:

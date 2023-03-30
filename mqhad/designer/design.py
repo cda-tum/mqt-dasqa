@@ -14,6 +14,7 @@ from mqhad.designer.qubit_capacitor_connector.metal import (
 from mqhad.designer.capacitor_launchpad_connector.metal import (
     CapacitorLaunchpadConnector as MetalCapacitorLaunchpadConnector,
 )
+from mqhad.designer.optimizer.metal import Optimizer as MetalOptimizer
 from qiskit_metal import MetalGUI
 import numpy as np
 
@@ -25,11 +26,13 @@ class Design(DesignBase):
         qubit_grid: np.ndarray = np.array([]),
         qubit_frequencies: np.ndarray = np.array([]),
         display_gui: bool = False,
+        config: dict = {},
     ):
         self._design_backend = design_backend
         self._qubit_grid = qubit_grid
         self._qubit_frequencies = qubit_frequencies
         self._display_gui = display_gui
+        self._config = config
 
     def design(self):
         if self._design_backend == "metal":
@@ -71,6 +74,9 @@ class Design(DesignBase):
             design, self._qubit_grid
         ).generate_capacitor_launchpad_connection()
 
+        print("Optimizing design...")
+        MetalOptimizer(design, self._config).optimize()
+
         if display_gui == True:
             # We define a exit_no_operation() function that simply does nothing, and then use
             # the monkeypatch.setattr() method to replace the sys.exit() function with exit_noop() during the test.
@@ -81,11 +87,13 @@ class Design(DesignBase):
 
             gui = MetalGUI(design)
             q_app = gui.qApp
-            print("Building GUI...")
+            print("Design completed. Building GUI...")
             gui.rebuild()
             gui.autoscale()
             print("GUI built.")
             sys.exit = exit_no_operation
             sys.exit(q_app.exec_())
+        else:
+            print("Design completed.")
 
         return result

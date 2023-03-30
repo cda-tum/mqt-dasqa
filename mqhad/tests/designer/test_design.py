@@ -1,4 +1,4 @@
-import sys
+import os
 from unittest.mock import MagicMock
 from mqhad.designer.design import Design
 import numpy as np
@@ -23,10 +23,26 @@ class TestDesign:
             ]
         )
         qubit_frequencies = np.linspace(5.0, 5.1, 27)
+        config = {
+            "model": {
+                "qubit": {
+                    "fQ": {
+                        "pad_gap": os.getcwd()
+                        + "/mqhad/tests/test_model/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                    }
+                },
+                "resonator": None,
+            },
+            "target": {
+                "qubit": {"specific": {"Q_0": {"fQ": 5.3}}, "general": None},
+                "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
+            },
+        }
         design = Design(
             design_backend="metal",
             qubit_grid=qubit_grid,
             qubit_frequencies=qubit_frequencies,
             display_gui=True,
+            config=config,
         )
         design._design_metal(display_gui=True)
