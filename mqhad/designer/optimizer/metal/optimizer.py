@@ -49,9 +49,9 @@ class Optimizer(OptimizerBase):
         self._optimize_resonators()
 
     def _process_config_dict(self, config: dict) -> tuple[dict, dict]:
-        tmp = config.copy()
-        qubit_specific = config["target"]["qubit"]["specific"]
-        qubit_general = config["target"]["qubit"]["general"]
+        tmp = copy.deepcopy(config)
+        qubit_specific = tmp["target"]["qubit"]["specific"]
+        qubit_general = tmp["target"]["qubit"]["general"]
 
         if qubit_general == None:
             return tmp
