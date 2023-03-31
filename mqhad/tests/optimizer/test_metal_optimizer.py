@@ -23,7 +23,7 @@ class TestOptimizer:
                 "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
             },
         }
-        qubit_frequencies = [5.3, 5.8]
+        qubit_frequencies = [5.2, 5.8]
         result = {
             "model": {
                 "qubit": {

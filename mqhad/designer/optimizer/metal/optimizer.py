@@ -65,6 +65,12 @@ class Optimizer(OptimizerBase):
         qubit_specific = tmp["target"]["qubit"]["specific"]
         for i, qubit_frequency in enumerate(qubit_frequencies):
             qubit_name = f"Q_{i}"
+
+            # If qubit configuration already exist in config.yml
+            # don't overwrite it
+            if qubit_name in qubit_specific:
+                continue
+
             qubit_specific[qubit_name] = {}
             qubit_specific[qubit_name]["fQ"] = qubit_frequency
         return tmp
