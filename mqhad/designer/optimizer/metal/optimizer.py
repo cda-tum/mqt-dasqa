@@ -6,42 +6,20 @@ from qiskit_metal.designs import DesignPlanar
 
 
 class Optimizer(OptimizerBase):
-    def __init__(self, design=None, config: dict = {}):  #: DesignPlanar = None,
+    def __init__(self, design=None, qubit_frequencies: np.ndarray = [], config: dict = {}):  #: DesignPlanar = None,
         """Optimizer class for metal designs
 
         Args:
             design (DesignPlanar): Metal design
-            targets (dict): Target values for each target
-            {
-                "target": {
-                    "qubit": {
-                        "specific": {"Q_0": {"fQ": 5.3, "EC/EQ": 50}},
-                        "general": {"EC/EQ": 50},
-                    },
-                    "resonator": {
-                        "specific": {"CU_0": {"fQ": 5.3}},
-                        "general": None,
-                    },
-                },
-            }
-            models (dict): Model paths for each target
-            {
-                "model": {
-                    "qubit": {
-                        "fQ": {
-                            "pad_gap": "models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
-                            "pad_height": "models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl",
-                        }
-                    },
-                    "resonator": None,
-                },
-            }
+            qubit_frequencies (np.ndarray, optional): Array of qubit frequencies
+            config (dict, optional): Config dict
         """
         self._design = design
+        self._qubit_frequences = qubit_frequencies
         self._config = config
 
     def optimize(self):
-        merged_config = self._merge_config_with_qubit_frequencies(self._config)
+        merged_config = self._merge_config_with_qubit_frequencies(self._qubit_frequences, self._config)
         processed_config = self._process_config(merged_config)
         self._targets = processed_config["target"]
         self._models = processed_config["model"]

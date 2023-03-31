@@ -75,7 +75,7 @@ class Design(DesignBase):
         ).generate_capacitor_launchpad_connection()
 
         print("Optimizing design...")
-        MetalOptimizer(design, self._config).optimize()
+        MetalOptimizer(design, self._qubit_frequencies, self._config).optimize()
 
         if display_gui == True:
             # We define a exit_no_operation() function that simply does nothing, and then use

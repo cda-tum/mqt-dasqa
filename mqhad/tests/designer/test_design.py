@@ -34,7 +34,7 @@ class TestDesign:
                 "resonator": None,
             },
             "target": {
-                "qubit": {"specific": {"Q_0": {"fQ": 5.3}}, "general": None},
+                "qubit": {"specific": None, "general": None},
                 "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
             },
         }
