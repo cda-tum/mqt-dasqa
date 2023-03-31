@@ -47,6 +47,50 @@ class TestOptimizer:
         )
         assert output == result
 
+    def test_merge_config_dict_with_qubit_frequencies2(self):
+        # Test when qubit specific config is None
+        from mqhad.designer.optimizer.metal import Optimizer
+
+        optimizer = Optimizer()
+        config = {
+            "model": {
+                "qubit": {
+                    "fQ": {
+                        "pad_gap": "models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                        "pad_height": "models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl",
+                    }
+                },
+                "resonator": None,
+            },
+            "target": {
+                "qubit": {"specific": None, "general": {"EC/EQ": 50}},
+                "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
+            },
+        }
+        qubit_frequencies = [5.2, 5.8]
+        result = {
+            "model": {
+                "qubit": {
+                    "fQ": {
+                        "pad_gap": "models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                        "pad_height": "models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl",
+                    }
+                },
+                "resonator": None,
+            },
+            "target": {
+                "qubit": {
+                    "specific": {"Q_0": {"fQ": 5.2}, "Q_1": {"fQ": 5.8}},
+                    "general": {"EC/EQ": 50},
+                },
+                "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
+            },
+        }
+        output = optimizer._merge_config_dict_with_qubit_frequencies(
+            qubit_frequencies, config
+        )
+        assert output == result
+
     def test_process_config_dict(self):
         from mqhad.designer.optimizer.metal import Optimizer
 

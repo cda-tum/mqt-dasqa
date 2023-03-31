@@ -63,6 +63,10 @@ class Optimizer(OptimizerBase):
         """
         tmp = copy.deepcopy(config)
         qubit_specific = tmp["target"]["qubit"]["specific"]
+        if qubit_specific is None:
+            qubit_specific = {}
+            tmp["target"]["qubit"]["specific"] = qubit_specific
+
         for i, qubit_frequency in enumerate(qubit_frequencies):
             qubit_name = f"Q_{i}"
 
