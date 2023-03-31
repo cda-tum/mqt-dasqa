@@ -9,7 +9,7 @@ from qiskit import QuantumCircuit
 def flow(args):
     absolute_path = os.path.abspath(args.file_path)
     if os.path.exists(absolute_path) == False:
-        print("File does not exist. Exiting...")
+        print("Circuit file does not exist. Exiting...")
         return
 
     print("#### Start generating architecture ####")

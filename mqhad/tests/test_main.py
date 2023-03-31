@@ -35,4 +35,4 @@ class TestMain:
         flow(args)
         # Capture the stdout and stderr output
         out, err = capfd.readouterr()
-        assert out == "File does not exist. Exiting...\n"
+        assert out == "Circuit file does not exist. Exiting...\n"
