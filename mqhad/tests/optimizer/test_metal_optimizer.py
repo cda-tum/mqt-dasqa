@@ -236,7 +236,12 @@ class TestOptimizer:
 
         optimizer._targets = {
             "qubit": {
-                "specific": {"Q_0": {"fQ": 5.3}},
+                "specific": {
+                    "Q_0": {
+                        "fQ": 5.3,
+                        "EC/EQ": 50,  # Test case for not in list of supported models
+                    }
+                },
                 "general": None,
             },
             "resonator": {

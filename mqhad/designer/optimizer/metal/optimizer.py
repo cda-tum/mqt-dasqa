@@ -6,7 +6,9 @@ from qiskit_metal.designs import DesignPlanar
 
 
 class Optimizer(OptimizerBase):
-    def __init__(self, design=None, qubit_frequencies: np.ndarray = [], config: dict = {}):  #: DesignPlanar = None,
+    def __init__(
+        self, design=None, qubit_frequencies: np.ndarray = [], config: dict = {}
+    ):  #: DesignPlanar = None,
         """Optimizer class for metal designs
 
         Args:
@@ -19,7 +21,9 @@ class Optimizer(OptimizerBase):
         self._config = config
 
     def optimize(self):
-        merged_config = self._merge_config_with_qubit_frequencies(self._qubit_frequences, self._config)
+        merged_config = self._merge_config_with_qubit_frequencies(
+            self._qubit_frequences, self._config
+        )
         processed_config = self._process_config(merged_config)
         self._targets = processed_config["target"]
         self._models = processed_config["model"]
@@ -89,7 +93,10 @@ class Optimizer(OptimizerBase):
     def _optimize_qubits(self):
         for qubit, parameters in self._targets["qubit"]["specific"].items():
             for parameter, target_value in parameters.items():
-                for _, model in self._models["qubit"][parameter].items():
+                qubit_models = self._models["qubit"]
+                if parameter not in qubit_models:
+                    continue
+                for _, model in qubit_models[parameter].items():
                     geometry_value = model.predict([[target_value]])[0]
                     self._design.components[qubit].options[
                         parameter
