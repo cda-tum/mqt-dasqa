@@ -245,7 +245,7 @@ class TestOptimizer:
             },
         }
         mock_model = MagicMock()
-        mock_model.predict.return_value = 10.0
+        mock_model.predict.return_value = [10.0]
 
         optimizer._models = {
             "qubit": {
