@@ -41,7 +41,7 @@ python -m pip install --no-deps -e .
 
 ```text
 Usage:
-    mqhad --file-path [PATH_TO_QASM_2.0_FILE]
+    mqhad --file-path [PATH_TO_QASM_2.0_FILE] --config-file-path [PATH_TO_CONFIG_FILE]
 ```
 
 The CLI will generate the high-level architecture of the placement of qubits in a 2D square-lattice and the corresponding qubit frequencies. The Metal GUI is invoked at the end as following where there is an option to save the design as a Python script.
@@ -50,7 +50,7 @@ The CLI will generate the high-level architecture of the placement of qubits in 
 
 ### Testing the Package
 
-1. There is a test circuit that could be used to test the package. Navigate to `mqhad` directory and execute `mqhad --file-path ./mqhad/tests/test_circuit/circuit1.qasm`
+1. There is a test circuit that could be used to test the package. Navigate to `mqhad` directory and execute `mqhad --file-path ./mqhad/tests/test_circuit/circuit1.qasm --config-file-path ./mqhad/tests/test_config/config.yml`
 
 ## Development
 
