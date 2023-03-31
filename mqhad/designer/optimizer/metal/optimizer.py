@@ -1,7 +1,7 @@
 from ..optimizer_base import OptimizerBase
 import copy
 import pickle
-
+import numpy as np
 from qiskit_metal.designs import DesignPlanar
 
 
@@ -41,14 +41,43 @@ class Optimizer(OptimizerBase):
         self._config = config
 
     def optimize(self):
-        processed_config = self._process_config_dict(self._config)
+        merged_dict = self._merge_config_dict_with_qubit_frequencies(self._config)
+        processed_config = self._process_config_dict(merged_dict)
         self._targets = processed_config["target"]
         self._models = processed_config["model"]
         self._models = self._unpack_models()
         self._optimize_qubits()
         self._optimize_resonators()
 
-    def _process_config_dict(self, config: dict) -> tuple[dict, dict]:
+    def _merge_config_dict_with_qubit_frequencies(
+        self, qubit_frequencies: np.ndarray, config: dict
+    ) -> dict:
+        """Merge config dict with qubit frequencies
+
+        Args:
+            qubit_frequencies (np.ndarray): Array of qubit frequencies
+            config (dict): Config dict
+
+        Returns:
+            dict: Config dict with qubit frequencies
+        """
+        tmp = copy.deepcopy(config)
+        qubit_specific = tmp["target"]["qubit"]["specific"]
+        for i, qubit_frequency in enumerate(qubit_frequencies):
+            qubit_name = f"Q_{i}"
+            qubit_specific[qubit_name] = {}
+            qubit_specific[qubit_name]["fQ"] = qubit_frequency
+        return tmp
+
+    def _process_config_dict(self, config: dict) -> dict:
+        """Merge general component parameters with specific component parameters
+
+        Args:
+            config (dict): config dict
+
+        Returns:
+            dict: processed config
+        """
         tmp = copy.deepcopy(config)
         qubit_specific = tmp["target"]["qubit"]["specific"]
         qubit_general = tmp["target"]["qubit"]["general"]
