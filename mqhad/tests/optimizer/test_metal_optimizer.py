@@ -1,6 +1,5 @@
 from unittest.mock import patch, MagicMock
 import os
-from mqhad.utils import Utils
 from sklearn.pipeline import Pipeline
 
 
@@ -8,7 +7,6 @@ class TestOptimizer:
     def test_process_config_dict(self):
         from mqhad.designer.optimizer.metal import Optimizer
 
-        CONFIG_FILE_PATH = os.getcwd() + "/mqhad/tests/test_config/config.yml"
         optimizer = Optimizer()
         config = {
             "model": {
