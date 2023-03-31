@@ -41,15 +41,15 @@ class Optimizer(OptimizerBase):
         self._config = config
 
     def optimize(self):
-        merged_dict = self._merge_config_dict_with_qubit_frequencies(self._config)
-        processed_config = self._process_config_dict(merged_dict)
+        merged_config = self._merge_config_with_qubit_frequencies(self._config)
+        processed_config = self._process_config(merged_config)
         self._targets = processed_config["target"]
         self._models = processed_config["model"]
         self._models = self._unpack_models()
         self._optimize_qubits()
         self._optimize_resonators()
 
-    def _merge_config_dict_with_qubit_frequencies(
+    def _merge_config_with_qubit_frequencies(
         self, qubit_frequencies: np.ndarray, config: dict
     ) -> dict:
         """Merge config dict with qubit frequencies
@@ -79,7 +79,7 @@ class Optimizer(OptimizerBase):
             qubit_specific[qubit_name]["fQ"] = qubit_frequency
         return tmp
 
-    def _process_config_dict(self, config: dict) -> dict:
+    def _process_config(self, config: dict) -> dict:
         """Merge general component parameters with specific component parameters
 
         Args:

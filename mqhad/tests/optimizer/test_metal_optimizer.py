@@ -4,7 +4,7 @@ from sklearn.pipeline import Pipeline
 
 
 class TestOptimizer:
-    def test_merge_config_dict_with_qubit_frequencies(self):
+    def test_merge_config_with_qubit_frequencies(self):
         from mqhad.designer.optimizer.metal import Optimizer
 
         optimizer = Optimizer()
@@ -42,12 +42,12 @@ class TestOptimizer:
                 "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
             },
         }
-        output = optimizer._merge_config_dict_with_qubit_frequencies(
+        output = optimizer._merge_config_with_qubit_frequencies(
             qubit_frequencies, config
         )
         assert output == result
 
-    def test_merge_config_dict_with_qubit_frequencies2(self):
+    def test_merge_config_with_qubit_frequencies2(self):
         # Test when qubit specific config is None
         from mqhad.designer.optimizer.metal import Optimizer
 
@@ -86,12 +86,12 @@ class TestOptimizer:
                 "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
             },
         }
-        output = optimizer._merge_config_dict_with_qubit_frequencies(
+        output = optimizer._merge_config_with_qubit_frequencies(
             qubit_frequencies, config
         )
         assert output == result
 
-    def test_process_config_dict(self):
+    def test_process_config(self):
         from mqhad.designer.optimizer.metal import Optimizer
 
         optimizer = Optimizer()
@@ -131,10 +131,10 @@ class TestOptimizer:
                 },
             },
         }
-        output = optimizer._process_config_dict(config)
+        output = optimizer._process_config(config)
         assert output == result
 
-    def test_process_config_dict2(self):
+    def test_process_config2(self):
         # Test NoneType for config["target"]["qubit"]["general"]
         from mqhad.designer.optimizer.metal import Optimizer
 
@@ -175,7 +175,7 @@ class TestOptimizer:
                 },
             },
         }
-        output = optimizer._process_config_dict(config)
+        output = optimizer._process_config(config)
         assert output == result
 
     def test_unpack_models(self):
