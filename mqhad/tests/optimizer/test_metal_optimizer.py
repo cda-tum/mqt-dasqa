@@ -5,7 +5,7 @@ from sklearn.pipeline import Pipeline
 
 class TestOptimizer:
     def test_merge_config_with_qubit_frequencies(self):
-        from mqhad.designer.optimizer.metal import Optimizer
+        from mqhad.optimizer.metal import Optimizer
 
         optimizer = Optimizer()
         config = {
@@ -49,7 +49,7 @@ class TestOptimizer:
 
     def test_merge_config_with_qubit_frequencies2(self):
         # Test when qubit specific config is None
-        from mqhad.designer.optimizer.metal import Optimizer
+        from mqhad.optimizer.metal import Optimizer
 
         optimizer = Optimizer()
         config = {
@@ -92,7 +92,7 @@ class TestOptimizer:
         assert output == result
 
     def test_process_config(self):
-        from mqhad.designer.optimizer.metal import Optimizer
+        from mqhad.optimizer.metal import Optimizer
 
         optimizer = Optimizer()
         config = {
@@ -136,7 +136,7 @@ class TestOptimizer:
 
     def test_process_config2(self):
         # Test NoneType for config["target"]["qubit"]["general"]
-        from mqhad.designer.optimizer.metal import Optimizer
+        from mqhad.optimizer.metal import Optimizer
 
         optimizer = Optimizer()
         config = {
@@ -185,7 +185,7 @@ class TestOptimizer:
             "pickle.load"
         ) as mock_load:
             mock_load.return_value = "model_unpacked"
-            from mqhad.designer.optimizer.metal import Optimizer
+            from mqhad.optimizer.metal import Optimizer
 
             models = {
                 "qubit": {
@@ -212,7 +212,7 @@ class TestOptimizer:
 
     def test_unpack_models2(self):
         # Real model file is used
-        from mqhad.designer.optimizer.metal import Optimizer
+        from mqhad.optimizer.metal import Optimizer
 
         models = {
             "qubit": {
@@ -230,7 +230,7 @@ class TestOptimizer:
         assert type(unpacked_models["qubit"]["fQ"]["pad_gap"]) == Pipeline
 
     def test_optimize_qubits(self):
-        from mqhad.designer.optimizer.metal import Optimizer
+        from mqhad.optimizer.metal import Optimizer
 
         optimizer = Optimizer()
 
