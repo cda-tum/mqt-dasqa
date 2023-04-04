@@ -38,7 +38,8 @@ class Design(DesignBase):
 
     def _design_metal(self, display_gui: bool = False) -> Any:
         print("Initializing Metal Canvas...")
-        design = MetalCanvas().get_canvas()
+        canvas = MetalCanvas()
+        design = canvas.get_canvas()
 
         result = {}
 
@@ -72,6 +73,6 @@ class Design(DesignBase):
             design, self._qubit_grid
         ).generate_capacitor_launchpad_connection()
 
-        result["canvas"] = design
+        result["canvas"] = canvas
 
         return result
