@@ -1,5 +1,6 @@
 # MQHAD
 
+- Munich Quantum HArdware Designer (MQHAD)
 - Framework to encapsulate application-driven quantum hardware architecture
 - A reference implementation of the framework is provided in this repository
   - Modular and easily extensible
