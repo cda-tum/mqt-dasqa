@@ -34,7 +34,7 @@
       6. qubit_capacitor_connector - creates qubit to capacitor connections
       7. qubit_connector - creates qubit-to-qubit connections
    3. optimizer - optimizes geometries of layout to hit target parameters
-2. notebooks PLACEHOLDER - train statistical model to be stand-in for simulation - used by optimizer
+2. notebooks - train statistical model to be stand-in for simulation - used by optimizer
 
 ## Trying reference implementation
 
