@@ -54,8 +54,6 @@ def flow(args):
         design_backend="metal",
         qubit_grid=qubit_grid,
         qubit_frequencies=qubit_frequencies,
-        display_gui=display_gui,
-        config=config,
     )
     result = design.design()
     print("#### Physical design generated ####")

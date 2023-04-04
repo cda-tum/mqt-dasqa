@@ -23,20 +23,16 @@ class Design(DesignBase):
         design_backend: str = "metal",
         qubit_grid: np.ndarray = np.array([]),
         qubit_frequencies: np.ndarray = np.array([]),
-        display_gui: bool = False,
-        config: dict = {},
     ):
         self._design_backend = design_backend
         self._qubit_grid = qubit_grid
         self._qubit_frequencies = qubit_frequencies
-        self._display_gui = display_gui
-        self._config = config
 
     def design(self):
         if self._design_backend == "metal":
-            return self._design_metal(display_gui=self._display_gui)
+            return self._design_metal()
 
-    def _design_metal(self, display_gui: bool = False) -> Any:
+    def _design_metal(self) -> Any:
         print("Initializing Metal Canvas...")
         canvas = MetalCanvas()
         design = canvas.get_canvas()
