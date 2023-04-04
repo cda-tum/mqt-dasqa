@@ -33,9 +33,8 @@
       5. qubit - creates qubits
       6. qubit_capacitor_connector - creates qubit to capacitor connections
       7. qubit_connector - creates qubit-to-qubit connections
-      8. optimizer - optimizes geometries of layout to hit target parameters - :exclamation: NEED REFACTORING to move one level up in repository to be consistent with the steps in framework explained in paper
-   3. optimizer PLACEHOLDER - after refactoring 2.8
-   4. notebooks PLACEHOLDER - train statistical model to be stand-in for simulation - used by optimizer
+   3. optimizer - optimizes geometries of layout to hit target parameters
+2. notebooks PLACEHOLDER - train statistical model to be stand-in for simulation - used by optimizer
 
 ## Trying reference implementation
 
