@@ -88,4 +88,3 @@ The CLI will generate the high-level architecture of the placement of qubits in 
 >Q: Why am I seeing a critical error from qt about not controlling layer-backing?
 >
 >A: If you are seeing: CRITICAL [_qt_message_handler]: …. WARNING: Layer-backing can not be explicitly controlled on 10.14 when built against the 10.14 SDK … you are likely running a MAC OS version that has trouble with the libraries. Based on information that is available online, this problem does not appear to have a solution. However, it does not seem like this error affects Qiskit Metal’s functionality. If you find problem with this, you might want to try using an older version of the dependency packages, beginning with lowering your python version to 3.7.x.
-
