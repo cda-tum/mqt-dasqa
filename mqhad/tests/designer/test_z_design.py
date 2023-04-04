@@ -1,10 +1,10 @@
-import os
-import importlib
 from unittest.mock import MagicMock
 import numpy as np
 
 
-class TestDesign:
+# Need to be last tests executed for desinger module
+# because it import Design without patching
+class TestZDesign:
     def test_design(self):
         from mqhad.designer.design import Design
 
