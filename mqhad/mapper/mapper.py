@@ -25,7 +25,7 @@ class Mapper(MapperBase):
         qubit_frequencies: np.ndarray = np.array([]),
     ):
         self._design_backend = design_backend
-        self._qubit_grid = qubit_grid
+        self._qubit_grid = qubit_grid[::-1]
         self._qubit_frequencies = qubit_frequencies
 
     def map(self):
