@@ -2,7 +2,7 @@ import argparse
 import os
 import sys
 import yaml
-from mqhad.architecture_generator.generator import Generator
+from mqhad.architecture_generator1.generator import Generator
 from mqhad.designer.design import Design
 from mqhad.optimizer.optimizer import Optimizer
 from qiskit import QuantumCircuit

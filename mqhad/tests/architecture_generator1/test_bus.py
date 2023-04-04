@@ -1,5 +1,5 @@
 import numpy as np
-from mqhad.architecture_generator.bus import Bus
+from mqhad.architecture_generator1.bus import Bus
 
 
 class TestBus:

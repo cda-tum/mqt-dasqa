@@ -1,9 +1,9 @@
-from mqhad.architecture_generator.generator_base import GeneratorBase
-from mqhad.architecture_generator.profile import ProfileBase, Profile
-from mqhad.architecture_generator.layout import LayoutBase, Layout
-from mqhad.architecture_generator.bus import BusBase, Bus
-from mqhad.architecture_generator.chip import ChipBase, Chip
-from mqhad.architecture_generator.frequency import FrequencyBase, Frequency
+from mqhad.architecture_generator1.generator_base import GeneratorBase
+from mqhad.architecture_generator1.profile import ProfileBase, Profile
+from mqhad.architecture_generator1.layout import LayoutBase, Layout
+from mqhad.architecture_generator1.bus import BusBase, Bus
+from mqhad.architecture_generator1.chip import ChipBase, Chip
+from mqhad.architecture_generator1.frequency import FrequencyBase, Frequency
 from mqhad.utils import Utils
 from qiskit.circuit import QuantumCircuit
 

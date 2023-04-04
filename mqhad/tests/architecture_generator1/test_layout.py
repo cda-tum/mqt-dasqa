@@ -1,5 +1,5 @@
 import numpy as np
-from mqhad.architecture_generator.layout import Layout
+from mqhad.architecture_generator1.layout import Layout
 
 
 class TestLayout:

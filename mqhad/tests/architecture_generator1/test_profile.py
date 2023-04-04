@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from qiskit import QuantumCircuit, QuantumRegister
-from mqhad.architecture_generator.profile import Profile
+from mqhad.architecture_generator1.profile import Profile
 import numpy as np
 
 

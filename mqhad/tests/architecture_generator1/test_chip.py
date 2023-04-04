@@ -1,5 +1,5 @@
 import numpy as np
-from mqhad.architecture_generator.chip import Chip
+from mqhad.architecture_generator1.chip import Chip
 
 
 class TestChip:

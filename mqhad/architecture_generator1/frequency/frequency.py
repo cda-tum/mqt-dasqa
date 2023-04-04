@@ -1,8 +1,8 @@
 from collections import deque
 import numpy as np
 from .frequency_base import FrequencyBase
-from mqhad.architecture_generator.chip import Chip
-from mqhad.architecture_generator.yieldsimulator import YieldSimulator
+from mqhad.architecture_generator1.chip import Chip
+from mqhad.architecture_generator1.yieldsimulator import YieldSimulator
 
 
 class Frequency(FrequencyBase):

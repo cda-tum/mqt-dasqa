@@ -3,10 +3,10 @@ from unittest import mock
 import pytest
 import numpy as np
 from qiskit import QuantumRegister, QuantumCircuit
-from mqhad.architecture_generator.profile import Profile
-from mqhad.architecture_generator.layout import Layout
-from mqhad.architecture_generator.bus import Bus
-from mqhad.architecture_generator.chip import Chip
+from mqhad.architecture_generator1.profile import Profile
+from mqhad.architecture_generator1.layout import Layout
+from mqhad.architecture_generator1.bus import Bus
+from mqhad.architecture_generator1.chip import Chip
 
 
 class TestGenerator:
@@ -31,9 +31,9 @@ class TestGenerator:
 
     def test_generate(self):
         with mock.patch(
-            "mqhad.architecture_generator.yieldsimulator.YieldSimulator"
+            "mqhad.architecture_generator1.yieldsimulator.YieldSimulator"
         ) as mock_class:
-            from mqhad.architecture_generator.generator import Generator
+            from mqhad.architecture_generator1.generator import Generator
 
             def infinite_generator():
                 for i in itertools.count():
@@ -61,8 +61,8 @@ class TestGenerator:
     # Once the Frequency class is imported in this method, it is added to the namespace
     # and the mocked YieldSimulator is not mocked anymore.
     def test_init(self):
-        from mqhad.architecture_generator.frequency import Frequency
-        from mqhad.architecture_generator.generator import Generator
+        from mqhad.architecture_generator1.frequency import Frequency
+        from mqhad.architecture_generator1.generator import Generator
 
         with pytest.raises(TypeError):
             Generator()

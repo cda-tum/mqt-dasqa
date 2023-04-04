@@ -7,9 +7,9 @@ import pytest
 class TestFrequency:
     def test_freq_allocation_mocked(self):
         with mock.patch(
-            "mqhad.architecture_generator.yieldsimulator.YieldSimulator"
+            "mqhad.architecture_generator1.yieldsimulator.YieldSimulator"
         ) as mock_class:
-            from mqhad.architecture_generator.frequency import Frequency
+            from mqhad.architecture_generator1.frequency import Frequency
 
             def infinite_generator():
                 for i in itertools.count():
@@ -53,7 +53,7 @@ class TestFrequency:
 
     @pytest.mark.slow
     def test_freq_allocation(self):
-        from mqhad.architecture_generator.frequency import Frequency
+        from mqhad.architecture_generator1.frequency import Frequency
 
         qubit_num = 5
         dimX = 3

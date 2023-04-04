@@ -3,7 +3,7 @@ from itertools import combinations
 from collections import OrderedDict
 import numpy as np
 from .yieldsimulator_base import YieldSimulatorBase
-from mqhad.architecture_generator.chip import Chip
+from mqhad.architecture_generator1.chip import Chip
 
 random.seed(a=0, version=2)
 
