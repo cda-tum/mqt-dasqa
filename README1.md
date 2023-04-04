@@ -16,15 +16,15 @@
 
 1. mqhad
    1. architecture_generator
-      1. profile - generates profiles of quantum application:
+      1. bus - generates buses between qubits
+      2. chip - creates temporary chip for simulation - temporary chip is a subgraph of the layout graph
+      3. frequency - generates frequency of qubits using Monte Carlo simulation - chooses frequency configuration based on maximum yield rate
+      4. layout - generates matrix of qubit layout
+      5. profile - generates profiles of quantum application:
          1. two qubit gate map - control and target
          2. connectivity degree of qubits
          3. adjacency matrix of qubit
-      2. layout - generates matrix of qubit layout
-      3. buses - generates buses between qubits
-      4. frequency - generates frequency of qubits using Monte Carlo simulation - chooses frequency configuration based on maximum yield rate
-         1. chip - creates temporary chip for simulation - temporary chip is a subgraph of the layout graph
-         2. yieldsimulator - uses temporary chip to calculate yield rate - yield rate is the number of sub-graphs with no frequency collision divided by the number of trials
+      6. yieldsimulator - uses temporary chip created using chip module to calculate yield rate - yield rate is the number of sub-graphs with no frequency collision divided by the number of trials
    2. designer - maps architecture generator layout to Metal design
       1. canvas - design space
       2. capacitor - creates capacitors
@@ -35,7 +35,7 @@
       7. qubit_connector - creates qubit-to-qubit connections
       8. optimizer - optimizes geometries of layout to hit target parameters - :exclamation: NEED REFACTORING to move one level up in repository to be consistent with the steps in framework explained in paper
    3. optimizer PLACEHOLDER - after refactoring 2.8
-2. notebooks - train statistical model to be stand-in for simulation - used by optimizer
+   4. notebooks PLACEHOLDER - train statistical model to be stand-in for simulation - used by optimizer
 
 ## Trying reference implementation
 
