@@ -3,7 +3,7 @@ import os
 import sys
 import yaml
 from mqhad.architecture_generator1.generator import Generator
-from mqhad.designer.design import Design
+from mqhad.mapper.design import Design
 from mqhad.optimizer.optimizer import Optimizer
 from qiskit import QuantumCircuit
 from qiskit_metal import MetalGUI

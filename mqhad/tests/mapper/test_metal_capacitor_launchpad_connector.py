@@ -7,7 +7,7 @@ class TestCapacitorLaunchpadConnector:
         with patch(
             "qiskit_metal.qlibrary.tlines.pathfinder.RoutePathfinder"
         ) as mock_class:
-            from mqhad.designer.capacitor_launchpad_connector.metal import (
+            from mqhad.mapper.capacitor_launchpad_connector.metal import (
                 CapacitorLaunchpadConnector,
             )
 
@@ -30,7 +30,7 @@ class TestCapacitorLaunchpadConnector:
             assert len(capacitor_launchpad_connections) == 27
 
     def test_get_configuration(self):
-        from mqhad.designer.capacitor_launchpad_connector.metal import (
+        from mqhad.mapper.capacitor_launchpad_connector.metal import (
             CapacitorLaunchpadConnector,
         )
 

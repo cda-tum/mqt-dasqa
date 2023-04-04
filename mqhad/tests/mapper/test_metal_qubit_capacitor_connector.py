@@ -2,12 +2,14 @@ from unittest.mock import patch
 import numpy as np
 
 
-class TestMetalCapacitor:
-    def test_generate_capacitor(self):
+class TestQubitCapacitorConnector:
+    def test_generate_qubit_capacitor_connection(self):
         with patch(
-            "qiskit_metal.qlibrary.lumped.cap_n_interdigital.CapNInterdigital"
+            "qiskit_metal.qlibrary.tlines.pathfinder.RoutePathfinder"
         ) as mock_class:
-            from mqhad.designer.capacitor.metal import Capacitor
+            from mqhad.mapper.qubit_capacitor_connector.metal import (
+                QubitCapacitorConnector,
+            )
 
             mock_class.return_value = object
             qubit_grid = np.array(
@@ -19,9 +21,11 @@ class TestMetalCapacitor:
                     [-1, -1, -1, 25, -1, -1, -1, 26, -1, -1, -1],
                 ]
             )
-            capacitor = Capacitor(qubit_grid=qubit_grid)
-            capacitors = capacitor.generate_capacitor()
-            assert len(capacitors) == 27
+            qubit_capacitor_connector = QubitCapacitorConnector(qubit_grid=qubit_grid)
+            qubit_capacitor_connections = (
+                qubit_capacitor_connector.generate_qubit_capacitor_connection()
+            )
+            assert len(qubit_capacitor_connections) == 27
 
     def test_get_configuration(self):
         pass

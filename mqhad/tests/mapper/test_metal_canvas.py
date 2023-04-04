@@ -1,4 +1,4 @@
-from mqhad.designer.canvas.metal import Canvas
+from mqhad.mapper.canvas.metal import Canvas
 from qiskit_metal.designs import DesignPlanar
 
 

@@ -353,7 +353,7 @@ class TestTransmonPocket6Qubit:
         with patch(
             "qiskit_metal.qlibrary.qubits.transmon_pocket_6.TransmonPocket6"
         ) as mock_class:
-            from mqhad.designer.qubit.metal import TransmonPocket6Qubit
+            from mqhad.mapper.qubit.metal import TransmonPocket6Qubit
 
             mock_class.return_value = object
             qubit = TransmonPocket6Qubit()
@@ -361,7 +361,7 @@ class TestTransmonPocket6Qubit:
             assert len(qubits) == 27
 
     def test_generate_qubit_layout(self):
-        from mqhad.designer.qubit.metal import TransmonPocket6Qubit
+        from mqhad.mapper.qubit.metal import TransmonPocket6Qubit
 
         design = DesignPlanar()
         qubit = TransmonPocket6Qubit()
@@ -371,14 +371,14 @@ class TestTransmonPocket6Qubit:
         assert len(qubits) == 2
 
     def test_get_open_qubit_pins(self):
-        from mqhad.designer.qubit.metal import TransmonPocket6Qubit
+        from mqhad.mapper.qubit.metal import TransmonPocket6Qubit
 
         qubit = TransmonPocket6Qubit()
         open_qubit_pins = qubit._get_open_qubit_pins(self.qubit_grid)
         assert open_qubit_pins == self.pins_to_remove
 
     def test_get_qubit(self):
-        from mqhad.designer.qubit.metal import TransmonPocket6Qubit
+        from mqhad.mapper.qubit.metal import TransmonPocket6Qubit
 
         qubit = TransmonPocket6Qubit()
         assert 0 == qubit._get_qubit(self.qubit_grid, 0, 3)

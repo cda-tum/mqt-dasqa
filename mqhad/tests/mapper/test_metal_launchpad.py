@@ -7,7 +7,7 @@ class TestMetalLaunchpad:
         with patch(
             "qiskit_metal.qlibrary.terminations.launchpad_wb.LaunchpadWirebond"
         ) as mock_class:
-            from mqhad.designer.launchpad.metal import Launchpad
+            from mqhad.mapper.launchpad.metal import Launchpad
 
             mock_class.return_value = object
             qubit_grid = np.array(

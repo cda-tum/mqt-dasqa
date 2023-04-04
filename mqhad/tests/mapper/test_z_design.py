@@ -6,7 +6,7 @@ import numpy as np
 # because it import Design without patching
 class TestZDesign:
     def test_design(self):
-        from mqhad.designer.design import Design
+        from mqhad.mapper.design import Design
 
         design = Design()
         design._design_metal = MagicMock()
@@ -15,7 +15,7 @@ class TestZDesign:
 
     # Test for no exception
     def test_design_metal(self):
-        from mqhad.designer.design import Design
+        from mqhad.mapper.design import Design
 
         qubit_grid = np.array(
             [

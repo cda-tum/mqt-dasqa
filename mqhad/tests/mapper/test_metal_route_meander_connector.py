@@ -6,7 +6,7 @@ import numpy as np
 class TestRouteMeanderConnector:
     def test_generate_qubit_connection(self):
         with patch("qiskit_metal.qlibrary.tlines.meandered.RouteMeander") as mock_class:
-            from mqhad.designer.qubit_connector.metal import RouteMeanderConnector
+            from mqhad.mapper.qubit_connector.metal import RouteMeanderConnector
 
             mock_class.return_value = object
             qubit_grid = np.array(
@@ -26,7 +26,7 @@ class TestRouteMeanderConnector:
             assert len(qubit_connections) == 28
 
     def test_get_upward_connection_configuration(self):
-        from mqhad.designer.qubit_connector.metal import RouteMeanderConnector
+        from mqhad.mapper.qubit_connector.metal import RouteMeanderConnector
 
         route_connector = RouteMeanderConnector()
         assert route_connector._get_upward_connection_configuration(4, 4) == (
@@ -51,7 +51,7 @@ class TestRouteMeanderConnector:
         )
 
     def test_sideway_connection_configuration(self):
-        from mqhad.designer.qubit_connector.metal import RouteMeanderConnector
+        from mqhad.mapper.qubit_connector.metal import RouteMeanderConnector
 
         route_connector = RouteMeanderConnector()
         assert route_connector._get_sideway_connection_configuration(0, 2) == (

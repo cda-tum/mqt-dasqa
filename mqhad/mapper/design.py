@@ -1,17 +1,17 @@
 import sys
 from typing import Any
-from mqhad.designer.design_base import DesignBase
-from mqhad.designer.canvas.metal import Canvas as MetalCanvas
-from mqhad.designer.qubit.metal import TransmonPocket6Qubit as MetalTransmonPocket6Qubit
-from mqhad.designer.qubit_connector.metal import (
+from mqhad.mapper.design_base import DesignBase
+from mqhad.mapper.canvas.metal import Canvas as MetalCanvas
+from mqhad.mapper.qubit.metal import TransmonPocket6Qubit as MetalTransmonPocket6Qubit
+from mqhad.mapper.qubit_connector.metal import (
     RouteMeanderConnector as MetalRouteMeanderConnector,
 )
-from mqhad.designer.launchpad.metal import Launchpad as MetalLaunchpad
-from mqhad.designer.capacitor.metal import Capacitor as MetalCapacitor
-from mqhad.designer.qubit_capacitor_connector.metal import (
+from mqhad.mapper.launchpad.metal import Launchpad as MetalLaunchpad
+from mqhad.mapper.capacitor.metal import Capacitor as MetalCapacitor
+from mqhad.mapper.qubit_capacitor_connector.metal import (
     QubitCapacitorConnector as MetalQubitCapacitorConnector,
 )
-from mqhad.designer.capacitor_launchpad_connector.metal import (
+from mqhad.mapper.capacitor_launchpad_connector.metal import (
     CapacitorLaunchpadConnector as MetalCapacitorLaunchpadConnector,
 )
 import numpy as np

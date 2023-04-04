@@ -1,6 +1,6 @@
 from mqhad.optimizer.optimizer_base import OptimizerBase
 from mqhad.optimizer.metal.optimizer import Optimizer as MetalOptimizer
-from mqhad.designer.canvas.canvas_base import CanvasBase
+from mqhad.mapper.canvas.canvas_base import CanvasBase
 import numpy as np
 
 
