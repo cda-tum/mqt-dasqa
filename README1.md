@@ -6,7 +6,7 @@
   - Modular and easily extensible
   - Providing a basis for future iteration to plug different implementation of each phase of the framework
   
-## Key phases
+## Phases in framework
 
 1. Architecture generator - Generates an optimized high-level architecture based on a quantum application - High-level architecture contains the layout of the qubits and qubit frequency
 2. Physical layout designer - Maps the high-level architecture to physical layout tools, i.e: Qiskit Metal
