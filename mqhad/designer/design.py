@@ -14,8 +14,6 @@ from mqhad.designer.qubit_capacitor_connector.metal import (
 from mqhad.designer.capacitor_launchpad_connector.metal import (
     CapacitorLaunchpadConnector as MetalCapacitorLaunchpadConnector,
 )
-from mqhad.designer.optimizer.metal import Optimizer as MetalOptimizer
-from qiskit_metal import MetalGUI
 import numpy as np
 
 
@@ -74,26 +72,6 @@ class Design(DesignBase):
             design, self._qubit_grid
         ).generate_capacitor_launchpad_connection()
 
-        print("Optimizing design...")
-        MetalOptimizer(design, self._qubit_frequencies, self._config).optimize()
-
-        if display_gui == True:
-            # We define a exit_no_operation() function that simply does nothing, and then use
-            # the monkeypatch.setattr() method to replace the sys.exit() function with exit_noop() during the test.
-            # This way, if the program calls sys.exit(), it will be replaced with the
-            # no-op function and the test will continue to run instead of exiting.
-            def exit_no_operation(status):
-                pass
-
-            gui = MetalGUI(design)
-            q_app = gui.qApp
-            print("Design completed. Building GUI...")
-            gui.rebuild()
-            gui.autoscale()
-            print("GUI built.")
-            sys.exit = exit_no_operation
-            sys.exit(q_app.exec_())
-        else:
-            print("Design completed.")
+        result["canvas"] = design
 
         return result
