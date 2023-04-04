@@ -8,15 +8,15 @@
 ## Key phases
 
 1. Architecture generator - Generates an optimized high-level architecture based on a quantum application - High-level architecture contains the layout of the qubits and qubit frequency
-2. Physical layout designer - Maps the high-level architecture to physical layout tools
+2. Physical layout designer - Maps the high-level architecture to physical layout tools, i.e: Qiskit Metal
 3. Statistical model - Trained separately from design flow - based on simulation data collected - stand-in for expensive simulation
 4. Optimizer - optimizes layout using statistical model created in (3). Usual layout process needs iterative simulation and adjustment of geometries - statistical model can give geometrical value for a targeted parameter without needing iterative simulation and design
 
 ## Repository structure
 
 1. mqhad
-   1. architecture_generator
-      1. bus - generates buses between qubits
+   1. architecture_generator - based on [G. Li, Y. Ding and Y. Xie](https://arxiv.org/abs/1911.12879)
+      1. bus - generates connection between qubits
       2. chip - creates temporary chip for simulation - temporary chip is a subgraph of the layout graph
       3. frequency - generates frequency of qubits using Monte Carlo simulation - chooses frequency configuration based on maximum yield rate
       4. layout - generates matrix of qubit layout
@@ -25,7 +25,7 @@
          2. connectivity degree of qubits
          3. adjacency matrix of qubit
       6. yieldsimulator - uses temporary chip created using chip module to calculate yield rate - yield rate is the number of sub-graphs with no frequency collision divided by the number of trials
-   2. designer - maps architecture generator layout to Metal design
+   2. designer - maps architecture generator layout to [Qiskit Metal](https://qiskit.org/documentation/metal/) design
       1. canvas - design space
       2. capacitor - creates capacitors
       3. capacitor_launchpad_connector - generates capacitor to launchpad connectors
