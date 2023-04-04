@@ -5,8 +5,8 @@ import numpy as np
 
 class TestMain:
     # Check for no exceptions
-    @mock.patch("mqhad.architecture_generator.generator.Generator")
-    @mock.patch("mqhad.designer.design.Design")
+    @mock.patch("mqhad.architecture_generator1.generator.Generator")
+    @mock.patch("mqhad.mapper.mapper.Mapper")
     @mock.patch("mqhad.optimizer.optimizer.Optimizer")
     def test_main(self, mock_class3, mock_class2, mock_class1):
         from mqhad.__main__ import flow
@@ -35,7 +35,7 @@ class TestMain:
         flow(args)
 
     # Check for no exceptions
-    @mock.patch("mqhad.architecture_generator.generator.Generator")
+    @mock.patch("mqhad.architecture_generator1.generator.Generator")
     def test_main2(self, mock_class1):
         """Test main function without mock for design and optimizer.
 

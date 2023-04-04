@@ -1,6 +1,6 @@
 import sys
 from typing import Any
-from mqhad.mapper.design_base import DesignBase
+from mqhad.mapper.mapper_base import MapperBase
 from mqhad.mapper.canvas.metal import Canvas as MetalCanvas
 from mqhad.mapper.qubit.metal import TransmonPocket6Qubit as MetalTransmonPocket6Qubit
 from mqhad.mapper.qubit_connector.metal import (
@@ -17,7 +17,7 @@ from mqhad.mapper.capacitor_launchpad_connector.metal import (
 import numpy as np
 
 
-class Design(DesignBase):
+class Mapper(MapperBase):
     def __init__(
         self,
         design_backend: str = "metal",
@@ -28,11 +28,11 @@ class Design(DesignBase):
         self._qubit_grid = qubit_grid
         self._qubit_frequencies = qubit_frequencies
 
-    def design(self):
+    def map(self):
         if self._design_backend == "metal":
-            return self._design_metal()
+            return self._map_metal()
 
-    def _design_metal(self) -> Any:
+    def _map_metal(self) -> Any:
         print("Initializing Metal Canvas...")
         canvas = MetalCanvas()
         design = canvas.get_canvas()

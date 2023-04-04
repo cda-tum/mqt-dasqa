@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class DesignBase(ABC):
+class MapperBase(ABC):
     @abstractmethod
-    def design(self):
+    def map(self):
         pass

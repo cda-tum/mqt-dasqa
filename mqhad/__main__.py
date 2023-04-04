@@ -3,7 +3,7 @@ import os
 import sys
 import yaml
 from mqhad.architecture_generator1.generator import Generator
-from mqhad.mapper.design import Design
+from mqhad.mapper.mapper import Mapper
 from mqhad.optimizer.optimizer import Optimizer
 from qiskit import QuantumCircuit
 from qiskit_metal import MetalGUI
@@ -50,12 +50,12 @@ def flow(args):
     print("Qubit grid:", qubit_grid)
     print("Qubit frequencies:", qubit_frequencies)
     print("#### Start generating physical design ####")
-    design = Design(
+    design = Mapper(
         design_backend="metal",
         qubit_grid=qubit_grid,
         qubit_frequencies=qubit_frequencies,
     )
-    result = design.design()
+    result = design.map()
     print("#### Physical design generated ####")
     print("Optimizing design...")
     canvas = result["canvas"]

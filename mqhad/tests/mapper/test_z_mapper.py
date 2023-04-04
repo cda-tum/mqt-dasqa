@@ -4,18 +4,18 @@ import numpy as np
 
 # Need to be last tests executed for desinger module
 # because it import Design without patching
-class TestZDesign:
+class TestZMapper:
     def test_design(self):
-        from mqhad.mapper.design import Design
+        from mqhad.mapper.mapper import Mapper
 
-        design = Design()
-        design._design_metal = MagicMock()
-        design.design()
-        design._design_metal.assert_called_once()
+        design = Mapper()
+        design._map_metal = MagicMock()
+        design.map()
+        design._map_metal.assert_called_once()
 
     # Test for no exception
     def test_design_metal(self):
-        from mqhad.mapper.design import Design
+        from mqhad.mapper.mapper import Mapper
 
         qubit_grid = np.array(
             [
@@ -27,9 +27,9 @@ class TestZDesign:
             ]
         )
         qubit_frequencies = np.linspace(5.0, 5.1, 27)
-        design = Design(
+        design = Mapper(
             design_backend="metal",
             qubit_grid=qubit_grid,
             qubit_frequencies=qubit_frequencies,
         )
-        design._design_metal()
+        design._map_metal()
