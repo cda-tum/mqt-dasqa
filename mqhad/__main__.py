@@ -50,18 +50,19 @@ def flow(args):
     print("Qubit grid:", qubit_grid)
     print("Qubit frequencies:", qubit_frequencies)
     print("#### Start generating physical design ####")
-    design = Mapper(
+    mapper = Mapper(
         design_backend="metal",
         qubit_grid=qubit_grid,
         qubit_frequencies=qubit_frequencies,
     )
-    result = design.map()
+    result = mapper.map()
     print("#### Physical design generated ####")
     print("Optimizing design...")
     canvas = result["canvas"]
-    Optimizer(
+    optimizer = Optimizer(
         canvas=canvas, qubit_frequencies=qubit_frequencies, config=config
-    ).optimize()
+    )
+    optimizer.optimize()
     print("Design optimized")
 
     if display_gui == True:
