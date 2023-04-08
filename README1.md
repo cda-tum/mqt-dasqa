@@ -1,41 +1,39 @@
 # MQHAD
 
-- Munich Quantum HArdware Designer (MQHAD)
-- Framework to encapsulate application-driven quantum hardware architecture
-- A reference implementation of the framework is provided in this repository
-  - Modular and easily extensible
-  - Providing a basis for future iteration to plug different implementation of each phase of the framework
+Munich Quantum HArdware Designer (MQHAD) is a framework to encapsulate application-driven quantum hardware architecture.In this repository, a reference implementation of the framework is provided. This implementation was done with modularality and easy extensibility in mind to allow for future extensions and improvement.
   
-## Phases in framework
+## Steps in framework
 
-1. Architecture generator - Generates an optimized high-level architecture based on a quantum application - High-level architecture contains the layout of the qubits and qubit frequency
-2. Physical layout designer - Maps the high-level architecture to physical layout tools, i.e: Qiskit Metal
-3. Statistical model - Trained separately from design flow - based on simulation data collected - stand-in for expensive simulation
-4. Optimizer - optimizes layout using statistical model created in (3). Usual layout process needs iterative simulation and adjustment of geometries - statistical model can give geometrical value for a targeted parameter without needing iterative simulation and design
+In this section, we will describe the steps in the framework as follows:
+
+1. `Architecture generator` which generates an optimized high-level architecture based on a quantum application. The input of the architecture generator is a quantum application (i.e, quantum circuit) and it outputs a high-level architecture containing the layout of the qubits and qubit frequency
+2. `Physical layout mapper` which maps the high-level architecture to physical layout using tools such as Qiskit Metal
+3. `Statistical model` which trains statistical models to stand-in for simulations using simulation software such as Ansys HFSS during the optimization step. The models are trained separately from the design flow using pre-collected simulation data. The models identify patterns that relates a target parameter to the geometrical parameters of the layout.
+4. `Optimizer` which optimizes layout using statistical model created in (3). Usually, the optimization of physical layout process needs iterative simulation and adjustment of geometries of the physical layout. Since, pre-trained statistical models are being used to stand-in for the simulation softwares, geometrical value for a targeted parameter can be obtained without needing iterative simulation and design
 
 ## Repository structure
 
-1. mqhad
-   1. architecture_generator - based on [G. Li, Y. Ding and Y. Xie](https://arxiv.org/abs/1911.12879)
-      1. bus - generates connection between qubits
-      2. chip - creates temporary chip for simulation - temporary chip is a subgraph of the layout graph
-      3. frequency - generates frequency of qubits using Monte Carlo simulation - chooses frequency configuration based on maximum yield rate
-      4. layout - generates matrix of qubit layout
-      5. profile - generates profiles of quantum application:
-         1. two qubit gate map - control and target
-         2. connectivity degree of qubits
-         3. adjacency matrix of qubit
-      6. yieldsimulator - uses temporary chip created using chip module to calculate yield rate - yield rate is the number of sub-graphs with no frequency collision divided by the number of trials
-   2. designer - maps architecture generator layout to [Qiskit Metal](https://qiskit.org/documentation/metal/) design
-      1. canvas - design space
-      2. capacitor - creates capacitors
-      3. capacitor_launchpad_connector - generates capacitor to launchpad connectors
-      4. launchpad - created readouts (launchpads)
-      5. qubit - creates qubits
-      6. qubit_capacitor_connector - creates qubit to capacitor connections
-      7. qubit_connector - creates qubit-to-qubit connections
-   3. optimizer - optimizes geometries of layout to hit target parameters
-2. notebooks - train statistical model to be stand-in for simulation - used by optimizer
+1. `mqhad` - contains the reference implementation of the framework covering the modules in steps 1,2, and 4 in the previous section
+   1. `architecture_generator1` is based on [G. Li, Y. Ding and Y. Xie](https://arxiv.org/abs/1911.12879)
+      1. `bus` generates connection between qubits
+      2. `chip` creates temporary chip for simulation. The temporary chip is a subgraph of the layout graph and it is used in the frequency generation module
+      3. `frequency` generates frequency of qubits using Monte Carlo simulation. It chooses frequency configuration based on maximum yield rate as computed by the `yieldsimulator` module
+      4. `layout` generates matrix of qubit layout
+      5. `profile` generates profiles of quantum application. The profile of are as follows:
+         1. Two qubit gate map which contains control and target gates of the two qubit gate
+         2. Connectivity degree of qubits
+         3. Adjacency matrix of qubit
+      6. `yieldsimulator` calculates the yield rate that is used by the `frequency` module. Yield rate is the number of sub-graphs with no frequency collision divided by the number of trials
+   2. `mapper` maps architecture generator layout to [Qiskit Metal](https://qiskit.org/documentation/metal/) physical layout
+      1. `canvas` is a module that creates the design space for the physical layout
+      2. `capacitor` creates the capacitors
+      3. `capacitor_launchpad_connector` generates capacitor to launchpad connectors
+      4. `launchpad` creates launchpads(i.e, readout/control)
+      5. `qubit` creates qubits
+      6. `qubit_capacitor_connector` creates qubit to capacitor connections
+      7. `qubit_connector` creates qubit-to-qubit connections
+   3. `optimizer` optimizes the geometries of layout to hit target parameters
+2. `notebooks` trains statistical model to stand-in for simulation software such as Ansys HFSS and used by the optimizer
 
 ## Trying reference implementation
 
