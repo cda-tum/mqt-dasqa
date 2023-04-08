@@ -1,17 +1,38 @@
-# MQHAD
+# MQHAD<!-- omit from toc -->
 
 Munich Quantum HArdware Designer (MQHAD) is a framework to encapsulate application-driven quantum hardware architecture.In this repository, a reference implementation of the framework is provided. This implementation was done with modularality and easy extensibility in mind to allow for future extensions and improvement.
+
+## Table of contents<!-- omit from toc -->
+
+- [Steps in framework](#steps-in-framework)
+- [Repository structure](#repository-structure)
+- [Extending reference implementation](#extending-reference-implementation)
+  - [Architecture generator](#architecture-generator)
+  - [Physical layout mapper](#physical-layout-mapper)
+  - [Optimizer](#optimizer)
+- [Trying reference implementation](#trying-reference-implementation)
+  - [Installation](#installation)
+    - [Installing Package](#installing-package)
+    - [Installing Qiskit Metal](#installing-qiskit-metal)
+  - [Usage](#usage)
+    - [Command-line interface (CLI)](#command-line-interface-cli)
+    - [Testing the Package](#testing-the-package)
+  - [Development](#development)
+  - [FAQs](#faqs)
+
   
 ## Steps in framework
 
 In this section, we will describe the steps in the framework as follows:
 
-1. `Architecture generator` which generates an optimized high-level architecture based on a quantum application. The input of the architecture generator is a quantum application (i.e, quantum circuit) and it outputs a high-level architecture containing the layout of the qubits and qubit frequency
-2. `Physical layout mapper` which maps the high-level architecture to physical layout using tools such as Qiskit Metal
-3. `Statistical model` which trains statistical models to stand-in for simulations using simulation software such as Ansys HFSS during the optimization step. The models are trained separately from the design flow using pre-collected simulation data. The models identify patterns that relates a target parameter to the geometrical parameters of the layout.
-4. `Optimizer` which optimizes layout using statistical model created in (3). Usually, the optimization of physical layout process needs iterative simulation and adjustment of geometries of the physical layout. Since, pre-trained statistical models are being used to stand-in for the simulation softwares, geometrical value for a targeted parameter can be obtained without needing iterative simulation and design
+1. `Architecture generator` - generates an optimized high-level architecture based on a quantum application(i.e, quantum circuit). The input of the architecture generator is a quantum application and it outputs a high-level architecture containing the layout of the qubits and qubit frequencies
+2. `Physical layout mapper` - maps the high-level architecture to physical layout using tools such as Qiskit Metal
+3. `Statistical model` - trains statistical models to stand-in for simulations that are done using software such as Ansys HFSS during the optimization step. The models are trained separately from the design flow using pre-collected simulation data. The models identify patterns that relates a target parameter to the geometrical parameters of the layout.
+4. `Optimizer` - optimizes layout using statistical model created in (3). Usually, the optimization of physical layout process needs iterative simulation and adjustment of geometries of the physical layout. Since, pre-trained statistical models are being used to stand-in for the simulation softwares, geometrical value for a targeted parameter can be obtained without needing iterative simulation and design
 
 ## Repository structure
+
+In this section, we will describe the structure of the repository as follows to help you navigate through the repository:
 
 1. `mqhad` - contains the reference implementation of the framework covering the modules in steps 1,2, and 4 in the previous section
    1. `architecture_generator1` is based on [G. Li, Y. Ding and Y. Xie](https://arxiv.org/abs/1911.12879)
@@ -34,6 +55,47 @@ In this section, we will describe the steps in the framework as follows:
       7. `qubit_connector` creates qubit-to-qubit connections
    3. `optimizer` optimizes the geometries of layout to hit target parameters
 2. `notebooks` trains statistical model to stand-in for simulation software such as Ansys HFSS and used by the optimizer
+
+## Extending reference implementation
+
+In this section, we will describe how to extend the reference implementation to include other modules in the framework. The script that integrates the different steps is defined in [__main__.py](mqhad/__main__.py). In the following sub-sections, we will describe how to replace the modules in the reference implementation with other modules.
+
+### Architecture generator
+
+The architecture generator shown below can be replaced with other solutions that can generate a matrix of qubit layout and its associated qubit frequencies.
+
+```
+qc = QuantumCircuit.from_qasm_file(circuit_absolute_path)
+generator = Generator(qc=qc)
+qubit_grid, qubit_frequencies = generator.generate()
+```
+
+### Physical layout mapper
+
+The mapper module shown in below can be replaced with other implementations than Qiskit Metal provided that they have an Application Programming Interface (API) to update the layout that can be used in the optimizer step.
+
+```
+mapper = Mapper(
+    design_backend="metal",
+    qubit_grid=qubit_grid,
+    qubit_frequencies=qubit_frequencies
+)
+result = mapper.map()
+```
+
+### Optimizer
+
+The optimizer shown below can be replaced with other optimizer algorithms. If the goal is to replace just the the statistical model provided to the optimizer module, then, the path to different models can be given in the configuration file.
+
+```
+canvas = result["canvas"]
+optimizer = Optimizer(
+    canvas=canvas, 
+    qubit_frequencies=qubit_frequencies, 
+    config=config
+)
+optimizer.optimize()
+```
 
 ## Trying reference implementation
 
