@@ -9,4 +9,8 @@ class OptimalGeometryFinder(OptimalGeometryFinderBase):
     def find_optimal_geometry(
         self, component: str, target_parameter: str, target_parameter_value: float
     ):
-        return self._models[target_parameter].predict([[target_parameter_value]])[0]
+        result = {}
+        for geometry, model in self._models[component][target_parameter].items():
+            prediction = model.predict([[target_parameter_value]])[0]
+            result[geometry] = f"{prediction}um"
+        return result

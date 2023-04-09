@@ -78,9 +78,13 @@ class TestOptimalGeometryFinder:
 
         optimal_geometry_finder = OptimalGeometryFinderMock()
         mock_concrete_optimal_geometry_finder = MagicMock()
-        mock_concrete_optimal_geometry_finder.find_optimal_geometry.return_value = "100um"
+        return_value = {
+            "pad_gap": "10.0um",
+            "pad_height": "10.0um",
+        }
+        mock_concrete_optimal_geometry_finder.find_optimal_geometry.return_value = return_value
         optimal_geometry_finder._optimal_geometry_finder = mock_concrete_optimal_geometry_finder
         optimal_geometry = optimal_geometry_finder.find_optimal_geometry(
             "qubit", "fQ", 0.1
         )
-        assert optimal_geometry == "100um"
+        assert optimal_geometry == return_value
