@@ -3,7 +3,6 @@ import copy
 import pickle
 import numpy as np
 from mqhad.optimal_geometry_finder.optimal_geometry_finder import OptimalGeometryFinder
-from qiskit_metal.designs import DesignPlanar
 
 
 class Optimizer(OptimizerBase):
@@ -13,7 +12,7 @@ class Optimizer(OptimizerBase):
         qubit_frequencies: np.ndarray = [],
         config: dict = {},
         optimal_geometry_finder: OptimalGeometryFinder = None,
-    ):  #: DesignPlanar = None,
+    ):
         """Optimizer class for metal designs
 
         Args:
