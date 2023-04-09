@@ -110,7 +110,9 @@ class DesignFlowBase(ABC):
         print("Qubit frequencies:", self.qubit_frequencies)
 
         print("#### Start mapping to physical layout ####")
-        self.map_to_physical_layout(self.qubit_grid, self.qubit_frequencies)
+        self.canvas = self.map_to_physical_layout(
+            self.qubit_grid, self.qubit_frequencies
+        )
         print("#### Physical layout generated ####")
 
         print("Optimizing design...")
