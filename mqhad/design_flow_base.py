@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Union
 import os
 import numpy as np
 from mqhad.mapper.canvas import CanvasBase
@@ -46,7 +46,11 @@ class DesignFlowBase(ABC):
         return self._qubit_grid
 
     @qubit_grid.setter
-    def qubit_grid(self, qubit_grid: np.ndarray):
+    def qubit_grid(self, qubit_grid: Union[list[list], np.ndarray]):
+        if isinstance(qubit_grid, np.ndarray) == False:
+            qubit_grid = np.array(qubit_grid)
+        if qubit_grid.ndim != 2:
+            raise ValueError("Qubit grid must be a 2D array.")
         self._qubit_grid = qubit_grid
 
     @property

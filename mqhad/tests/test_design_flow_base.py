@@ -1,4 +1,5 @@
 import pytest
+import numpy as np
 from mqhad.design_flow_base import DesignFlowBase
 
 
@@ -56,3 +57,25 @@ class TestDesignFlowBase:
             design_flow_mock = DesignFlowMock()
             design_flow_mock.canvas
         assert "Physical layout not generated." in str(excinfo.value)
+
+    def test_qubit_grid_setter_list(self):
+        design_flow_mock = DesignFlowMock()
+        design_flow_mock.qubit_grid = [[0, 0], [0, 1]]
+        assert isinstance(design_flow_mock.qubit_grid, np.ndarray)
+        np.testing.assert_array_equal(
+            design_flow_mock.qubit_grid, np.array([[0, 0], [0, 1]])
+        )
+
+    def test_qubit_grid_setter_ndarray(self):
+        design_flow_mock = DesignFlowMock()
+        design_flow_mock.qubit_grid = np.array([[0, 0], [0, 1]])
+        assert isinstance(design_flow_mock.qubit_grid, np.ndarray)
+        np.testing.assert_array_equal(
+            design_flow_mock.qubit_grid, np.array([[0, 0], [0, 1]])
+        )
+    
+    def test_qubit_grid_setter_invalid(self):
+        with pytest.raises(ValueError) as excinfo:
+            design_flow_mock = DesignFlowMock()
+            design_flow_mock.qubit_grid = 1
+        assert "Qubit grid must be a 2D array." in str(excinfo.value)
