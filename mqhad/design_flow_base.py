@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Any
+import os
 from mqhad.mapper.canvas import CanvasBase
 
 
@@ -33,6 +34,8 @@ class DesignFlowBase(ABC):
 
     @circuit_path.setter
     def circuit_path(self, circuit_path: str):
+        if os.path.exists(circuit_path) == False:
+            raise ValueError("Circuit path does not exist.")
         self._circuit_path = circuit_path
 
     @property
