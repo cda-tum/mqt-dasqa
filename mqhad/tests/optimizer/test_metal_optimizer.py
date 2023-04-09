@@ -19,7 +19,7 @@ class TestOptimizer:
                 "resonator": None,
             },
             "target": {
-                "qubit": {"specific": {"Q_0": {"fQ": 5.3}}, "general": {"EC/EQ": 50}},
+                "qubit": {"specific": {"Q_0": {"fQ": 5.3}}, "general": {"EC/EJ": 50}},
                 "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
             },
         }
@@ -37,7 +37,7 @@ class TestOptimizer:
             "target": {
                 "qubit": {
                     "specific": {"Q_0": {"fQ": 5.3}, "Q_1": {"fQ": 5.8}},
-                    "general": {"EC/EQ": 50},
+                    "general": {"EC/EJ": 50},
                 },
                 "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
             },
@@ -63,7 +63,7 @@ class TestOptimizer:
                 "resonator": None,
             },
             "target": {
-                "qubit": {"specific": None, "general": {"EC/EQ": 50}},
+                "qubit": {"specific": None, "general": {"EC/EJ": 50}},
                 "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
             },
         }
@@ -81,7 +81,7 @@ class TestOptimizer:
             "target": {
                 "qubit": {
                     "specific": {"Q_0": {"fQ": 5.2}, "Q_1": {"fQ": 5.8}},
-                    "general": {"EC/EQ": 50},
+                    "general": {"EC/EJ": 50},
                 },
                 "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
             },
@@ -106,7 +106,7 @@ class TestOptimizer:
                 "resonator": None,
             },
             "target": {
-                "qubit": {"specific": {"Q_0": {"fQ": 5.3}}, "general": {"EC/EQ": 50}},
+                "qubit": {"specific": {"Q_0": {"fQ": 5.3}}, "general": {"EC/EJ": 50}},
                 "resonator": {"specific": {"CU_0": {"fQ": 5.3}}, "general": None},
             },
         }
@@ -122,8 +122,8 @@ class TestOptimizer:
             },
             "target": {
                 "qubit": {
-                    "specific": {"Q_0": {"fQ": 5.3, "EC/EQ": 50}},
-                    "general": {"EC/EQ": 50},
+                    "specific": {"Q_0": {"fQ": 5.3, "EC/EJ": 50}},
+                    "general": {"EC/EJ": 50},
                 },
                 "resonator": {
                     "specific": {"CU_0": {"fQ": 5.3}},
@@ -239,7 +239,7 @@ class TestOptimizer:
                 "specific": {
                     "Q_0": {
                         "fQ": 5.3,
-                        "EC/EQ": 50,  # Test case for not in list of supported models
+                        "EC/EJ": 50,  # Test case for not in list of supported models
                     }
                 },
                 "general": None,
