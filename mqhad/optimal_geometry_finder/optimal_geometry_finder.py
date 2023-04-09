@@ -1,7 +1,7 @@
 import copy
 import pickle
 from .optimal_geometry_finder_base import OptimalGeometryFinderBase
-from .metal import OptimalGeometryFinder as MetalOptimalGeometryFinder
+from .statistical_model import OptimalGeometryFinder as MetalOptimalGeometryFinder
 
 
 class OptimalGeometryFinder(OptimalGeometryFinderBase):
