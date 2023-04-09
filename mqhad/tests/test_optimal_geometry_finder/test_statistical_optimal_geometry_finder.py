@@ -1,12 +1,79 @@
-from unittest.mock import MagicMock
-from mqhad.optimal_geometry_finder.statistical_model.optimal_geometry_finder import (
-    OptimalGeometryFinder as OptimalStatisticalGeometryFinder,
-)
+from unittest.mock import patch, MagicMock
+import os
+from sklearn.pipeline import Pipeline
 
 
 class TestOptimalStatisticalGeometryFinder:
+    @patch("builtins.open")
+    @patch("pickle.load")
+    def test_unpack_model(self, mock_load, mock_open):
+        from mqhad.optimal_geometry_finder.statistical_model.optimal_geometry_finder import (
+            OptimalGeometryFinder as OptimalStatisticalGeometryFinder,
+        )
+
+        mock_load.return_value = "model_unpacked"
+
+        models = {
+            "qubit": {
+                "fQ": {
+                    "pad_gap": "models/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                    "pad_height": "models/polynomial_ridge_regression_fQ_pad_height_in_um.pkl",
+                }
+            },
+            "resonator": None,
+        }
+
+        class OptimalStatisticalGeometryFinderMock(OptimalStatisticalGeometryFinder):
+            def __init__(self):
+                pass
+
+        optimal_geometry_finder = OptimalStatisticalGeometryFinderMock()
+        optimal_geometry_finder._models = models
+        unpacked_models = optimal_geometry_finder._unpack_models()
+        assert unpacked_models == {
+            "qubit": {
+                "fQ": {
+                    "pad_gap": "model_unpacked",
+                    "pad_height": "model_unpacked",
+                }
+            },
+            "resonator": None,
+        }
+
+    def test_unpack_models2(self):
+        from mqhad.optimal_geometry_finder.statistical_model.optimal_geometry_finder import (
+            OptimalGeometryFinder as OptimalStatisticalGeometryFinder,
+        )
+
+        models = {
+            "qubit": {
+                "fQ": {
+                    "pad_gap": os.getcwd()
+                    + "/mqhad/tests/test_model/polynomial_ridge_regression_fQ_pad_gap_in_um.pkl",
+                }
+            },
+            "resonator": None,
+        }
+
+        class OptimalStatisticalGeometryFinderMock(OptimalStatisticalGeometryFinder):
+            def __init__(self):
+                pass
+
+        optimal_geometry_finder = OptimalStatisticalGeometryFinderMock()
+        optimal_geometry_finder._models = models
+        unpacked_models = optimal_geometry_finder._unpack_models()
+        assert type(unpacked_models["qubit"]["fQ"]["pad_gap"]) == Pipeline
+
     def test_find_optimal_geometry(self):
-        optimal_statistical_geometry_finder = OptimalStatisticalGeometryFinder()
+        from mqhad.optimal_geometry_finder.statistical_model.optimal_geometry_finder import (
+            OptimalGeometryFinder as OptimalStatisticalGeometryFinder,
+        )
+
+        class OptimalStatisticalGeometryFinderMock(OptimalStatisticalGeometryFinder):
+            def __init__(self):
+                pass
+
+        optimal_statistical_geometry_finder = OptimalStatisticalGeometryFinderMock()
         mock_model = MagicMock()
         return_value = [10.0]
         mock_model.predict.return_value = return_value

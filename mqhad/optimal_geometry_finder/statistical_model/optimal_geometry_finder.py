@@ -1,10 +1,21 @@
 from typing import Any
+import copy
+import pickle
 from ..optimal_geometry_finder_base import OptimalGeometryFinderBase
 
 
 class OptimalGeometryFinder(OptimalGeometryFinderBase):
-    def __init__(self, models: Any = None):
-        self._models = models
+    def __init__(self, models: Any = None, config: dict = {}):
+        self._models = config["model"]
+
+    def _unpack_models(self):
+        models = copy.deepcopy(self._models)
+        qubit_models = models["qubit"]
+        for parameter, geometries in qubit_models.items():
+            for geometry, model_path in geometries.items():
+                with open(model_path, "rb") as file:
+                    qubit_models[parameter][geometry] = pickle.load(file)
+        return models
 
     def find_optimal_geometry(
         self, component: str, target_parameter: str, target_parameter_value: float
