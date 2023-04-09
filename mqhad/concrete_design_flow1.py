@@ -37,11 +37,11 @@ class ConcreteDesignFlow1(DesignFlowBase):
         result = mapper.map()
         return result["canvas"]
 
-    def optimize_design(self):
+    def optimize_design(self, canvas, qubit_frequencies, config):
         optimizer = Optimizer(
-            canvas=self.canvas,
-            qubit_frequencies=self.qubit_frequencies,
-            config=self.config,
+            canvas=canvas,
+            qubit_frequencies=qubit_frequencies,
+            config=config,
         )
         optimizer.optimize()
 

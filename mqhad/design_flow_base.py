@@ -90,7 +90,9 @@ class DesignFlowBase(ABC):
         pass
 
     @abstractmethod
-    def optimize_design(self):
+    def optimize_design(
+        self, canvas: CanvasBase, qubit_frequencies: np.ndarray, config: dict
+    ):
         pass
 
     @abstractmethod
@@ -118,7 +120,7 @@ class DesignFlowBase(ABC):
         print("#### Physical layout generated ####")
 
         print("Optimizing design...")
-        self.optimize_design()
+        self.optimize_design(self.canvas, self.qubit_frequencies, self.config)
         print("Design optimized")
 
         self.display_gui()
