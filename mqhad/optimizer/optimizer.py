@@ -23,7 +23,7 @@ class Optimizer(OptimizerBase):
             config (dict, optional): Config dict
         """
         self._design_backend = design_backend
-        self._design = canvas.get_canvas()
+        self._canvas = canvas
         self._qubit_frequences = qubit_frequencies
         self._config = config
         self._optimal_geometry_finder = optimal_geometry_finder
@@ -31,7 +31,7 @@ class Optimizer(OptimizerBase):
     def optimize(self):
         if self._design_backend == "metal":
             return self._optimize_metal(
-                self._design,
+                self._canvas,
                 self._qubit_frequences,
                 self._config,
                 self._optimal_geometry_finder,
@@ -39,11 +39,11 @@ class Optimizer(OptimizerBase):
 
     def _optimize_metal(
         self,
-        design,
+        canvas: CanvasBase,
         qubit_frequencies: np.ndarray,
         config: dict,
         optimal_geometry_finder: OptimalGeometryFinderBase,
     ):
         MetalOptimizer(
-            design, qubit_frequencies, config, optimal_geometry_finder
+            canvas, qubit_frequencies, config, optimal_geometry_finder
         ).optimize()

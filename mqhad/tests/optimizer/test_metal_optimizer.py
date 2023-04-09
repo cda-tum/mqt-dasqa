@@ -266,9 +266,9 @@ class TestOptimizer:
             find_optimal_geometry_side_effect
         )
 
-        mock_design = MagicMock(name="mock_design")
-        optimizer._design = mock_design
+        mock_canvas = MagicMock(name="mock_canvas")
+        optimizer._canvas = mock_canvas
 
         optimizer._optimize_qubits()
 
-        assert mock_design.components.__getitem__().options.__setitem__.call_count == 2
+        assert mock_canvas.update_components.call_count == 2

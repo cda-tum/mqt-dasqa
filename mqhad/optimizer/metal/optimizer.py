@@ -2,13 +2,14 @@ from ..optimizer_base import OptimizerBase
 import copy
 import pickle
 import numpy as np
+from mqhad.mapper.canvas.canvas_base import CanvasBase
 from mqhad.optimal_geometry_finder.optimal_geometry_finder import OptimalGeometryFinder
 
 
 class Optimizer(OptimizerBase):
     def __init__(
         self,
-        design=None,
+        canvas: CanvasBase = None,
         qubit_frequencies: np.ndarray = [],
         config: dict = {},
         optimal_geometry_finder: OptimalGeometryFinder = None,
@@ -16,11 +17,11 @@ class Optimizer(OptimizerBase):
         """Optimizer class for metal designs
 
         Args:
-            design (DesignPlanar): Metal design
+            canvas (Canvas): Canvas
             qubit_frequencies (np.ndarray, optional): Array of qubit frequencies
             config (dict, optional): Config dict
         """
-        self._design = design
+        self._canvas = canvas
         self._qubit_frequences = qubit_frequencies
         self._config = config
         self._optimal_geometry_finder = optimal_geometry_finder
@@ -104,9 +105,10 @@ class Optimizer(OptimizerBase):
                     target_parameter_value=target_value,
                 )
                 for geometry_name, geometry_value in geometries.items():
-                    self._design.components[qubit].options[
-                        geometry_name
-                    ] = geometry_value
+                    self._canvas.update_components(qubit, geometry_name, geometry_value)
+                    # self._canvas.components[qubit].options[
+                    #     geometry_name
+                    # ] = geometry_value
 
     def _optimize_resonators(self):
         pass
