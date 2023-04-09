@@ -21,6 +21,9 @@ class OptimalGeometryFinder(OptimalGeometryFinderBase):
         self, component: str, target_parameter: str, target_parameter_value: float
     ):
         result = {}
+        if target_parameter not in self._models[component].keys():
+            return result
+
         for geometry, model in self._models[component][target_parameter].items():
             prediction = model.predict([[target_parameter_value]])[0]
             result[geometry] = f"{prediction}um"

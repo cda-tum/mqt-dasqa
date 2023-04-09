@@ -97,3 +97,31 @@ class TestOptimalStatisticalGeometryFinder:
             "pad_gap": "10.0um",
             "pad_height": "10.0um",
         }
+
+    def test_find_optimal_geometry2(self):
+        # Test when target_parameter is not in the model
+        from mqhad.optimal_geometry_finder.statistical_model.optimal_geometry_finder import (
+            OptimalGeometryFinder as OptimalStatisticalGeometryFinder,
+        )
+
+        class OptimalStatisticalGeometryFinderMock(OptimalStatisticalGeometryFinder):
+            def __init__(self):
+                pass
+
+        optimal_statistical_geometry_finder = OptimalStatisticalGeometryFinderMock()
+        optimal_statistical_geometry_finder._models = {
+            "qubit": {
+                "fQ": {
+                    "pad_gap": "model",
+                    "pad_height": "model",
+                }
+            },
+            "resonator": None,
+        }
+        component = "qubit"
+        target_parameter = "EC/EJ"
+        target_parameter_value = 0.1
+        geometries = optimal_statistical_geometry_finder.find_optimal_geometry(
+            component, target_parameter, target_parameter_value
+        )
+        assert geometries == {}
