@@ -27,11 +27,6 @@ class ConcreteDesignFlow1(DesignFlowBase):
         self.qubit_grid, self.qubit_frequencies = generator.generate()
 
     def map_to_physical_layout(self):
-        if self.qubit_grid is None:
-            print(
-                "Error: qubit grid not generated. Please run generate_architecture() first."
-            )
-            return
         mapper = Mapper(
             design_backend="metal",
             qubit_grid=self.qubit_grid,
@@ -41,12 +36,6 @@ class ConcreteDesignFlow1(DesignFlowBase):
         self.canvas = result["canvas"]
 
     def optimize_design(self):
-        if self.canvas is None:
-            print(
-                "Error: physical design not generated. Please run generate_physical_design() first."
-            )
-            return
-
         optimizer = Optimizer(
             canvas=self.canvas,
             qubit_frequencies=self.qubit_frequencies,
