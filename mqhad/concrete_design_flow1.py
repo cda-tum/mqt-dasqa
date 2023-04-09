@@ -3,6 +3,7 @@ import numpy as np
 from .design_flow_base import DesignFlowBase
 from mqhad.architecture_generator1.generator import Generator
 from mqhad.mapper.mapper import Mapper
+from mqhad.optimal_geometry_finder.statistical_model import OptimalGeometryFinder
 from mqhad.optimizer.optimizer import Optimizer
 from qiskit import QuantumCircuit
 from qiskit_metal import MetalGUI
@@ -18,6 +19,7 @@ class ConcreteDesignFlow1(DesignFlowBase):
         **kwargs
     ):
         super().__init__(circuit_path=circuit_path, config=config)
+        self._design_backend = "metal"
         self._display_gui = display_gui
 
     def read_circuit(self):
@@ -30,12 +32,15 @@ class ConcreteDesignFlow1(DesignFlowBase):
 
     def map_to_physical_layout(self, qubit_grid, qubit_frequencies):
         mapper = Mapper(
-            design_backend="metal",
+            design_backend=self._design_backend,
             qubit_grid=qubit_grid,
             qubit_frequencies=qubit_frequencies,
         )
         result = mapper.map()
         return result["canvas"]
+
+    def load_optimal_geometry_finder(self, config: dict):
+        return OptimalGeometryFinder(design_backend=self._design_backend, config=config)
 
     def optimize_design(self, canvas, qubit_frequencies, config):
         optimizer = Optimizer(

@@ -3,6 +3,7 @@ from typing import Any, Union
 import os
 import numpy as np
 from mqhad.mapper.canvas import CanvasBase
+from mqhad.optimal_geometry_finder import OptimalGeometryFinderBase
 
 
 class DesignFlowBase(ABC):
@@ -79,6 +80,20 @@ class DesignFlowBase(ABC):
             raise ValueError("Canvas must be an instance of Canvas.")
         self._canvas = canvas
 
+    @property
+    def optimal_geometry_finder(self):
+        if hasattr(self, "_optimal_geometry_finder") == False:
+            raise ValueError("Optimal geometry finder not loaded.")
+        return self._optimal_geometry_finder
+
+    @optimal_geometry_finder.setter
+    def optimal_geometry_finder(self, optimal_geometry_finder: Any):
+        if isinstance(optimal_geometry_finder, OptimalGeometryFinderBase) == False:
+            raise ValueError(
+                "Optimal geometry finder must be an instance of OptimalGeometryFinderBase."
+            )
+        self._optimal_geometry_finder = optimal_geometry_finder
+
     @abstractmethod
     def generate_architecture(self) -> tuple[np.ndarray, np.ndarray]:
         pass
@@ -87,6 +102,10 @@ class DesignFlowBase(ABC):
     def map_to_physical_layout(
         self, qubit_grid: np.ndarray, qubit_frequencies: np.ndarray
     ) -> CanvasBase:
+        pass
+
+    @abstractmethod
+    def load_optimal_geometry_finder(self, config: dict):
         pass
 
     @abstractmethod

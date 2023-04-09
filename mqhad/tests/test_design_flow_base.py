@@ -14,6 +14,9 @@ class DesignFlowMock(DesignFlowBase):
     def map_to_physical_layout(self):
         pass
 
+    def load_optimal_geometry_finder(self):
+        pass
+
     def optimize_design(self):
         pass
 
@@ -113,3 +116,18 @@ class TestDesignFlowBase:
             design_flow_mock = DesignFlowMock()
             design_flow_mock.canvas = 1
         assert "Canvas must be an instance of Canvas." in str(excinfo.value)
+
+    def test_optimal_geometry_finder_invalid(self):
+        with pytest.raises(ValueError) as excinfo:
+            design_flow_mock = DesignFlowMock()
+            design_flow_mock.optimal_geometry_finder
+        assert "Optimal geometry finder not loaded." in str(excinfo.value)
+
+    def test_optimal_geometry_finder_setter_invalid(self):
+        with pytest.raises(ValueError) as excinfo:
+            design_flow_mock = DesignFlowMock()
+            design_flow_mock.optimal_geometry_finder = 1
+        assert (
+            "Optimal geometry finder must be an instance of OptimalGeometryFinderBase."
+            in str(excinfo.value)
+        )
