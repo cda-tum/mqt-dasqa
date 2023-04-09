@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 import os
+import numpy as np
 from mqhad.mapper.canvas import CanvasBase
 
 
@@ -40,22 +41,34 @@ class DesignFlowBase(ABC):
 
     @property
     def qubit_grid(self):
+        if hasattr(self, "_qubit_grid") == False:
+            raise ValueError(
+                "Qubit grid not generated. Please run generate_architecture() first."
+            )
         return self._qubit_grid
 
     @qubit_grid.setter
-    def qubit_grid(self, qubit_grid: dict):
+    def qubit_grid(self, qubit_grid: np.ndarray):
         self._qubit_grid = qubit_grid
 
     @property
     def qubit_frequencies(self):
+        if hasattr(self, "_qubit_frequencies") == False:
+            raise ValueError(
+                "Qubit frequencies not generated. Please run generate_architecture() first."
+            )
         return self._qubit_frequencies
 
     @qubit_frequencies.setter
-    def qubit_frequencies(self, qubit_frequencies: dict):
+    def qubit_frequencies(self, qubit_frequencies: np.ndarray):
         self._qubit_frequencies = qubit_frequencies
 
     @property
     def canvas(self):
+        if hasattr(self, "_canvas") == False:
+            raise ValueError(
+                "Physical design not generated. Please run map_to_physical_layout() first."
+            )
         return self._canvas
 
     @canvas.setter
