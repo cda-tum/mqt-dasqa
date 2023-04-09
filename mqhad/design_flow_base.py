@@ -61,6 +61,10 @@ class DesignFlowBase(ABC):
 
     @qubit_frequencies.setter
     def qubit_frequencies(self, qubit_frequencies: np.ndarray):
+        if isinstance(qubit_frequencies, np.ndarray) == False:
+            qubit_frequencies = np.array(qubit_frequencies)
+        if qubit_frequencies.ndim != 1:
+            raise ValueError("Qubit frequencies must be a 1D array.")
         self._qubit_frequencies = qubit_frequencies
 
     @property

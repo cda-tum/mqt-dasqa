@@ -73,9 +73,31 @@ class TestDesignFlowBase:
         np.testing.assert_array_equal(
             design_flow_mock.qubit_grid, np.array([[0, 0], [0, 1]])
         )
-    
+
     def test_qubit_grid_setter_invalid(self):
         with pytest.raises(ValueError) as excinfo:
             design_flow_mock = DesignFlowMock()
             design_flow_mock.qubit_grid = 1
         assert "Qubit grid must be a 2D array." in str(excinfo.value)
+
+    def test_qubit_frequencies_setter_list(self):
+        design_flow_mock = DesignFlowMock()
+        design_flow_mock.qubit_frequencies = [1, 2]
+        assert isinstance(design_flow_mock.qubit_frequencies, np.ndarray)
+        np.testing.assert_array_equal(
+            design_flow_mock.qubit_frequencies, np.array([1, 2])
+        )
+
+    def test_qubit_frequencies_setter_ndarray(self):
+        design_flow_mock = DesignFlowMock()
+        design_flow_mock.qubit_frequencies = np.array([1, 2])
+        assert isinstance(design_flow_mock.qubit_frequencies, np.ndarray)
+        np.testing.assert_array_equal(
+            design_flow_mock.qubit_frequencies, np.array([1, 2])
+        )
+
+    def test_qubit_frequencies_setter_invalid(self):
+        with pytest.raises(ValueError) as excinfo:
+            design_flow_mock = DesignFlowMock()
+            design_flow_mock.qubit_frequencies = 1
+        assert "Qubit frequencies must be a 1D array." in str(excinfo.value)
