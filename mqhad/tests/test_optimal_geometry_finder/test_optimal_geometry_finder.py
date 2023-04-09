@@ -77,9 +77,9 @@ class TestOptimalGeometryFinder:
                 pass
 
         optimal_geometry_finder = OptimalGeometryFinderMock()
-        mock_metal_optimal_geometry_finder = MagicMock()
-        mock_metal_optimal_geometry_finder.find_optimal_geometry.return_value = "100um"
-        optimal_geometry_finder._optimal_geometry_finder = mock_metal_optimal_geometry_finder
+        mock_concrete_optimal_geometry_finder = MagicMock()
+        mock_concrete_optimal_geometry_finder.find_optimal_geometry.return_value = "100um"
+        optimal_geometry_finder._optimal_geometry_finder = mock_concrete_optimal_geometry_finder
         optimal_geometry = optimal_geometry_finder.find_optimal_geometry(
             "qubit", "fQ", 0.1
         )
