@@ -75,6 +75,8 @@ class DesignFlowBase(ABC):
 
     @canvas.setter
     def canvas(self, canvas: CanvasBase):
+        if isinstance(canvas, CanvasBase) == False:
+            raise ValueError("Canvas must be an instance of Canvas.")
         self._canvas = canvas
 
     @abstractmethod

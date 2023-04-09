@@ -1,6 +1,7 @@
 import pytest
 import numpy as np
 from mqhad.design_flow_base import DesignFlowBase
+from mqhad.mapper.canvas.metal import Canvas as MetalCanvas
 
 
 class DesignFlowMock(DesignFlowBase):
@@ -101,3 +102,14 @@ class TestDesignFlowBase:
             design_flow_mock = DesignFlowMock()
             design_flow_mock.qubit_frequencies = 1
         assert "Qubit frequencies must be a 1D array." in str(excinfo.value)
+
+    def test_canvas_setter(self):
+        design_flow_mock = DesignFlowMock()
+        design_flow_mock.canvas = MetalCanvas()
+        assert isinstance(design_flow_mock.canvas, MetalCanvas)
+
+    def test_canvas_setter_invalid(self):
+        with pytest.raises(ValueError) as excinfo:
+            design_flow_mock = DesignFlowMock()
+            design_flow_mock.canvas = 1
+        assert "Canvas must be an instance of Canvas." in str(excinfo.value)
