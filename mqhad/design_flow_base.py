@@ -82,7 +82,9 @@ class DesignFlowBase(ABC):
         pass
 
     @abstractmethod
-    def map_to_physical_layout(self) -> CanvasBase:
+    def map_to_physical_layout(
+        self, qubit_grid: np.ndarray, qubit_frequencies: np.ndarray
+    ) -> CanvasBase:
         pass
 
     @abstractmethod
@@ -108,7 +110,7 @@ class DesignFlowBase(ABC):
         print("Qubit frequencies:", self.qubit_frequencies)
 
         print("#### Start mapping to physical layout ####")
-        self.map_to_physical_layout()
+        self.map_to_physical_layout(self.qubit_grid, self.qubit_frequencies)
         print("#### Physical layout generated ####")
 
         print("Optimizing design...")

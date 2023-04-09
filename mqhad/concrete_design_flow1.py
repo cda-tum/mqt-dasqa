@@ -28,11 +28,11 @@ class ConcreteDesignFlow1(DesignFlowBase):
         qubit_grid, qubit_frequencies = generator.generate()
         return qubit_grid, qubit_frequencies
 
-    def map_to_physical_layout(self):
+    def map_to_physical_layout(self, qubit_grid, qubit_frequencies):
         mapper = Mapper(
             design_backend="metal",
-            qubit_grid=self.qubit_grid,
-            qubit_frequencies=self.qubit_frequencies,
+            qubit_grid=qubit_grid,
+            qubit_frequencies=qubit_frequencies,
         )
         result = mapper.map()
         self.canvas = result["canvas"]
