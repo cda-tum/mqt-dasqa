@@ -42,9 +42,7 @@ class DesignFlowBase(ABC):
     @property
     def qubit_grid(self):
         if hasattr(self, "_qubit_grid") == False:
-            raise ValueError(
-                "Qubit grid not generated. Please run generate_architecture() first."
-            )
+            raise ValueError("Qubit grid not generated.")
         return self._qubit_grid
 
     @qubit_grid.setter
@@ -54,9 +52,7 @@ class DesignFlowBase(ABC):
     @property
     def qubit_frequencies(self):
         if hasattr(self, "_qubit_frequencies") == False:
-            raise ValueError(
-                "Qubit frequencies not generated. Please run generate_architecture() first."
-            )
+            raise ValueError("Qubit frequencies not generated.")
         return self._qubit_frequencies
 
     @qubit_frequencies.setter
@@ -66,9 +62,7 @@ class DesignFlowBase(ABC):
     @property
     def canvas(self):
         if hasattr(self, "_canvas") == False:
-            raise ValueError(
-                "Physical design not generated. Please run map_to_physical_layout() first."
-            )
+            raise ValueError("Physical layout not generated.")
         return self._canvas
 
     @canvas.setter
@@ -76,11 +70,11 @@ class DesignFlowBase(ABC):
         self._canvas = canvas
 
     @abstractmethod
-    def generate_architecture(self):
+    def generate_architecture(self) -> tuple[np.ndarray, np.ndarray]:
         pass
 
     @abstractmethod
-    def map_to_physical_layout(self):
+    def map_to_physical_layout(self) -> CanvasBase:
         pass
 
     @abstractmethod

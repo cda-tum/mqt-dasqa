@@ -43,25 +43,16 @@ class TestDesignFlowBase:
         with pytest.raises(ValueError) as excinfo:
             design_flow_mock = DesignFlowMock()
             design_flow_mock.qubit_grid
-        assert (
-            "Qubit grid not generated. Please run generate_architecture() first."
-            in str(excinfo.value)
-        )
+        assert "Qubit grid not generated." in str(excinfo.value)
 
     def test_invalid_qubit_frequencies(self):
         with pytest.raises(ValueError) as excinfo:
             design_flow_mock = DesignFlowMock()
             design_flow_mock.qubit_frequencies
-        assert (
-            "Qubit frequencies not generated. Please run generate_architecture() first."
-            in str(excinfo.value)
-        )
+        assert "Qubit frequencies not generated." in str(excinfo.value)
 
     def test_invalid_canvas(self):
         with pytest.raises(ValueError) as excinfo:
             design_flow_mock = DesignFlowMock()
             design_flow_mock.canvas
-        assert (
-            "Physical design not generated. Please run map_to_physical_layout() first."
-            in str(excinfo.value)
-        )
+        assert "Physical layout not generated." in str(excinfo.value)
