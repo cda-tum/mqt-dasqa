@@ -3,7 +3,7 @@ import numpy as np
 from .design_flow_base import DesignFlowBase
 from mqhad.architecture_generator1.generator import Generator
 from mqhad.mapper.mapper import Mapper
-from mqhad.optimal_geometry_finder.statistical_model import OptimalGeometryFinder
+from mqhad.optimal_geometry_finder.optimal_geometry_finder import OptimalGeometryFinder
 from mqhad.optimizer.optimizer import Optimizer
 from qiskit import QuantumCircuit
 from qiskit_metal import MetalGUI
@@ -42,11 +42,14 @@ class ConcreteDesignFlow1(DesignFlowBase):
     def load_optimal_geometry_finder(self, config: dict):
         return OptimalGeometryFinder(design_backend=self._design_backend, config=config)
 
-    def optimize_design(self, canvas, qubit_frequencies, config):
+    def optimize_design(
+        self, canvas, qubit_frequencies, config, optimal_geometry_finder
+    ):
         optimizer = Optimizer(
             canvas=canvas,
             qubit_frequencies=qubit_frequencies,
             config=config,
+            optimal_geometry_finder=optimal_geometry_finder,
         )
         optimizer.optimize()
 

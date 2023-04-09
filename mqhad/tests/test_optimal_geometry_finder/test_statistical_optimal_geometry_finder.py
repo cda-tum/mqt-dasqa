@@ -28,7 +28,7 @@ class TestOptimalStatisticalGeometryFinder:
                 pass
 
         optimal_geometry_finder = OptimalStatisticalGeometryFinderMock()
-        optimal_geometry_finder._models = models
+        optimal_geometry_finder._models_config = models
         unpacked_models = optimal_geometry_finder._unpack_models()
         assert unpacked_models == {
             "qubit": {
@@ -60,7 +60,7 @@ class TestOptimalStatisticalGeometryFinder:
                 pass
 
         optimal_geometry_finder = OptimalStatisticalGeometryFinderMock()
-        optimal_geometry_finder._models = models
+        optimal_geometry_finder._models_config = models
         unpacked_models = optimal_geometry_finder._unpack_models()
         assert type(unpacked_models["qubit"]["fQ"]["pad_gap"]) == Pipeline
 
