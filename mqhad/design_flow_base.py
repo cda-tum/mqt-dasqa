@@ -94,7 +94,7 @@ class DesignFlowBase(ABC):
             self.read_circuit()
 
         print("#### Start generating architecture ####")
-        self.generate_architecture()
+        self.qubit_grid, self.qubit_frequencies = self.generate_architecture()
         print("#### Architecture generated ####")
         print("Qubit grid:", self.qubit_grid)
         print("Qubit frequencies:", self.qubit_frequencies)

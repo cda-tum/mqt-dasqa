@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 from .design_flow_base import DesignFlowBase
 from mqhad.architecture_generator1.generator import Generator
 from mqhad.mapper.mapper import Mapper
@@ -22,9 +23,10 @@ class ConcreteDesignFlow1(DesignFlowBase):
     def read_circuit(self):
         self.qc = QuantumCircuit.from_qasm_file(self.circuit_path)
 
-    def generate_architecture(self):
+    def generate_architecture(self) -> tuple[np.ndarray, np.ndarray]:
         generator = Generator(qc=self.qc)
-        self.qubit_grid, self.qubit_frequencies = generator.generate()
+        qubit_grid, qubit_frequencies = generator.generate()
+        return qubit_grid, qubit_frequencies
 
     def map_to_physical_layout(self):
         mapper = Mapper(
