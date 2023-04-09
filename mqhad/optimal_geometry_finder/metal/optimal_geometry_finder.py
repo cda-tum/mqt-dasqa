@@ -7,6 +7,6 @@ class OptimalGeometryFinder(OptimalGeometryFinderBase):
         self._models = models
 
     def find_optimal_geometry(
-        self, target_parameter: str, target_parameter_value: float
+        self, component: str, target_parameter: str, target_parameter_value: float
     ):
         return self._models[target_parameter].predict([[target_parameter_value]])[0]

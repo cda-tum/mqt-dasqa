@@ -63,3 +63,23 @@ class TestOptimalGeometryFinder:
         optimal_geometry_finder._models = models
         unpacked_models = optimal_geometry_finder._unpack_models()
         assert type(unpacked_models["qubit"]["fQ"]["pad_gap"]) == Pipeline
+    
+    def test_find_optimal_geometry(self):
+        from mqhad.optimal_geometry_finder.optimal_geometry_finder import OptimalGeometryFinder
+        
+        class OptimalGeometryFinderMock(OptimalGeometryFinder):
+            def __init__(self):
+                pass
+
+        optimal_geometry_finder = OptimalGeometryFinderMock()
+        optimal_geometry_finder._models = {
+            "qubit": {
+                "fQ": {
+                    "pad_gap": "model_unpacked",
+                    "pad_height": "model_unpacked",
+                }
+            },
+            "resonator": None,
+        }
+        optimal_geometry = optimal_geometry_finder.find_optimal_geometry("qubit", "fQ", "pad_gap", 0.1)
+        assert optimal_geometry == 0.1

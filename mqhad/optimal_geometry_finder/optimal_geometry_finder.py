@@ -23,8 +23,8 @@ class OptimalGeometryFinder(OptimalGeometryFinderBase):
         return models
 
     def find_optimal_geometry(
-        self, target_parameter: str, target_parameter_value: float
+        self, component: str, target_parameter: str, target_parameter_value: float
     ):
         return self._optimal_geometry_finder.find_optimal_geometry(
-            target_parameter, target_parameter_value
+            component, target_parameter, target_parameter_value
         )
