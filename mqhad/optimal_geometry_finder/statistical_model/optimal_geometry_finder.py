@@ -5,7 +5,7 @@ from ..optimal_geometry_finder_base import OptimalGeometryFinderBase
 
 
 class OptimalGeometryFinder(OptimalGeometryFinderBase):
-    def __init__(self, models: Any = None, config: dict = {}):
+    def __init__(self, config: dict = {}):
         self._models = config["model"]
 
     def _unpack_models(self):
