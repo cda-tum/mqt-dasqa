@@ -249,18 +249,22 @@ class TestOptimizer:
                 "general": None,
             },
         }
-        mock_model = MagicMock()
-        mock_model.predict.return_value = [10.0]
 
-        optimizer._models = {
-            "qubit": {
-                "fQ": {
-                    "pad_gap": mock_model,
-                    "pad_height": mock_model,
+        optimizer._optimal_geometry_finder = MagicMock()
+
+        def find_optimal_geometry_side_effect(
+            component: str, target_parameter: str, *args, **kwargs
+        ):
+            if target_parameter == "fQ":
+                return {
+                    "pad_gap": "10.0um",
+                    "pad_height": "10.0um",
                 }
-            },
-            "resonator": None,
-        }
+            return {}
+
+        optimizer._optimal_geometry_finder.find_optimal_geometry.side_effect = (
+            find_optimal_geometry_side_effect
+        )
 
         mock_design = MagicMock(name="mock_design")
         optimizer._design = mock_design

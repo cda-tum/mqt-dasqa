@@ -2,12 +2,17 @@ from ..optimizer_base import OptimizerBase
 import copy
 import pickle
 import numpy as np
+from mqhad.optimal_geometry_finder.optimal_geometry_finder import OptimalGeometryFinder
 from qiskit_metal.designs import DesignPlanar
 
 
 class Optimizer(OptimizerBase):
     def __init__(
-        self, design=None, qubit_frequencies: np.ndarray = [], config: dict = {}
+        self,
+        design=None,
+        qubit_frequencies: np.ndarray = [],
+        config: dict = {},
+        optimal_geometry_finder: OptimalGeometryFinder = None,
     ):  #: DesignPlanar = None,
         """Optimizer class for metal designs
 
@@ -19,6 +24,7 @@ class Optimizer(OptimizerBase):
         self._design = design
         self._qubit_frequences = qubit_frequencies
         self._config = config
+        self._optimal_geometry_finder = optimal_geometry_finder
 
     def optimize(self):
         merged_config = self._merge_config_with_qubit_frequencies(
@@ -93,14 +99,15 @@ class Optimizer(OptimizerBase):
     def _optimize_qubits(self):
         for qubit, parameters in self._targets["qubit"]["specific"].items():
             for parameter, target_value in parameters.items():
-                qubit_models = self._models["qubit"]
-                if parameter not in qubit_models:
-                    continue
-                for _, model in qubit_models[parameter].items():
-                    geometry_value = model.predict([[target_value]])[0]
+                geometries = self._optimal_geometry_finder.find_optimal_geometry(
+                    component="qubit",
+                    target_parameter=parameter,
+                    target_parameter_value=target_value,
+                )
+                for geometry_name, geometry_value in geometries.items():
                     self._design.components[qubit].options[
-                        parameter
-                    ] = f"{geometry_value}um"
+                        geometry_name
+                    ] = geometry_value
 
     def _optimize_resonators(self):
         pass
