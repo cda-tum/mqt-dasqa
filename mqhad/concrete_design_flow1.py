@@ -54,7 +54,7 @@ class ConcreteDesignFlow1(DesignFlowBase):
         )
         optimizer.optimize()
 
-    def display_gui(self):
+    def display_gui(self, canvas):
         if self._display_gui == True:
             # We define a exit_no_operation() function that simply does nothing, and then use
             # the monkeypatch.setattr() method to replace the sys.exit() function with exit_noop() during the test.
@@ -63,7 +63,7 @@ class ConcreteDesignFlow1(DesignFlowBase):
             def exit_no_operation(status):
                 pass
 
-            gui = MetalGUI(self.canvas.get_canvas())
+            gui = MetalGUI(canvas.get_canvas())
             q_app = gui.qApp
             print("Building GUI...")
             gui.rebuild()

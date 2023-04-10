@@ -119,7 +119,7 @@ class DesignFlowBase(ABC):
         pass
 
     @abstractmethod
-    def display_gui(self):
+    def display_gui(self, canvas: CanvasBase):
         pass
 
     # Hooks
@@ -154,4 +154,4 @@ class DesignFlowBase(ABC):
         )
         print("#### Design optimized ####")
 
-        self.display_gui()
+        self.display_gui(self.canvas)
