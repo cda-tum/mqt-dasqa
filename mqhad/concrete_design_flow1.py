@@ -3,6 +3,7 @@ from typing import Any
 import numpy as np
 from .design_flow_base import DesignFlowBase
 from mqhad.architecture_generator1.generator import Generator
+from mqhad.mapper.canvas import CanvasBase
 from mqhad.mapper.mapper import Mapper
 from mqhad.optimal_geometry_finder.optimal_geometry_finder import OptimalGeometryFinder
 from mqhad.optimizer.optimizer import Optimizer
@@ -31,7 +32,9 @@ class ConcreteDesignFlow1(DesignFlowBase):
         qubit_grid, qubit_frequencies = generator.generate()
         return qubit_grid, qubit_frequencies
 
-    def map_to_physical_layout(self, qubit_grid, qubit_frequencies):
+    def map_to_physical_layout(
+        self, qubit_grid: np.ndarray, qubit_frequencies: np.ndarray
+    ):
         mapper = Mapper(
             design_backend=self._design_backend,
             qubit_grid=qubit_grid,
@@ -54,7 +57,7 @@ class ConcreteDesignFlow1(DesignFlowBase):
         )
         optimizer.optimize()
 
-    def display_gui(self, canvas):
+    def display_gui(self, canvas: CanvasBase):
         if self._display_gui == True:
             # We define a exit_no_operation() function that simply does nothing, and then use
             # the monkeypatch.setattr() method to replace the sys.exit() function with exit_noop() during the test.
