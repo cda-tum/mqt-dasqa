@@ -43,7 +43,7 @@ class ConcreteDesignFlow1(DesignFlowBase):
     def load_optimal_geometry_finder(self, config: dict):
         return OptimalGeometryFinder(design_backend=self._design_backend, config=config)
 
-    def optimize_design(
+    def optimize_layout(
         self, canvas, qubit_frequencies, config, optimal_geometry_finder
     ):
         optimizer = Optimizer(

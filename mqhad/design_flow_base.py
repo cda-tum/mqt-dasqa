@@ -109,7 +109,7 @@ class DesignFlowBase(ABC):
         pass
 
     @abstractmethod
-    def optimize_design(
+    def optimize_layout(
         self,
         canvas: CanvasBase,
         qubit_frequencies: np.ndarray,
@@ -146,7 +146,7 @@ class DesignFlowBase(ABC):
         self.optimal_geometry_finder = self.load_optimal_geometry_finder(self.config)
         print("#### Optimal geometry finder loaded ####")
         print("#### Optimizing design ####")
-        self.optimize_design(
+        self.optimize_layout(
             self.canvas,
             self.qubit_frequencies,
             self.config,

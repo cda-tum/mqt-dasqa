@@ -17,7 +17,7 @@ class DesignFlowMock(DesignFlowBase):
     def load_optimal_geometry_finder(self):
         pass
 
-    def optimize_design(self):
+    def optimize_layout(self):
         pass
 
     def display_gui(self):
