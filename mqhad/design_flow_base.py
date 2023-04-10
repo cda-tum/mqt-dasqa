@@ -123,12 +123,12 @@ class DesignFlowBase(ABC):
         pass
 
     # Hooks
-    def read_circuit(self):
+    def read_circuit(self, circuit_path: str):
         pass
 
     def run(self):
         if self._qc == None:
-            self.read_circuit()
+            self.read_circuit(self.circuit_path)
 
         print("#### Start generating architecture ####")
         self.qubit_grid, self.qubit_frequencies = self.generate_architecture(self.qc)

@@ -24,8 +24,8 @@ class ConcreteDesignFlow1(DesignFlowBase):
         self._design_backend = "metal"
         self._display_gui = display_gui
 
-    def read_circuit(self):
-        self.qc = QuantumCircuit.from_qasm_file(self.circuit_path)
+    def read_circuit(self, circuit_path: str):
+        self.qc = QuantumCircuit.from_qasm_file(circuit_path)
 
     def generate_architecture(self, qc: Any) -> tuple[np.ndarray, np.ndarray]:
         generator = Generator(qc=qc)
