@@ -95,7 +95,7 @@ class DesignFlowBase(ABC):
         self._optimal_geometry_finder = optimal_geometry_finder
 
     @abstractmethod
-    def generate_architecture(self) -> tuple[np.ndarray, np.ndarray]:
+    def generate_architecture(self, qc: Any) -> tuple[np.ndarray, np.ndarray]:
         pass
 
     @abstractmethod
@@ -131,7 +131,7 @@ class DesignFlowBase(ABC):
             self.read_circuit()
 
         print("#### Start generating architecture ####")
-        self.qubit_grid, self.qubit_frequencies = self.generate_architecture()
+        self.qubit_grid, self.qubit_frequencies = self.generate_architecture(self.qc)
         print("#### Architecture generated ####")
         print("Qubit grid:", self.qubit_grid)
         print("Qubit frequencies:", self.qubit_frequencies)

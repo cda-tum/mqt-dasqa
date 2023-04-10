@@ -1,4 +1,5 @@
 import sys
+from typing import Any
 import numpy as np
 from .design_flow_base import DesignFlowBase
 from mqhad.architecture_generator1.generator import Generator
@@ -25,8 +26,8 @@ class ConcreteDesignFlow1(DesignFlowBase):
     def read_circuit(self):
         self.qc = QuantumCircuit.from_qasm_file(self.circuit_path)
 
-    def generate_architecture(self) -> tuple[np.ndarray, np.ndarray]:
-        generator = Generator(qc=self.qc)
+    def generate_architecture(self, qc: Any) -> tuple[np.ndarray, np.ndarray]:
+        generator = Generator(qc=qc)
         qubit_grid, qubit_frequencies = generator.generate()
         return qubit_grid, qubit_frequencies
 
