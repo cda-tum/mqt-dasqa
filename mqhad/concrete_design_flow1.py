@@ -27,7 +27,7 @@ class ConcreteDesignFlow1(DesignFlowBase):
         )
 
     def generate_architecture(
-        self, qc: QuantumCircuit
+        self, qc: QuantumCircuit, config: dict
     ) -> tuple[np.ndarray, np.ndarray]:
         generator = Generator(qc=qc)
         qubit_grid, qubit_frequencies = generator.generate()

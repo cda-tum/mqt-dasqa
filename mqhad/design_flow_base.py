@@ -142,7 +142,7 @@ class DesignFlowBase(ABC):
 
     @abstractmethod
     def generate_architecture(
-        self, qc: QuantumCircuit
+        self, qc: QuantumCircuit, config: dict
     ) -> tuple[np.ndarray, np.ndarray]:
         pass
 
@@ -159,7 +159,9 @@ class DesignFlowBase(ABC):
         self.read_circuit(self.circuit_path)
 
         print("#### Start generating architecture ####")
-        self.qubit_grid, self.qubit_frequencies = self.generate_architecture(self.qc)
+        self.qubit_grid, self.qubit_frequencies = self.generate_architecture(
+            self.qc, self.config
+        )
         print("#### Architecture generated ####")
         print("Qubit grid:", self.qubit_grid)
         print("Qubit frequencies:", self.qubit_frequencies)
