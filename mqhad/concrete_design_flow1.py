@@ -5,6 +5,7 @@ from .design_flow_base import DesignFlowBase
 from mqhad.architecture_generator1.generator import Generator
 from mqhad.optimal_geometry_finder.optimal_geometry_finder import OptimalGeometryFinder
 from mqhad.optimizer.optimizer import Optimizer
+from qiskit import QuantumCircuit
 
 
 class ConcreteDesignFlow1(DesignFlowBase):
@@ -25,7 +26,9 @@ class ConcreteDesignFlow1(DesignFlowBase):
             config=config,
         )
 
-    def generate_architecture(self, qc: Any) -> tuple[np.ndarray, np.ndarray]:
+    def generate_architecture(
+        self, qc: QuantumCircuit
+    ) -> tuple[np.ndarray, np.ndarray]:
         generator = Generator(qc=qc)
         qubit_grid, qubit_frequencies = generator.generate()
         return qubit_grid, qubit_frequencies

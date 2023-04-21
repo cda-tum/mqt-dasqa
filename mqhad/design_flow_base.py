@@ -141,7 +141,9 @@ class DesignFlowBase(ABC):
             sys.exit(q_app.exec_())
 
     @abstractmethod
-    def generate_architecture(self, qc: Any) -> tuple[np.ndarray, np.ndarray]:
+    def generate_architecture(
+        self, qc: QuantumCircuit
+    ) -> tuple[np.ndarray, np.ndarray]:
         pass
 
     @abstractmethod
