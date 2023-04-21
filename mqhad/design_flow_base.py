@@ -13,7 +13,6 @@ from qiskit_metal import MetalGUI
 class DesignFlowBase(ABC):
     def __init__(
         self,
-        qc: Any = None,
         circuit_path: str = "",
         design_backend: str = "metal",
         display_gui: bool = True,
@@ -22,7 +21,6 @@ class DesignFlowBase(ABC):
         **kwargs
     ):
         self.config = config
-        self.qc = qc
         self.circuit_path = circuit_path
         self._design_backend = design_backend
         self._display_gui = display_gui
@@ -156,8 +154,7 @@ class DesignFlowBase(ABC):
         pass
 
     def run(self):
-        if self._qc == None:
-            self.read_circuit(self.circuit_path)
+        self.read_circuit(self.circuit_path)
 
         print("#### Start generating architecture ####")
         self.qubit_grid, self.qubit_frequencies = self.generate_architecture(self.qc)
