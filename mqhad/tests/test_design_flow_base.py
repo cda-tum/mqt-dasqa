@@ -11,20 +11,7 @@ class DesignFlowMock(DesignFlowBase):
     def generate_architecture(self):
         pass
 
-    def map_to_physical_layout(self):
-        pass
-
-    def load_optimal_geometry_finder(self):
-        pass
-
     def optimize_layout(self):
-        pass
-
-    def display_gui(self):
-        pass
-
-    # Hooks
-    def read_circuit(self):
         pass
 
 

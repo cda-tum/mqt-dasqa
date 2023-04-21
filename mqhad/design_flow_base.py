@@ -1,18 +1,31 @@
 from abc import ABC, abstractmethod
-from typing import Any, Union
+from typing import final, Any, Union
+import sys
 import os
 import numpy as np
 from mqhad.mapper.canvas import CanvasBase
+from mqhad.mapper.mapper import Mapper
 from mqhad.optimal_geometry_finder import OptimalGeometryFinderBase
+from qiskit import QuantumCircuit
+from qiskit_metal import MetalGUI
 
 
 class DesignFlowBase(ABC):
     def __init__(
-        self, qc: Any = None, circuit_path: str = "", config: dict = {}, *args, **kwargs
+        self,
+        qc: Any = None,
+        circuit_path: str = "",
+        design_backend: str = "metal",
+        display_gui: bool = True,
+        config: dict = {},
+        *args,
+        **kwargs
     ):
         self.config = config
         self.qc = qc
         self.circuit_path = circuit_path
+        self._design_backend = design_backend
+        self._display_gui = display_gui
 
     @property
     def config(self):
@@ -94,18 +107,43 @@ class DesignFlowBase(ABC):
             )
         self._optimal_geometry_finder = optimal_geometry_finder
 
-    @abstractmethod
-    def generate_architecture(self, qc: Any) -> tuple[np.ndarray, np.ndarray]:
-        pass
+    @final
+    def read_circuit(self, circuit_path: str):
+        self.qc = QuantumCircuit.from_qasm_file(circuit_path)
 
-    @abstractmethod
+    @final
     def map_to_physical_layout(
         self, qubit_grid: np.ndarray, qubit_frequencies: np.ndarray
     ) -> CanvasBase:
-        pass
+        mapper = Mapper(
+            design_backend=self._design_backend,
+            qubit_grid=qubit_grid,
+            qubit_frequencies=qubit_frequencies,
+        )
+        result = mapper.map()
+        return result["canvas"]
+
+    @final
+    def display_gui(self, canvas: CanvasBase):
+        if self._display_gui == True:
+            # We define a exit_no_operation() function that simply does nothing, and then use
+            # the monkeypatch.setattr() method to replace the sys.exit() function with exit_noop() during the test.
+            # This way, if the program calls sys.exit(), it will be replaced with the
+            # no-op function and the test will continue to run instead of exiting.
+            def exit_no_operation(status):
+                pass
+
+            gui = MetalGUI(canvas.get_canvas())
+            q_app = gui.qApp
+            print("Building GUI...")
+            gui.rebuild()
+            gui.autoscale()
+            print("GUI built.")
+            sys.exit = exit_no_operation
+            sys.exit(q_app.exec_())
 
     @abstractmethod
-    def load_optimal_geometry_finder(self, config: dict):
+    def generate_architecture(self, qc: Any) -> tuple[np.ndarray, np.ndarray]:
         pass
 
     @abstractmethod
@@ -114,16 +152,7 @@ class DesignFlowBase(ABC):
         canvas: CanvasBase,
         qubit_frequencies: np.ndarray,
         config: dict,
-        optimal_geometry_finder: OptimalGeometryFinderBase,
     ):
-        pass
-
-    @abstractmethod
-    def display_gui(self, canvas: CanvasBase):
-        pass
-
-    # Hooks
-    def read_circuit(self, circuit_path: str):
         pass
 
     def run(self):
@@ -142,16 +171,8 @@ class DesignFlowBase(ABC):
         )
         print("#### Physical layout generated ####")
 
-        print("#### Loading optimal geometry finder ####")
-        self.optimal_geometry_finder = self.load_optimal_geometry_finder(self.config)
-        print("#### Optimal geometry finder loaded ####")
         print("#### Optimizing design ####")
-        self.optimize_layout(
-            self.canvas,
-            self.qubit_frequencies,
-            self.config,
-            self.optimal_geometry_finder,
-        )
+        self.optimize_layout(self.canvas, self.qubit_frequencies, self.config)
         print("#### Design optimized ####")
 
         self.display_gui(self.canvas)
