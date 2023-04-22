@@ -18,6 +18,6 @@ class TestMetalCanvas:
         mock_design = MagicMock(name="mock_design")
         design_metal._canvas = mock_design
 
-        design_metal.update_components("Q_0", "fQ", 5.3)
+        design_metal.update_component("Q_0", "fQ", 5.3)
 
         assert mock_design.components.__getitem__().options.__setitem__.call_count == 1

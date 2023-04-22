@@ -105,7 +105,7 @@ class Optimizer(OptimizerBase):
                     target_parameter_value=target_value,
                 )
                 for geometry_name, geometry_value in geometries.items():
-                    self._canvas.update_components(qubit, geometry_name, geometry_value)
+                    self._canvas.update_component(qubit, geometry_name, geometry_value)
 
     def _optimize_resonators(self):
         pass

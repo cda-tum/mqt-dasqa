@@ -7,5 +7,5 @@ class CanvasBase(ABC):
         pass
 
     @abstractmethod
-    def update_components(self, component_name, option_name, option_value):
+    def update_component(self, component_name, option_name, option_value):
         pass
