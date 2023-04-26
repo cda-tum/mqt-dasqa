@@ -2,7 +2,7 @@
     "editor.formatOnSave": true,
     "python.formatting.provider": "black",
     "python.testing.pytestArgs": [
-        "mqhad"
+        "src"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true

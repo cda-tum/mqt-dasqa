@@ -26,13 +26,13 @@ with open(here / "requirements.txt", encoding="utf-8") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="mqhad",
+    name="dasqa",
     version="0.1",
-    description="Munich Quantum HArdware Designer",
+    description="MQT Designer for Alternative Superconducting Quantum Architectures",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/jagandecapri/mqhad",
-    author="jagandecapri@gmail.com",
+    url="https://github.com/cda-tum/mqt-dasqa",
+    author="Jagatheesan Kunasaikaran",
     author_email="jagatheesan.kunasaikaran@tum.de",
     license="MIT",
     classifiers=[
@@ -48,17 +48,17 @@ setup(
     ],
     keywords="quantum sdk hardware eda",
     packages=find_packages(),
-    package_data={"mqhad": []},
+    package_data={"dasqa": []},
     python_requires=">=3.9",
     install_requires=requirements,
     entry_points={
         "console_scripts": [
-            "mqhad=mqhad.__main__:main",
+            "dasqa=src.__main__:main",
         ],
     },
     project_urls={
-        "Bug Tracker": "https://github.com/jagandecapri/mqhad/issues",
-        "Documentation": "https://github.com/jagandecapri/mqhad",
-        "Source Code": "https://github.com/jagandecapri/mqhad",
+        "Bug Tracker": "https://github.com/cda-tum/issues",
+        "Documentation": "https://github.com/cda-tum/mqt-dasqa",
+        "Source Code": "https://github.com/cda-tum/mqt-dasqa",
     },
 )
