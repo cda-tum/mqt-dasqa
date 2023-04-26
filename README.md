@@ -1,15 +1,14 @@
-# MQHAD<!-- omit from toc -->
+# MQT DASQA - Designer for Alternative Superconducting Quantum Architectures<!-- omit from toc -->
 
-Munich Quantum HArdware Designer (MQHAD) is a framework to encapsulate application-driven quantum hardware architecture.In this repository, a reference implementation of the framework is provided. This implementation was done with modularality and easy extensibility in mind to allow for future extensions and improvement.
+DASQA is a framework to encapsulate application-driven quantum hardware architecture. In this repository, a reference implementation of the framework is provided. This implementation was done with modularality and easy extensibility in mind to allow for future extensions and improvement.
 
 ## Table of contents<!-- omit from toc -->
 
 - [Steps in framework](#steps-in-framework)
 - [Repository structure](#repository-structure)
 - [Extending reference implementation](#extending-reference-implementation)
-  - [Architecture generator](#architecture-generator)
-  - [Physical layout mapper](#physical-layout-mapper)
-  - [Optimizer](#optimizer)
+  - [Using the framework](#using-the-framework)
+  - [Extending the framework](#extending-the-framework)
 - [Trying reference implementation](#trying-reference-implementation)
   - [Installation](#installation)
     - [Installing Package](#installing-package)
@@ -27,14 +26,13 @@ In this section, we will describe the steps in the framework as follows:
 
 1. `Architecture generator` - generates an optimized high-level architecture based on a quantum application(i.e, quantum circuit). The input of the architecture generator is a quantum application and it outputs a high-level architecture containing the layout of the qubits and qubit frequencies
 2. `Physical layout mapper` - maps the high-level architecture to physical layout using tools such as Qiskit Metal
-3. `Statistical model` - trains statistical models to stand-in for simulations that are done using software such as Ansys HFSS during the optimization step. The models are trained separately from the design flow using pre-collected simulation data. The models identify patterns that relates a target parameter to the geometrical parameters of the layout.
-4. `Optimizer` - optimizes layout using statistical model created in (3). Usually, the optimization of physical layout process needs iterative simulation and adjustment of geometries of the physical layout. Since, pre-trained statistical models are being used to stand-in for the simulation softwares, geometrical value for a targeted parameter can be obtained without needing iterative simulation and design
+3. `Optimizer` - optimizes the geometries of the components to hit target parameters
 
 ## Repository structure
 
 In this section, we will describe the structure of the repository as follows to help you navigate through the repository:
 
-1. `mqhad` - contains the reference implementation of the framework covering the modules in steps 1,2, and 4 in the previous section
+1. `src` - contains the reference implementation of the framework
    1. `architecture_generator1` is based on [G. Li, Y. Ding and Y. Xie](https://arxiv.org/abs/1911.12879)
       1. `bus` generates connection between qubits
       2. `chip` creates temporary chip for simulation. The temporary chip is a subgraph of the layout graph and it is used in the frequency generation module
@@ -53,49 +51,19 @@ In this section, we will describe the structure of the repository as follows to 
       5. `qubit` creates qubits
       6. `qubit_capacitor_connector` creates qubit to capacitor connections
       7. `qubit_connector` creates qubit-to-qubit connections
-   3. `optimizer` optimizes the geometries of layout to hit target parameters
+   3. `optimal_geometry_finder` contains the algorithm to find the optimal geometry of a component given a target parameter
+   4. `optimizer` optimizes the geometries of layout to hit target parameters
 2. `notebooks` trains statistical model to stand-in for simulation software such as Ansys HFSS and used by the optimizer
 
 ## Extending reference implementation
 
-In this section, we will describe how to extend the reference implementation to include other modules in the framework. The script that integrates the different steps is defined in [__main__.py](mqhad/__main__.py). In the following sub-sections, we will describe how to replace the modules in the reference implementation with other modules.
+### Using the framework
 
-### Architecture generator
+**TODO**
 
-The architecture generator shown below can be replaced with other solutions that can generate a matrix of qubit layout and its associated qubit frequencies.
+### Extending the framework
 
-```
-qc = QuantumCircuit.from_qasm_file(circuit_absolute_path)
-generator = Generator(qc=qc)
-qubit_grid, qubit_frequencies = generator.generate()
-```
-
-### Physical layout mapper
-
-The mapper module shown in below can be replaced with other implementations than Qiskit Metal provided that they have an Application Programming Interface (API) to update the layout that can be used in the optimizer step.
-
-```
-mapper = Mapper(
-    design_backend="metal",
-    qubit_grid=qubit_grid,
-    qubit_frequencies=qubit_frequencies
-)
-result = mapper.map()
-```
-
-### Optimizer
-
-The optimizer shown below can be replaced with other optimizer algorithms. If the goal is to replace just the the statistical model provided to the optimizer module, then, the path to different models can be given in the configuration file.
-
-```
-canvas = result["canvas"]
-optimizer = Optimizer(
-    canvas=canvas, 
-    qubit_frequencies=qubit_frequencies, 
-    config=config
-)
-optimizer.optimize()
-```
+**TODO**
 
 ## Trying reference implementation
 
@@ -105,9 +73,9 @@ optimizer.optimize()
 
 1. Clone the repository - `git clone {URL}`
 
-2. Change to cloned directory - `cd mqhad`
+2. Change to cloned directory - `cd dasqa`
 
-3. The easiest way to install the toolkit without affecting other packages is to create a virtual environment, i.e: using conda, as following. Else, you can just run `python -m pip install -e .`. Do note that MQHAD is tested on Python 3.10.
+3. The easiest way to install the toolkit without affecting other packages is to create a virtual environment, i.e: using conda, as following. Else, you can just run `python -m pip install -e .`. Do note that DASQA is tested on Python 3.10.
 
 ```text
 conda env create -n <env_name> environment.yml
@@ -125,7 +93,7 @@ python -m pip install --no-deps -e .
 
 ```text
 Usage:
-    mqhad --file-path [PATH_TO_QASM_2.0_FILE] --config-file-path [PATH_TO_CONFIG_FILE]
+    dasqa --file-path [PATH_TO_QASM_2.0_FILE] --config-file-path [PATH_TO_CONFIG_FILE]
 ```
 
 The CLI will generate the high-level architecture of the placement of qubits in a 2D square-lattice and the corresponding qubit frequencies. The Metal GUI is invoked at the end as following where there is an option to save the design as a Python script.
@@ -134,7 +102,7 @@ The CLI will generate the high-level architecture of the placement of qubits in 
 
 #### Testing the Package
 
-1. There is a test circuit that could be used to test the package. Navigate to `mqhad` directory and execute `mqhad --file-path ./mqhad/tests/test_circuit/circuit1.qasm --config-file-path ./mqhad/tests/test_config/config.yml`
+1. There is a test circuit that could be used to test the package. Navigate to `dasqa` directory and execute `dasqa --file-path ./src/tests/test_circuit/circuit1.qasm --config-file-path ./src/tests/test_config/config.yml`
 
 ### Development
 
