@@ -1,11 +1,10 @@
-# TODOs
+# TODOs<!-- omit from toc -->
 
 This document lists the experimental features and TODOs
 
-- [TODOs](#todos)
-  - [Experimental Features](#experimental-features)
-    - [Vectorized Yield Simulator](#vectorized-yield-simulator)
-  - [Future Improvements](#future-improvements)
+- [Experimental Features](#experimental-features)
+  - [Vectorized Yield Simulator](#vectorized-yield-simulator)
+- [Future Improvements](#future-improvements)
 
 ## Experimental Features
 
@@ -17,7 +16,7 @@ Yield simulation is used in frequency allocation to detect common collisions in 
 
 Injecting random noise from a Gaussian distribution into pre-fabrication qubit frequencies enables a yield simulator to accurately model post-fabrication frequencies. The Monte Carlo simulations allow the successful fabrications of a quantum processor design to be accurately modeled, and the resulting yield rate to be estimated. Through repeated runs of the simulation process, the successful simulations are calculated in relation to all simulations, thereby providing an accurate estimate of the overall yield rate. Furthermore, the use of this simulation process enables a more precise analysis of the effects of the random noise on the pre-fabrication qubit frequencies, allowing for more precise estimates of the yield rate.
 
-In this toolkit, a new vectorized yield simulator called [YieldSimulator2](mqhad/architecture_generator/yieldsimulator/yieldsimulator2.py) is implemented. It is still experimental as the performance for the yield simulator needs to be benchmarked. It's hypothesized that the new yield simulator can handle large quantum hardware layout given it's vectorized nature. For further information, see [Future Improvements](#future-improvements) section. Currently, the unvectorized yield simulator [YieldSimulator](mqhad/architecture_generator/yieldsimulator/yieldsimulator.py) is used as the default yield simulator.
+In this toolkit, a new vectorized yield simulator called [YieldSimulator2](src/architecture_generator1/yieldsimulator/yieldsimulator2.py) is implemented. It is still experimental as the performance for the yield simulator needs to be benchmarked. It's hypothesized that the new yield simulator can handle large quantum hardware layout given it's vectorized nature. For further information, see [Future Improvements](#future-improvements) section. Currently, the unvectorized yield simulator [YieldSimulator](src/architecture_generator1/yieldsimulator/yieldsimulator.py) is used as the default yield simulator.
 
 ## Future Improvements
 
@@ -41,6 +40,6 @@ In this toolkit, a new vectorized yield simulator called [YieldSimulator2](mqhad
 
 - [ ] Add better progress indicator for the steps using progress indicators, i.e: [tqdm](https://github.com/tqdm/tqdm). Currently, some steps such as generating qubit frequencies takes time and there is no granular indicator on the progress other than a simple text message.
 
-- [ ] After tool execution in MacOS Ventura 13.0, there is a segmentation fault message `zsh: segmentation fault  mqhad --file-path ./mqhad/tests/test_circuit/circuit1.qasm`. Investigate why this issue is happening.
+- [ ] After tool execution in MacOS Ventura 13.0, there is a segmentation fault message `zsh: segmentation fault`. Investigate why this issue is happening.
 
 - [ ] Refactor config.yml file parsing to defaults if no value is specified in config. There may be other approaches to elegantly handle configurations in a config file which can be explored.
