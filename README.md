@@ -19,7 +19,6 @@ DASQA (pronounced "dah-skuh") is a framework to encapsulate application-driven q
   - [Development](#development)
   - [FAQs](#faqs)
 
-
 ## Steps in framework
 
 In this section, we will describe the steps in the framework as follows:
@@ -53,17 +52,33 @@ In this section, we will describe the structure of the repository as follows to 
       7. `qubit_connector` creates qubit-to-qubit connections
    3. `optimal_geometry_finder` contains the algorithm to find the optimal geometry of a component given a target parameter
    4. `optimizer` optimizes the geometries of layout to hit target parameters
+   5. `__main__.py` is the entry point for the Command-Line Interface (CLI) application
 2. `notebooks` trains statistical model to stand-in for simulation software such as Ansys HFSS and used by the optimizer
 
 ## Extending reference implementation
 
 ### Using the framework
 
-**TODO**
+A reference implementation of the framework is provided in the `src` directory. The reference implementation is modular and extensible.
+
+To this end, a concrete implementation which is a subclass of `DesignFlowBase` class is available at [src/concrete_design_flow1.py](src/concrete_design_flow1.py). In the concrete implementation, an example of how the `generate_architecture` and `optimize_layout` abstract methods are overriden is given.
+
+Then, the `run` method defined in the `DesignFlowBase` class invokes the `generate_architecture` and `optimize_layout` methods to execute the design flow.
 
 ### Extending the framework
 
-**TODO**
+Each module in [src](src/) has abstract classes which allows for easy extensibility.
+
+As an example, the qubit layout subclass [TransmonPocket6Qubit](src/mapper/qubit/metal/transmon_pocket_6_qubit.py) in the physical layout mapper inherits from the `QubitBase` abstract class defined in [QubitBase](src/mapper/qubit/qubit_base.py) as:
+
+```python
+class QubitBase(ABC):
+@abstractmethod
+def generate_qubit_layout(self):
+  pass
+```
+
+The [TransmonPocket6Qubit](src/mapper/qubit/metal/transmon_pocket_6_qubit.py) subclass then defines how the qubits are positioned on the physical layout. For a complete list of possible abstract classes that can be overriden in each module, please refer to the individual modules in [src](src/) directory.
 
 ## Trying reference implementation
 
