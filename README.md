@@ -1,6 +1,6 @@
 # MQT DASQA - Designer for Alternative Superconducting Quantum Architectures<!-- omit from toc -->
 
-DASQA is a framework to encapsulate application-driven quantum hardware architecture. In this repository, a reference implementation of the framework is provided. This implementation was done with modularality and easy extensibility in mind to allow for future extensions and improvement.
+DASQA (pronounced "dah-skuh") is a framework to encapsulate application-driven quantum hardware architecture. In this repository, a reference implementation of the framework is provided. This implementation was done with modularality and easy extensibility in mind to allow for future extensions and improvement.
 
 ## Table of contents<!-- omit from toc -->
 
