@@ -93,14 +93,14 @@ The [TransmonPocket6Qubit](src/mapper/qubit/metal/transmon_pocket_6_qubit.py) su
 3. The easiest way to install the toolkit without affecting other packages is to create a virtual environment, i.e: using conda, as following. Else, you can just run `python -m pip install -e .`. Do note that DASQA is tested on Python 3.10.
 
 ```text
-conda env create -n <env_name> -f environment.yml
-conda activate <env_name>
-python -m pip install --no-deps -e .
+conda env create -n mqt-dasqa -f environment.yml
+conda activate mqt-dasqa
+python -m pip install -e .
 ```
 
 #### Installing Qiskit Metal
 
-1. Install Qiskit Metal following installation instructions at [Qiskit Metal](https://qiskit.org/documentation/metal/installation.html). Refer to the [Pre-existing environment](https://qiskit.org/documentation/metal/installation.html#option-2-a-pre-existing-environment) section.
+1. Install Qiskit Metal following installation instructions at [Qiskit Metal](https://qiskit.org/documentation/metal/installation.html). Refer to the [Pre-existing environment](https://qiskit.org/documentation/metal/installation.html#option-2-a-pre-existing-environment) section. Note that to run the pip install command **without** the `--no-deps` flag so that all dependencies are installed for Qiskit Metal.
 
 ### Usage
 
