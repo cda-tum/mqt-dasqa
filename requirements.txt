@@ -1,4 +1,4 @@
-numpy>=1.23.5
-qiskit==0.41.0
+numpy==1.24.2
+qiskit==1.0.2
 scikit-learn>=1.2.0
 pyyaml>=6.0
