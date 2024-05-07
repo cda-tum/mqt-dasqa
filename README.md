@@ -1,6 +1,15 @@
+<p align="center">
+  <a href="https://mqt.readthedocs.io">
+   <picture>
+     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cda-tum/mqt/main/docs/_static/mqt_light.png" width="60%">
+     <img src="https://raw.githubusercontent.com/cda-tum/mqt/main/docs/_static/mqt_dark.png" width="60%" alt="MQT Logo">
+   </picture>
+  </a>
+</p>
+
 # MQT DASQA - Designer for Alternative Superconducting Quantum Architectures<!-- omit from toc -->
 
-DASQA (pronounced "dah-skuh") is a framework to encapsulate application-driven quantum hardware architecture. In this repository, a reference implementation of the framework is provided. This implementation was done with modularality and easy extensibility in mind to allow for future extensions and improvement.
+DASQA (pronounced "dah-skuh") is a framework to encapsulate application-driven quantum hardware architecture developed as part of the [_Munich Quantum Toolkit (MQT)_](https://mqt.readthedocs.io) by the [Chair for Design Automation](https://www.cda.cit.tum.de/) at the [Technical University of Munich](https://www.tum.de/). In this repository, a reference implementation of the framework is provided. This implementation was done with modularality and easy extensibility in mind to allow for future extensions and improvement.
 
 ## Table of contents<!-- omit from toc -->
 
@@ -18,6 +27,7 @@ DASQA (pronounced "dah-skuh") is a framework to encapsulate application-driven q
     - [Testing the Package](#testing-the-package)
   - [Development](#development)
   - [FAQs](#faqs)
+- [Acknowledgements](#acknowledgements)
 
 ## Steps in framework
 
@@ -132,3 +142,27 @@ The CLI will generate the high-level architecture of the placement of qubits in 
 >Q: Why am I seeing a critical error from qt about not controlling layer-backing?
 >
 >A: If you are seeing: CRITICAL [_qt_message_handler]: …. WARNING: Layer-backing can not be explicitly controlled on 10.14 when built against the 10.14 SDK … you are likely running a MAC OS version that has trouble with the libraries. Based on information that is available online, this problem does not appear to have a solution. However, it does not seem like this error affects Qiskit Metal’s functionality. If you find problem with this, you might want to try using an older version of the dependency packages, beginning with lowering your python version to 3.7.x.
+
+## Acknowledgements
+
+The Munich Quantum Toolkit has been supported by the European
+Research Council (ERC) under the European Union's Horizon 2020 research and innovation program (grant agreement
+No. 101001318), the Bavarian State Ministry for Science and Arts through the Distinguished Professorship Program, as well as the
+Munich Quantum Valley, which is supported by the Bavarian state government with funds from the Hightech Agenda Bayern Plus.
+
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cda-tum/mqt/main/docs/_static/tum_dark.svg" width="28%">
+<img src="https://raw.githubusercontent.com/cda-tum/mqt/main/docs/_static/tum_light.svg" width="28%" alt="TUM Logo">
+</picture>
+<picture>
+<img src="https://raw.githubusercontent.com/cda-tum/mqt/main/docs/_static/logo-bavaria.svg" width="16%" alt="Coat of Arms of Bavaria">
+</picture>
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cda-tum/mqt/main/docs/_static/erc_dark.svg" width="24%">
+<img src="https://raw.githubusercontent.com/cda-tum/mqt/main/docs/_static/erc_light.svg" width="24%" alt="ERC Logo">
+</picture>
+<picture>
+<img src="https://raw.githubusercontent.com/cda-tum/mqt/main/docs/_static/logo-mqv.svg" width="28%" alt="MQV Logo">
+</picture>
+</p>
